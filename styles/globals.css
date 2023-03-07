@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components{
+    .addProductInputBox{
+        @apply grid grid-cols-5 w-[30rem] gap-2 items-center;
+    }
+
+    .addProductInputField{
+        @apply col-span-4 border p-2;
+    }
+
+    .btn-red{
+        @apply py-1 px-2 bg-[#e50914] text-white font-bold uppercase hover:brightness-95;
+    }
+}
