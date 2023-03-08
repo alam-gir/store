@@ -2,8 +2,19 @@ import { connectMongoDB } from "@/lib/mongodb/connectDB";
 
 const handler = async (req, res) => {
   if(req.method === "GET"){
-    return res.status(200).json({success: true, message: 'No Data For Get.'})
+    try {
+      // connect db
+      const { db } = await connectMongoDB()      
+      // find all products
+      const products = await db.collection('products').find().toArray()
+
+      return res.status(200).json({success: true, products})
+    } catch (error) {
+      return res.status(200).json({success: true, message: 'No Data For Get.'})
+    }
   }
+
+  // add products to db
   if (req.method === "POST") {
     //grab data from client side
 
@@ -28,7 +39,7 @@ const handler = async (req, res) => {
         // then we will store client data in our data base
         const product = await db
           .collection("products")
-          .insertOne({ ...data, createdAt: new Date() });
+          .insertOne({ ...data, createdAt: new Date().toLocaleString() });
         console.log(product);
         // then we will send a response that data added.
         return res
