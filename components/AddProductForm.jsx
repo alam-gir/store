@@ -90,20 +90,28 @@ const AddProductForm = () => {
       stock: input.stock.trim() ? false : true,
     }));
 
-    if (submitCondition) {
-      console.log("submitted");
-      //   const res = await fetch("api/db/products", {
-      //     method: "POST",
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //       Accept: "application/json",
-      //     },
-      //     body: JSON.stringify(input),
-      //   });
-      //   const data = await res.json();
-      //   console.log(data);
-      //   window.alert("response get.");
-    } else {
+    //post req...
+    console.log("submitted");
+    const res = await fetch("api/db/products", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(input),
+    });
+    const data = await res.json();
+    console.log(data);
+    if (data.success) {
+        // make alert
+      window.alert(data.message);
+      // clean field data and image
+      setInput(initialInput)
+      setImages([])
+    }
+    if(data.status === 'empty'){
+        //  make alert
+        window.alert(data.message)
     }
   };
 

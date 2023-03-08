@@ -1,6 +1,9 @@
 import { connectMongoDB } from "@/lib/mongodb/connectDB";
 
 const handler = async (req, res) => {
+  if(req.method === "GET"){
+    return res.status(200).json({success: true, message: 'No Data For Get.'})
+  }
   if (req.method === "POST") {
     //grab data from client side
 
@@ -30,13 +33,19 @@ const handler = async (req, res) => {
         // then we will send a response that data added.
         return res
           .status(201)
-          .json({ success: true, message: "product added." });
+          .json({ success: true, message: "Product added." });
       } catch (error) {
         return res.status(400).json({ success: false, message: error.message });
       }
     } else{
-      return res.status(404).json({success: false, message: 'Some field maybe empty. please fill required fieled!'})
+      return res.send({success: false, status: 'empty', message: 'Please fill required fieled!'})
     }
+  }
+  if(req.method === "PUT"){
+    // update the post
+  }
+  if(req.method === "DELETE"){
+    // delete the post
   }
   return res.status(500).json({ message: "internal server error" });
 };
