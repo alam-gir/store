@@ -4,7 +4,7 @@ export default function Product(props) {
   return (
     <>
       <div className={`product ${props.bgColor}`}>
-        <div className={`img-wrapper ${props.imgHeight}`}>
+        <div className={`img-wrapper`}>
           <img
             src="https://i.ibb.co/P9fVhj6/pngfind-com-lemon-tea-png-6661129.png"
             alt="productImg"

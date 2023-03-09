@@ -17,7 +17,7 @@ import HomeSliderCard from "./HomeSliderCard";
 
 function HomePage() {
   return (
-    <>
+    <section className="bg-[#F8F8F8]">
       <div className="wrapper">
         <header className="home-slider">
           <Swiper
@@ -25,7 +25,7 @@ function HomePage() {
             spaceBetween={30}
             pagination={{ clickable: true }}
             autoplay={{
-              delay: 2500,
+              delay: 3000,
               disableOnInteraction: false,
             }}
             modules={[Pagination, Autoplay]}
@@ -52,14 +52,14 @@ function HomePage() {
             </span>
           </header>
           <main className="product-wrapper">
-            <Product imgHeight="h-[150px]" />
-            <Product imgHeight="h-[150px]" bgColor="bg-green-100" />
-            <Product imgHeight="h-[150px]" bgColor="bg-blue-100" />
-            <Product imgHeight="h-[150px]" bgColor="bg-amber-100" />
+            <Product />
+            <Product bgColor="bg-green-100" />
+            <Product bgColor="bg-blue-100" />
+            <Product bgColor="bg-amber-100" />
           </main>
         </section>
       </div>
-    </>
+    </section>
   );
 }
 
