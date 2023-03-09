@@ -42,7 +42,7 @@
   }
 
   .btn-red {
-    @apply py-1 px-2 bg-[#e50914] text-white font-bold hover:brightness-100 uppercase
+    @apply py-1 px-2 bg-[#e50914] text-white font-bold hover:brightness-100 uppercase;
   }
 
   /* Main Body Wrappar */
@@ -76,15 +76,14 @@
   }
 
   .slider-img img {
-    @apply w-full
+    @apply w-full;
   }
-
 
   /* Home Slider End */
 
   /* Product Section Start */
   .product-container {
-    @apply mb-6
+    @apply mb-6;
   }
 
   .product-header {
@@ -100,7 +99,7 @@
   }
 
   .product-wrapper {
-    @apply grid grid-cols-2 gap-[4%] gap-y-6 pt-3 ;
+    @apply grid grid-cols-2 gap-[4%] gap-y-6 pt-3;
   }
 
   /* Product Card Start */
@@ -117,7 +116,11 @@
   }
 
   .product-details {
-    @apply pb-4;
+    @apply pb-4 capitalize;
+  }
+
+  .product-name span {
+    @apply lowercase;
   }
 
   /* Product Card End */

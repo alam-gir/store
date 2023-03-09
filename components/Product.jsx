@@ -1,25 +1,30 @@
 import React from "react";
 
 export default function Product(props) {
+  const productDefaultImg =
+    "https://i.ibb.co/P9fVhj6/pngfind-com-lemon-tea-png-6661129.png";
+
   return (
-    <>
+    <a href={props.productId}>
       <div className={`product ${props.bgColor}`}>
         <div className={`img-wrapper`}>
           <img
-            src="https://i.ibb.co/P9fVhj6/pngfind-com-lemon-tea-png-6661129.png"
+            src={props.productImg ? props.productImg : productDefaultImg}
             alt="productImg"
+            loading="lazy"
             className={`product-img ${props.imgHeight}`}
           />
         </div>
         <div className="product-details">
           <h3 className={`product-name ${props.nameTextSize}`}>
-            Green Tea <span> - 20g</span>
+            {props.productName}{" "}
+            {props.productWeight && <span> - {props.productWeight}</span>}
           </h3>
           <strong className={`product-price ${props.priceTextSize}`}>
-            $40.00
+            ${props.productPrice}
           </strong>
         </div>
       </div>
-    </>
+    </a>
   );
 }
