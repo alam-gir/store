@@ -1,8 +1,9 @@
+import HomePage from "@/components/HomePage";
 
 export default function Home() {
   return (
     <div>
-      <h1>bismillah</h1>
+      <HomePage />
     </div>
-  )
+  );
 }

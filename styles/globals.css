@@ -2,16 +2,120 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components{
-    .addProductInputBox{
-        @apply grid grid-cols-5 w-[30rem] gap-2 items-center;
-    }
+@layer base {
+  html {
+    @apply font-sans;
+  }
 
-    .addProductInputField{
-        @apply col-span-4 border p-2;
-    }
+  img {
+    @apply h-full;
+  }
 
-    .btn-red{
-        @apply py-1 px-2 bg-[#e50914] text-white font-bold uppercase hover:brightness-95;
-    }
+  h1 {
+    @apply text-2xl font-bold;
+  }
+
+  h2 {
+    @apply text-lg font-medium;
+  }
+
+  h3 {
+    @apply text-base font-medium;
+  }
+
+  strong {
+    @apply font-bold;
+  }
+
+  span {
+    @apply font-normal text-gray-500;
+  }
+}
+
+@layer components {
+  .addProductInputBox {
+    @apply grid grid-cols-5 w-[30rem] gap-2 items-center;
+  }
+
+  .addProductInputField {
+    @apply col-span-4 border p-2;
+  }
+
+  .btn-red {
+    @apply py-1 px-2 bg-[#e50914] text-white font-bold uppercase hover:brightness-95;
+  }
+
+  /* Main Body Wrappar */
+  .wrapper {
+    @apply mx-auto w-[92%];
+  }
+
+  /* Home Slider Start */
+  .home-slider {
+    @apply mt-4;
+  }
+
+  .slider-card {
+    @apply bg-[#227C70] h-[120px] rounded-[10px] flex flex-col justify-center relative overflow-hidden;
+  }
+
+  .slider-text {
+    @apply uppercase text-white ml-4;
+  }
+
+  .slider-text h1 {
+    @apply text-5xl;
+  }
+
+  .slider-text h2 {
+    @apply text-2xl tracking-wide;
+  }
+
+  .slider-img {
+    @apply absolute -right-10 -bottom-4;
+  }
+
+  .slider-img {
+    @apply h-full;
+  }
+
+  /* Home Slider End */
+
+  /* Product Section Start */
+
+  .product-header {
+    @apply flex flex-row justify-between my-4;
+  }
+
+  .product-header h2 {
+    @apply text-xl;
+  }
+
+  .product-header span {
+    @apply underline cursor-pointer;
+  }
+
+  .product-wrapper {
+    @apply grid grid-cols-2 gap-[4%] gap-y-6 pt-3;
+  }
+
+  /* Product Card Start */
+  .product {
+    @apply flex flex-col px-2 bg-red-100 w-auto rounded-lg;
+  }
+
+  .img-wrapper {
+    @apply w-full mx-auto relative;
+  }
+
+  .product-img {
+    @apply absolute -top-4 left-1/2 -translate-x-1/2;
+  }
+
+  .product-details {
+    @apply pb-4;
+  }
+
+  /* Product Card End */
+  /* Product Section End */
 }
