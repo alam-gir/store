@@ -103,15 +103,15 @@ const AddProductForm = () => {
     const data = await res.json();
     console.log(data);
     if (data.success) {
-        // make alert
+      // make alert
       window.alert(data.message);
       // clean field data and image
-      setInput(initialInput)
-      setImages([])
+      setInput(initialInput);
+      setImages([]);
     }
-    if(data.status === 'empty'){
-        //  make alert
-        window.alert(data.message)
+    if (data.status === "empty") {
+      //  make alert
+      window.alert(data.message);
     }
   };
 
@@ -195,7 +195,7 @@ const AddProductForm = () => {
 
           {/* price */}
           <div className="addProductInputBox">
-            <label className=" col-span-1" htmlFor="price">
+            <label className="col-span-1" htmlFor="price">
               Price
             </label>
             <input
@@ -297,8 +297,7 @@ const AddProductForm = () => {
               onClick={() => {
                 pickImage.current.click();
               }}
-              className="col-span-2 cursor-pointer hover:brightness-75 border"
-            >
+              className="col-span-2 cursor-pointer hover:brightness-75 border">
               📸 choose image. . . 📸
             </span>
             <input
