@@ -1,7 +1,7 @@
 import Button from "@/components/Button";
 import LoaderSVG from "@/components/LoaderSVG";
+import ProductsCardSlider from "@/components/ProductsCardSlider";
 import ProductSlider from "@/components/ProductSlider";
-import ProductSliderThumb from "@/components/ProductSliderThumb";
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 
@@ -62,16 +62,18 @@ const View = () => {
           </div>
         ) : (
           <div className=" z-30 mx-4 mt-8 px-4 py-6 md:w-[100%] rounded-lg shadow-[0_-2px_10px_rgba(0,0,0,0.15)] backdrop-blur-2xl">
+
+            {/* Header  */}
             <div className=" grid grid-cols-4 items-center">
               {/* left */}
               <div className=" col-span-3">
-                <div className="flex gap-1 items-center leading-7">
+                <div className="flex gap-1 items-center leading-3">
                   <h1 className="text-gray-700 capitalize tracking-wide text-[18px] md:text-[22px] font-bold">
                     {product?.name}
                   </h1>
                   <h1 className="text-gray-400 text-[18px] md:text-[22px] "> {product?.weight && `- ${product?.weight}`}</h1>
                 </div>
-                <h1 className="text-[12px] md:text-[16px] text-[#67771E] tracking-wide font-bold capitalize">
+                <h1 className="text-[12px] md:text-[16px] text-[#67771E] tracking-wide font-bold capitalize leading-3">
                   {product?.category}
                 </h1>
               </div>
@@ -82,7 +84,7 @@ const View = () => {
                   ${regularPrice - offerPrice}
                 </h1>
                 {offerPrice > 0 && (
-                  <h2 className="text-[12px]">
+                  <h2 className="text-[12px] leading-4">
                     <span className="line-through text-[#9C9C9C]">
                       ${regularPrice}
                     </span>{" "}
@@ -124,6 +126,11 @@ const View = () => {
             </div>
           </div>
         )}
+      </div>
+
+      {/* // Products card Slider  */}
+      <div className="mx-4 my-8 px-4 py-6 md:w-[100%] rounded-lg shadow-[0_-2px_10px_rgba(0,0,0,0.15)] backdrop-blur-2xl">
+        <ProductsCardSlider />
       </div>
     </div>
   );
