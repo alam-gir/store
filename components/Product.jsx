@@ -1,11 +1,12 @@
+import Link from "next/link";
 import React from "react";
 
 export default function Product(props) {
-  const productDefaultImg =
+  const productDefaultImg = 
     "https://i.ibb.co/P9fVhj6/pngfind-com-lemon-tea-png-6661129.png";
 
   return (
-    <a href={props.productId}>
+    <Link href={`/products/${props.productId}`}>
       <div className={`product ${props.bgColor}`}>
         <div className={`img-wrapper`}>
           <img
@@ -25,6 +26,6 @@ export default function Product(props) {
           </strong>
         </div>
       </div>
-    </a>
+    </Link>
   );
 }

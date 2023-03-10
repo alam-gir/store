@@ -1,4 +1,5 @@
 import { connectMongoDB } from "@/lib/mongodb/connectDB";
+import { ObjectId } from "mongodb";
 
 const signleProduct = async (req, res) => {
   const productId = req.query.productId
@@ -6,7 +7,7 @@ const signleProduct = async (req, res) => {
     // connect db
     const { db } = await connectMongoDB();
     // find single data by query
-    const product = await db.collection("products").findOne({ id: productId });
+    const product = await db.collection("products").findOne({ _id: new ObjectId(productId) });
     if (product) {
         return res.status(200).json({success: true, product})
     } else {
