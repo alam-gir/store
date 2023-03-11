@@ -3,7 +3,7 @@ import "./../components/slickCarousel/slick.css";
 import "./../components/slickCarousel/slick-theme.css";
 import CartBtn from "@/components/CartBtn";
 import { RecoilRoot } from "recoil";
-import CartModal from "@/components/slickCarousel/CartModal";
+import CartModal from "@/components/CartModal";
 
 export default function App({ Component, pageProps }) {
   return (
