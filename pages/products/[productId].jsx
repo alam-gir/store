@@ -1,6 +1,6 @@
 import Button from "@/components/Button";
 import LoaderSVG from "@/components/LoaderSVG";
-import ProductsCardSlider from "@/components/ProductsCardSlider";
+import ProductsCardSlider from "@/components/slickCarousel/ProductsCardSlider";
 import ProductSlider from "@/components/ProductSlider";
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
@@ -62,7 +62,6 @@ const View = () => {
           </div>
         ) : (
           <div className=" z-30 mx-4 mt-8 px-4 py-6 md:w-[100%] rounded-lg shadow-[0_-2px_10px_rgba(0,0,0,0.15)] backdrop-blur-2xl">
-
             {/* Header  */}
             <div className=" grid grid-cols-4 items-center">
               {/* left */}
@@ -71,7 +70,10 @@ const View = () => {
                   <h1 className="text-gray-700 capitalize tracking-wide text-[18px] md:text-[22px] font-bold">
                     {product?.name}
                   </h1>
-                  <h1 className="text-gray-400 text-[18px] md:text-[22px] "> {product?.weight && `- ${product?.weight}`}</h1>
+                  <h1 className="text-gray-400 text-[18px] md:text-[22px] ">
+                    {" "}
+                    {product?.weight && `- ${product?.weight}`}
+                  </h1>
                 </div>
                 <h1 className="text-[12px] md:text-[16px] text-[#67771E] tracking-wide font-bold capitalize leading-3">
                   {product?.category}
@@ -124,13 +126,11 @@ const View = () => {
                 px={"px-12"}
               />
             </div>
+            <div>
+              <ProductsCardSlider />
+            </div>
           </div>
         )}
-      </div>
-
-      {/* // Products card Slider  */}
-      <div className="mx-4 my-8 px-4 py-6 md:w-[100%] rounded-lg shadow-[0_-2px_10px_rgba(0,0,0,0.15)] backdrop-blur-2xl">
-        <ProductsCardSlider />
       </div>
     </div>
   );

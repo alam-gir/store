@@ -40,7 +40,6 @@ const handler = async (req, res) => {
         const product = await db
           .collection("products")
           .insertOne({ ...data, createdAt: new Date().toLocaleString() });
-        console.log(product);
         // then we will send a response that data added.
         return res
           .status(201)

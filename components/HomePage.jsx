@@ -15,21 +15,21 @@ import "swiper/css/autoplay";
 import Product from "./Product";
 import HomeSliderCard from "./HomeSliderCard";
 
-function HomePage() {
-  const [products, setProducts] = useState([]);
+function HomePage({products}) {
+  // const [products, setProducts] = useState([]); get from server
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    fetch("http://localhost:3000/api/db/products")
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setProducts(data.products);
-        console.log(data.products);
-        setIsLoading(false);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch("/api/db/products")
+  //     .then((res) => {
+  //       return res.json();
+  //     })
+  //     .then((data) => {
+  //       setProducts(data.products);
+  //       console.log(data.products);
+  //       setIsLoading(false);
+  //     });
+  // }, []);
 
   const productElement =
     products &&
@@ -81,7 +81,7 @@ function HomePage() {
             </span>
           </header>
           <main className="product-wrapper">
-            {isLoading && <h2>Loading...</h2>}
+            {/* {isLoading && <h2>Loading...</h2>} */}
 
             {productElement}
 
