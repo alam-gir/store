@@ -1,11 +1,38 @@
 import Button from "@/components/Button";
 import ProductsCardSlider from "@/components/slickCarousel/ProductsCardSlider";
 import ProductImageSlider from "@/components/ProductImageSlider";
-import React from "react";
+import {useEffect} from "react";
+import { useRecoilState } from "recoil";
+import { cartState } from "@/utils/atom/cartRecoil";
+import { addToLocalstorage } from "@/utils/addToLocalstorage";
+import { getFromLocalstorage } from "@/utils/getFromLocalstorage";
 
 const View = ({ singleProduct, allProducts }) => {
+  const [cart, setCart] = useRecoilState(cartState)
+  
+  // add to cart
+  const handleAddToCart = (id) => {
+    //set item id to state
+    setCart(prev => {
+      const temp = [...prev]
+      if(!temp.includes(id)) temp.push(id)
+      return temp
+    })
+  }
 
 
+  // get cart items from local storage if previously had 
+  useEffect(()=>{
+    getFromLocalstorage('ramzanStoreCart', setCart)
+  },[])
+
+    // set car to local storage
+  useEffect(() => {
+    addToLocalstorage('ramzansStoreCart',cart)
+  }, [cart])
+  
+
+  console.log({cart})
   // price calculations
   const regularPrice = singleProduct.price;
   const offer = (singleProduct.price / 100) * singleProduct.discountPercentage;
@@ -85,6 +112,7 @@ const View = ({ singleProduct, allProducts }) => {
               bgColor={"bg-[#227C70]"}
               textSize={"text-[16px]"}
               px={"px-12"}
+              handleClick={()=> handleAddToCart(singleProduct._id)}
             />
           </div>
           <div className="w-[100%] mt-24">
