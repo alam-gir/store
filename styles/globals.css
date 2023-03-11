@@ -33,6 +33,11 @@
 }
 
 @layer components {
+  /* custom scrollbar  */
+  .customScrollbar{
+    @apply !scrollbar-thin !scrollbar-thumb-gray-300
+  }
+
   /* cart btns  */
   .cart-btn{
     @apply fixed z-40 bottom-6 right-6 ;

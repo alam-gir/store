@@ -28,9 +28,21 @@ const CartModal = () => {
             </div>
 
             {/* body  */}
-            <div className="flex flex-col justify-between h-[calc(100vh-3rem)] p-4 sm:p-2">
+            <div className="flex flex-col justify-between space-y-2 h-[calc(100vh-3rem)] p-4 sm:p-2">
               {/* cart items  */}
-              <div className="max-h-[62%] overflow-y-scroll px-2 py-4 flex flex-col gap-6">
+              <div className="max-h-full overflow-y-scroll px-2 py-4 flex flex-col gap-6 customScrollbar">
+                <div className="h-20">
+                  <CartItem />
+                </div>
+                <div className="h-20">
+                  <CartItem />
+                </div>
+                <div className="h-20">
+                  <CartItem />
+                </div>
+                <div className="h-20">
+                  <CartItem />
+                </div>
                 <div className="h-20">
                   <CartItem />
                 </div>
@@ -43,8 +55,8 @@ const CartModal = () => {
               </div>
 
               {/* pricing section  */}
-              <div className="h-[38%] rounded-md shadow-[0_-2px_10px_rgba(0,0,0,0.1)] px-2 py-4">
-                <CartPricing />
+              <div className="h-fit rounded-md shadow-[0_-2px_10px_rgba(0,0,0,0.1)] px-2 py-4">
+                <CartPricing /> 
               </div>
             </div>
           </div>

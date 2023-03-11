@@ -2,8 +2,8 @@ import React from 'react'
 
 const CartPricing = () => {
   return (
-    <div className='h-full'>
-        <div className='capitalize flex flex-col h-full justify-between'>
+    <div className=''>
+        <div className='capitalize flex flex-col gap-4'>
             <div>
                 <h2 className='font-semibold text-gray-700'>price details</h2>
             </div>
