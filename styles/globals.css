@@ -33,6 +33,16 @@
 }
 
 @layer components {
+  /* cart btns  */
+  .cart-btn{
+    @apply fixed z-10 bottom-6 right-6 ;
+  }
+
+  /* cart modal container  */
+  .cart-modal-container{
+    @apply fixed z-20 h-full w-full bg-green-400 top-0;
+  }
+
   .addProductInputBox {
     @apply grid grid-cols-5 w-[30rem] gap-2 items-center;
   }
