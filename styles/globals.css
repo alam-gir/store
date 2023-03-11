@@ -35,12 +35,15 @@
 @layer components {
   /* cart btns  */
   .cart-btn{
-    @apply fixed z-10 bottom-6 right-6 ;
+    @apply fixed z-40 bottom-6 right-6 ;
   }
 
   /* cart modal container  */
-  .cart-modal-container{
-    @apply fixed z-20 h-full w-full bg-green-400 top-0;
+  /* .cart-modal-container{
+    @apply fixed z-50 h-full w-full bg-red-400 top-0;
+  } */
+  .cart-modal-wrapper{
+    @apply fixed h-full w-full backdrop-blur-lg top-0 z-50 sm:w-1/2 sm:right-0 sm:min-w-[20rem] sm:max-w-[25rem];
   }
 
   .addProductInputBox {
