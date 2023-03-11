@@ -5,9 +5,9 @@ import ProductSlider from "@/components/ProductSlider";
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 
-const View = () => {
-  const [product, setProduct] = useState();
-  const [isLoading, setLoading] = useState(true);
+const View = ({product}) => {
+  // const [product, setProduct] = useState();
+  const [isLoading, setLoading] = useState(false);
   const router = useRouter();
 
   const id = router.query.productId;
@@ -27,12 +27,12 @@ const View = () => {
     setLoading(false);
   };
 
-  useEffect(() => {
-    // return if id not available
-    if (!id) return;
-    //fetch
-    fetchProduct(id);
-  }, [router]);
+  // useEffect(() => {
+  //   // return if id not available
+  //   if (!id) return;
+  //   //fetch
+  //   fetchProduct(id);
+  // }, [router]);
 
   // price calculations
   const regularPrice = product?.price;
@@ -137,3 +137,16 @@ const View = () => {
 };
 
 export default View;
+
+
+export const getServerSideProps = async (context) => {
+  const productId = context.query.productId
+  const res = await fetch(`http://localhost:3000/api/db/products/${productId}`)
+  const data = await res.json()
+
+  return {
+    props: {
+      product: data.product
+    }
+  }
+}
