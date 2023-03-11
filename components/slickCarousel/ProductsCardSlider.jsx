@@ -1,7 +1,7 @@
 import Slider from "react-slick";
+import ProductCard from "../ProductCard";
 
-const ProductsCardSlider = ({products}) => {
-
+const ProductsCardSlider = ({ products }) => {
   const settings = {
     dots: true,
     infinite: false,
@@ -36,17 +36,16 @@ const ProductsCardSlider = ({products}) => {
       },
     ],
   };
-  console.log(products);
   return (
     <div className="">
-      <Slider {...settings}>
-        {products?.map((product) => {
-          return (
-            <div key={product._id}>
-              <h3>{product.name}</h3>
-            </div>
-          );
-        })}
+      <Slider {...settings} >
+          {products?.map((product) => {
+            return (
+              <div key={product._id} className="py-4">
+                <ProductCard product={product} imgHeight={"h-24"} />
+              </div>
+            );
+          })}
       </Slider>
     </div>
   );

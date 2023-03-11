@@ -7,9 +7,10 @@
 {
     font-size: 0;
     line-height: 0;
+    font-size: 0;
 
     position: absolute;
-    top: 50%;
+    top: 40%;
 
     display: block;
 
@@ -25,7 +26,6 @@
     color: transparent;
     border: none;
     outline: none;
-    background: transparent;
 }
 .slick-prev:hover,
 .slick-prev:focus,
@@ -54,10 +54,10 @@
 {
     /* font-family: 'slick'; */
     font-size: 20px;
-    line-height: 1;
+    line-height: 0;
 
     opacity: .75;
-    color: white;
+    color: #333;
 
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

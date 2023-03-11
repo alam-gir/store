@@ -1,6 +1,6 @@
 import Button from "@/components/Button";
 import ProductsCardSlider from "@/components/slickCarousel/ProductsCardSlider";
-import ProductSlider from "@/components/ProductSlider";
+import ProductImageSlider from "@/components/ProductImageSlider";
 import React from "react";
 
 const View = ({ singleProduct, allProducts }) => {
@@ -15,14 +15,14 @@ const View = ({ singleProduct, allProducts }) => {
     <div className="relative w-full">
       <div className="md:flex w-full md:w-[80%] md:m-auto">
         {/* sliderrrrrrr small device*/}
-        <div className="sticky top-8 left-0 md:block md:max-w-[35%] md:max-h-[calc(100vh-4rem)] mx-4 mt-8 px-4 py-6 md:rounded-lg md:shadow-[0_-2px_10px_rgba(0,0,0,0.15)] backdrop-blur-2xl">
+        <div className="sticky top-8 left-0 md:block md:w-[35%] md:max-h-[calc(100vh-4rem)] mx-4 mt-8 px-4 py-6 md:rounded-lg md:shadow-[0_-2px_10px_rgba(0,0,0,0.15)] backdrop-blur-2xl">
           <div className="">
-            <ProductSlider product={singleProduct} />
+            <ProductImageSlider product={singleProduct} />
           </div>
         </div>
 
         {/* prduct details  */}
-        <div className=" z-30 mx-4 mt-8 px-4 py-6 md:max-w-[60%] rounded-lg shadow-[0_-2px_10px_rgba(0,0,0,0.15)] backdrop-blur-2xl">
+        <div className=" z-30 mx-4 mt-8 px-4 py-6 md:w-[65%] rounded-lg shadow-[0_-2px_10px_rgba(0,0,0,0.15)] backdrop-blur-2xl">
           {/* Header  */}
           <div className=" grid grid-cols-4 items-center">
             {/* left */}
@@ -87,8 +87,8 @@ const View = ({ singleProduct, allProducts }) => {
               px={"px-12"}
             />
           </div>
-          <div className="w-[100%] mt-24 bg-red-200 relative">
-            <div className="w-[100%] bg-green-200">
+          <div className="w-[100%] mt-24">
+            <div className="w-[95%] m-auto">
               <ProductsCardSlider products={allProducts}/>
             </div>
           </div>
