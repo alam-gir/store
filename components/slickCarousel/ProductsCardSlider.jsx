@@ -1,23 +1,7 @@
-import { useEffect, useState } from "react";
 import Slider from "react-slick";
 
-const ProductsCardSlider = () => {
-  const [products, setProducts] = useState(null);
-  const [isLoading, setLoading] = useState(true);
-  const fetchProducts = async () => {
-    const res = await fetch("/api/db/products");
-    const data = await res.json();
-    console.log({data})
-    setProducts(data?.products);
-    setLoading(false);
-  };
+const ProductsCardSlider = ({products}) => {
 
-  useEffect(() => {
-    fetchProducts();
-
-  },[])
-
-  console.log("loged");
   const settings = {
     dots: true,
     infinite: false,
@@ -52,17 +36,19 @@ const ProductsCardSlider = () => {
       },
     ],
   };
-  console.log(products)
+  console.log(products);
   return (
-    <Slider {...settings}>
-      {products?.map((product) => {
-        return (
-          <div key={product._id}>
-            <h3>{product.name}</h3>
-          </div>
-        );
-      })}
-    </Slider>
+    <div className="">
+      <Slider {...settings}>
+        {products?.map((product) => {
+          return (
+            <div key={product._id}>
+              <h3>{product.name}</h3>
+            </div>
+          );
+        })}
+      </Slider>
+    </div>
   );
 };
 
