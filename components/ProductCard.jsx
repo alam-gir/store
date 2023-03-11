@@ -6,21 +6,21 @@ export default function ProductCard({product:{_id, images, name, weight, price},
 
   return (
     <Link href={`/products/${_id}`}>
-      <div className={`product ${bgColor}`}>
-        <div className={`img-wrapper`}>
+      <div className={`product-card ${bgColor}`}>
+        <div className={`img-wrapper h-[8rem] w-auto object-contain`}>
           <img
-            src={images.length ? images[0] : productDefaultImg}
+            src={images.length > 0 ? images[0] : productDefaultImg}
             alt="productImg"
             loading="lazy"
-            className={`product-img ${imgHeight}`}
+            className={`product-img h-full ${imgHeight}`}
           />
         </div>
         <div className="product-details">
           <h3 className={`product-name ${nameTextSize}`}>
-            {name}
-            {weight && <span> - {weight}</span>}
+            {name.slice(0,10)}
+            {weight && <span className="text-sm"> - {weight}</span>}
           </h3>
-          <strong className={`product-price ${priceTextSize}`}>
+          <strong className={`product-price ${priceTextSize} text-sm text-gray-600`}>
             ${price}
           </strong>
         </div>

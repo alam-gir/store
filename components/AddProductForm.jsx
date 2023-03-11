@@ -91,7 +91,6 @@ const AddProductForm = () => {
     }));
 
     //post req...
-    console.log("submitted");
     const res = await fetch("api/db/products", {
       method: "POST",
       headers: {
@@ -101,7 +100,6 @@ const AddProductForm = () => {
       body: JSON.stringify(input),
     });
     const data = await res.json();
-    console.log(data);
     if (data.success) {
       // make alert
       window.alert(data.message);

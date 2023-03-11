@@ -9,12 +9,12 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper";
 import ProductViewSlide from "./ProductViewSlide";
 
-const ProductSlider = ({ product }) => {
+const ProductImageSlider = ({ product }) => {
   return (
     <div>
       <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
         {/* render all slider */}
-        {product?.images.map((image) => {
+        {product.images.map((image) => {
           return (
             <SwiperSlide key={product._id}>
               <div>
@@ -28,4 +28,4 @@ const ProductSlider = ({ product }) => {
   );
 };
 
-export default ProductSlider;
+export default ProductImageSlider;
