@@ -1,5 +1,6 @@
 import { TrashIcon } from "@heroicons/react/24/outline";
-const CartItem = ({handleIncrease, handleDecrease, product:{name, images, price, discountPercentage, weight, quantity}}) => {
+const CartItem = ({handleIncrease, handleDecrease, handleDelete, localCartProduct, product:{_id, name, images, price, discountPercentage, weight, quantity}}) => {
+  
   return (
     <div className="rounded-md h-full shadow-[0_-2px_10px_rgba(0,0,0,0.1)] capitalize">
       <div className="w-full grid grid-cols-12 h-full gap-2">
@@ -32,7 +33,7 @@ const CartItem = ({handleIncrease, handleDecrease, product:{name, images, price,
         </div>
         {/* delete btn */}
         <div className="col-span-1 p-2 relative">
-          <TrashIcon className="h-4 w-4 absolute left-0 hover:text-[#e05914]"/>
+          <TrashIcon onClick={handleDelete} className="h-4 w-4 absolute left-0 hover:text-[#e05914]"/>
         </div>
       </div>
     </div>
