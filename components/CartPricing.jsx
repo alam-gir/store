@@ -8,13 +8,13 @@ const CartPricing = () => {
                 <h2 className='font-semibold text-gray-700'>price details</h2>
             </div>
             <div className=''>
-                <div className='grid grid-cols-2'><span>bag dicount</span> <span className='text-right'>$130.00</span></div>
+                <div className='grid grid-cols-2'><span>total amount</span> <span className='text-right'>$130.00</span></div>
+                <div className='grid grid-cols-2'><span>bag discount</span> <span className='text-right'>$130.00</span></div>
                 <div className='grid grid-cols-2'><span>estimated text</span> <span className='text-right'>$130.00</span></div>
                 <div className='grid grid-cols-2'><span>delivery charge</span> <span className='text-right'>$130.00</span></div>
-                <div className='grid grid-cols-2'><span>total amount</span> <span className='text-right'>$130.00</span></div>
             </div>
             <div className='grid grid-cols-2'>
-                <h3>total amount</h3>
+                <h3>sub total</h3>
                 <h3 className='text-right text-[#FF4C4C]'>$150.00</h3>
             </div>
             <div className=''>

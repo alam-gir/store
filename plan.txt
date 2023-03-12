@@ -1,0 +1,16 @@
+CARTING.....
+
+when customer add to cart a product =>
+	#get product id, and set in local storage,[{id:34545, quantity: 1},{id:34545, quantity: 1}]
+	
+
+*** product pricing, product ordaring, every sensitive step shoul work in back end for security purpose/
+
+in cart component or pages => 
+	#taking cartitems data and send it to back and
+	
+in cart backend =>
+	#find actual product in DB by cartitems data Ids,
+	#modify the actual product data with quantity
+	#now calculate prices 
+	#response with products list and price calculations	
