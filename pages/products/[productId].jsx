@@ -1,38 +1,52 @@
 import Button from "@/components/Button";
 import ProductsCardSlider from "@/components/slickCarousel/ProductsCardSlider";
 import ProductImageSlider from "@/components/ProductImageSlider";
-import {useEffect} from "react";
+import { useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { cartState } from "@/utils/atom/cartRecoil";
 import { addToLocalstorage } from "@/utils/addToLocalstorage";
-import { getFromLocalstorage } from "@/utils/getFromLocalstorage";
+import { cartProductsIdState } from "@/utils/atom/cartProductsIdState";
 
 const View = ({ singleProduct, allProducts }) => {
-  const [cart, setCart] = useRecoilState(cartState)
-  
+  const [cartProductsId, setCartProductsId] =
+    useRecoilState(cartProductsIdState);
+
   // add to cart
   const handleAddToCart = (id) => {
     //set item id to state
-    setCart(prev => {
-      const temp = [...prev]
-      if(!temp.includes(id)) temp.push(id)
-      return temp
-    })
-  }
+    setCartProductsId((prev) => {
+      // take an temporary container
+      const temp = [...prev];
 
+      // if no prouducts in cart
+      if (temp.length < 0) {
+        temp.push({ id, quantity: 1 });
+        return temp;
+      }
 
-  // get cart items from local storage if previously had 
-  useEffect(()=>{
-    getFromLocalstorage('ramzanStoreCart', setCart)
-  },[])
+      // else
+      const isCarted = temp.some((product) => product.id === id);
+      if (!isCarted) {
+        temp.push({ id, quantity: 1 });
+      }
+      return temp;
+    });
+  };
 
-    // set car to local storage
+  // get cart items from local storage if previously had
   useEffect(() => {
-    addToLocalstorage('ramzansStoreCart',cart)
-  }, [cart])
-  
+    const data =
+      JSON.parse(localStorage.getItem("ramzansStoreCartProductsId")) || [];
+    if (data.length > 0) {
+      setCartProductsId(data);
+    }
+  }, []);
 
-  console.log({cart})
+  // set car to local storage
+  useEffect(() => {
+    addToLocalstorage("ramzansStoreCartProductsId", cartProductsId);
+  }, [cartProductsId]);
+
+  console.log("productIds", cartProductsId);
   // price calculations
   const regularPrice = singleProduct.price;
   const offer = (singleProduct.price / 100) * singleProduct.discountPercentage;
@@ -53,28 +67,27 @@ const View = ({ singleProduct, allProducts }) => {
           {/* Header  */}
           <div className=" grid grid-cols-4 items-center">
             {/* left */}
-            <div className=" col-span-3">
-              <div className="flex gap-1 items-center leading-3">
-                <h1 className="text-gray-700 capitalize tracking-wide text-[18px] md:text-[22px] font-bold">
+            <div className=" col-span-3 flex flex-col">
+              <div className="flex gap-1 items-center">
+                <h2 className="text-gray-700 capitalize tracking-wide text-[18px] md:text-[22px] font-bold">
                   {singleProduct.name}
-                </h1>
-                <h1 className="text-gray-400 text-[18px] md:text-[22px] ">
-                  {" "}
+                </h2>
+                <h2 className="text-gray-400 text-[18px] md:text-[22px] ">
                   {singleProduct.weight && `- ${singleProduct.weight}`}
-                </h1>
+                </h2>
               </div>
-              <h1 className="text-[12px] md:text-[16px] text-[#67771E] tracking-wide font-bold capitalize leading-3 ">
+              <h2 className="text-[14px] md:text-[16px] text-[#67771E] tracking-wide font-bold capitalize">
                 {singleProduct.category}
-              </h1>
+              </h2>
             </div>
 
             {/* right */}
-            <div className={`col-span-1 leading-5 text-end`}>
-              <h1 className="text-[#227C70] text-[18px] md:text-[22px] text-xl font-bold">
+            <div className={`col-span-1 text-end flex flex-col`}>
+              <h2 className="text-[#227C70] text-[18px] md:text-[22px] text-xl font-bold">
                 ${offerPrice}
-              </h1>
+              </h2>
               {offer > 0 && (
-                <h2 className="text-[12px] leading-4">
+                <h2 className="text-[12px]">
                   <span className="line-through text-[#9C9C9C]">
                     ${regularPrice}
                   </span>{" "}
@@ -112,12 +125,12 @@ const View = ({ singleProduct, allProducts }) => {
               bgColor={"bg-[#227C70]"}
               textSize={"text-[16px]"}
               px={"px-12"}
-              handleClick={()=> handleAddToCart(singleProduct._id)}
+              handleClick={() => handleAddToCart(singleProduct._id)}
             />
           </div>
           <div className="w-[100%] mt-24">
             <div className="w-[95%] m-auto">
-              <ProductsCardSlider products={allProducts}/>
+              <ProductsCardSlider products={allProducts} />
             </div>
           </div>
         </div>
