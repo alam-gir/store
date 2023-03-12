@@ -43,33 +43,31 @@ const cart = async (req, res) => {
         console.log({ modifiedProducts });
         // calculate price
         const priceDetails = modifiedProducts.reduce(
-          (prevValue, currentValue, index) => {
-            let totalAmount = (prevValue.totalAmount += parseInt(
-              currentValue.price
-            ));
-            let bagDiscount = (prevValue.bagDiscount = 0); // implement will later
-            let estimatedText = (prevValue.estimatedText = 0); // implement will later
-            let devlivaryCharge = prevValue.devlivaryCharge;
+          (prevValue, currentValue) => {
+             prevValue.totalAmount =
+              (prevValue.totalAmount += parseInt(currentValue.price)) *
+              parseInt(currentValue.quantity);
+             prevValue.bagDiscount = (prevValue.bagDiscount = 0); // implement will later
+             prevValue.estimatedTax = (prevValue.estimatedTax = 0); // implement will later
+             prevValue.deliveryCharge = prevValue.deliveryCharge;
             prevValue.subTotal =
-              totalAmount + estimatedText + devlivaryCharge - bagDiscount;
+              prevValue.totalAmount + prevValue.estimatedTax + prevValue.deliveryCharge - prevValue.bagDiscount;
             return prevValue;
           },
           {
             totalAmount: 0,
             bagDiscount: 0,
-            estimatedText: 0,
-            devlivaryCharge: 60,
+            estimatedTax: 0,
+            deliveryCharge: 60,
             subTotal: 0,
           }
         );
 
         //response
-        return res
-          .status(200)
-          .json({
-            success: true,
-            cart: { products: modifiedProducts, priceDetails },
-          });
+        return res.status(200).json({
+          success: true,
+          cart: { products: modifiedProducts, priceDetails },
+        });
       } catch (error) {
         console.log(error.message);
         return res.send({ success: false, message: error.message });
