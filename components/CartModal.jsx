@@ -37,20 +37,20 @@ const CartModal = () => {
     setOpenCart(!isOpenCart);
   };
 
-  const handleIncrease = (_id) => {
+  const handleIncrease = (serverProduct) => {
     // update cartProductsId quantity
     setCartProductsId(prev => {
       return prev.map(product => {
-        return {...product, quantity: _id === product.id ? product.quantity + 1 : product.quantity}
+        return {...product, quantity: serverProduct._id === product.id && product.quantity <= serverProduct.stock ? product.quantity + 1 : product.quantity}
       }
         )
     })
   }
-  const handleDecrease = (_id) => {
+  const handleDecrease = (serverProduct) => {
     // update cartProductsId quantity
     setCartProductsId(prev => {
       return prev.map(product => {
-        return {...product, quantity: _id === product.id ? product.quantity - 1 : product.quantity}
+        return {...product, quantity: serverProduct._id === product.id && product.quantity > 1 ? product.quantity - 1 : product.quantity}
       }
         )
     })
@@ -79,7 +79,7 @@ const CartModal = () => {
               <div className="max-h-full overflow-y-scroll px-2 py-4 flex flex-col gap-6 customScrollbar">
                 {cart.products?.map((product) => (
                   <div className="h-20" key={product._id}>
-                    <CartItem product={product} handleIncrease={() => handleIncrease(product._id)} handleDecrease={() => handleDecrease(product._id)} />
+                    <CartItem product={product} handleIncrease={() => handleIncrease(product)} handleDecrease={() => handleDecrease(product)} />
                   </div>
                 ))}
               </div>
