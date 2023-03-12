@@ -30,28 +30,28 @@ const cart = async (req, res) => {
 
         // modify products with quantity
         const modifiedProducts = products.map((product) => {
-          // console.log(product._id.toString())
           let temp;
           for (let item of localCartProducts) {
-            console.log(item.id === product._id.toString());
             if (item.id === product._id.toString()) {
               temp = { ...product, quantity: item.quantity };
             }
           }
           return temp;
         });
-        console.log({ modifiedProducts });
         // calculate price
         const priceDetails = modifiedProducts.reduce(
           (prevValue, currentValue) => {
-             prevValue.totalAmount =
+            prevValue.totalAmount =
               (prevValue.totalAmount += parseInt(currentValue.price)) *
               parseInt(currentValue.quantity);
-             prevValue.bagDiscount = (prevValue.bagDiscount = 0); // implement will later
-             prevValue.estimatedTax = (prevValue.estimatedTax = 0); // implement will later
-             prevValue.deliveryCharge = prevValue.deliveryCharge;
+            prevValue.bagDiscount = prevValue.bagDiscount = 0; // implement will later
+            prevValue.estimatedTax = prevValue.estimatedTax = 0; // implement will later
+            prevValue.deliveryCharge = prevValue.deliveryCharge;
             prevValue.subTotal =
-              prevValue.totalAmount + prevValue.estimatedTax + prevValue.deliveryCharge - prevValue.bagDiscount;
+              prevValue.totalAmount +
+              prevValue.estimatedTax +
+              prevValue.deliveryCharge -
+              prevValue.bagDiscount;
             return prevValue;
           },
           {
@@ -69,7 +69,6 @@ const cart = async (req, res) => {
           cart: { products: modifiedProducts, priceDetails },
         });
       } catch (error) {
-        console.log(error.message);
         return res.send({ success: false, message: error.message });
       }
     } else {

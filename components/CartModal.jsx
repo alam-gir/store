@@ -28,7 +28,6 @@ const CartModal = () => {
       setCart(data.cart);
     }
     if(!data.success){
-      console.log('cleared alhamdulillah')
       setCart([])
     }
   };
@@ -79,7 +78,6 @@ const CartModal = () => {
     })
   }
 
-  console.log({ cart });
   return (
     <>
       {isOpenCart && (

@@ -46,7 +46,6 @@ const View = ({ singleProduct, allProducts }) => {
     addToLocalstorage("ramzansStoreCartProductsId", cartProductsId);
   }, [cartProductsId]);
 
-  console.log("productIds", cartProductsId);
   // price calculations
   const regularPrice = singleProduct.price;
   const offer = (singleProduct.price / 100) * singleProduct.discountPercentage;
