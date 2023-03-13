@@ -27,8 +27,8 @@ const CartModal = () => {
     if (data.success) {
       setCart(data.cart);
     }
-    if(!data.success){
-      setCart([])
+    if (!data.success) {
+      setCart([]);
     }
   };
 
@@ -72,11 +72,11 @@ const CartModal = () => {
 
   const handleDelete = (serverProduct) => {
     // filter cart
-    setCartProductsId(prev => {
-      const temp = prev.filter(product => product.id !== serverProduct._id)
-      return temp
-    })
-  }
+    setCartProductsId((prev) => {
+      const temp = prev.filter((product) => product.id !== serverProduct._id);
+      return temp;
+    });
+  };
 
   return (
     <>
@@ -93,26 +93,30 @@ const CartModal = () => {
             </div>
 
             {/* body  */}
-            <div className="flex flex-col justify-between space-y-2 h-[calc(100vh-3rem)] p-4 sm:p-2">
-              {/* cart items  */}
-              <div className="max-h-full overflow-y-scroll px-2 py-4 flex flex-col gap-6 customScrollbar">
-                {cart?.products?.map((product) => (
-                  <div className="h-20" key={product._id}>
-                    <CartItem
-                      product={product}
-                      handleIncrease={() => handleIncrease(product)}
-                      handleDecrease={() => handleDecrease(product)}
-                      handleDelete={() => handleDelete(product)}
-                    />
-                  </div>
-                ))}
-              </div>
+            {cart?.products?.length > 0 ? (
+              <div className="flex flex-col justify-between space-y-2 h-[calc(100vh-3rem)] p-4 sm:p-2">
+                {/* cart items  */}
+                <div className="max-h-full overflow-y-scroll px-2 py-4 flex flex-col gap-6 customScrollbar">
+                  {cart?.products?.map((product) => (
+                    <div className="h-20" key={product._id}>
+                      <CartItem
+                        product={product}
+                        handleIncrease={() => handleIncrease(product)}
+                        handleDecrease={() => handleDecrease(product)}
+                        handleDelete={() => handleDelete(product)}
+                      />
+                    </div>
+                  ))}
+                </div>
 
-              {/* pricing section  */}
-              <div className="h-fit rounded-md shadow-[0_-2px_10px_rgba(0,0,0,0.1)] px-2 py-4">
-                <CartPricing cart={cart}/>
+                {/* pricing section  */}
+                <div className="h-fit rounded-md shadow-[0_-2px_10px_rgba(0,0,0,0.1)] px-2 py-4">
+                  <CartPricing cart={cart} />
+                </div>
               </div>
-            </div>
+            ) : (
+              <h2 className="capitalize text-gray-700 text-center mt-[50%]">no products in cart!</h2>
+            )}
           </div>
         </div>
       )}

@@ -4,6 +4,8 @@ import Button from "./Button";
 import { useState, useEffect } from "react";
 import ProductImageViewSlider from "./slickCarousel/ProductImageViewSlider";
 import ProductsCardSlider from "./slickCarousel/ProductsCardSlider";
+import { useRecoilValue } from "recoil";
+import { cartState } from "@/utils/atom/cartState";
 
 const ProductView = ({
   allProducts,
@@ -16,12 +18,20 @@ const ProductView = ({
   const queryProduct = allProducts.filter(
     (product) => product._id === queryProductId
   );
+  const cart = useRecoilValue(cartState)
 
   useEffect(() => {
     // whenever change queryProduct set query product to current product 
     setCurrentProduct(queryProduct[0])
   }, [queryProduct])
   
+  const cartBtnText = (id) => {
+    const cartProductsIds = cart?.products?.map(product => product._id)
+    if(cartProductsIds?.includes(id)) return 'product added in cart'
+
+    // initially 
+    return "add to cart"
+  }
 
   return (
     <div className="relative w-full">
@@ -91,7 +101,7 @@ const ProductView = ({
               px={"px-12"}
             />
             <Button
-              text={"Add To Cart"}
+              text={cartBtnText(currentProduct?._id)}
               textColor={"text-white"}
               bgColor={"bg-[#227C70]"}
               textSize={"text-[16px]"}
