@@ -50,7 +50,7 @@ function HomePage({ products }) {
               <a href="#">View All</a>
             </span>
           </header>
-          <main className="product-card-wrapper gap-4 justify-center mt-8">
+          <main className="">
             {/* products card  */}
               {products.map((product) => {
                 return <div key={product._id} className="w-[8rem] mt-6">
