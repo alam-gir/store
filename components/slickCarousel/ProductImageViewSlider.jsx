@@ -1,7 +1,7 @@
 import Slider from "react-slick";
 
-const ProductImageViewSlider = ({ product }) => {
-    console.log(product?.images)
+const ProductImageViewSlider = ({product}) => {
+  console.log(product?.images);
   const settings = {
     dots: true,
     infinite: true,
@@ -15,8 +15,7 @@ const ProductImageViewSlider = ({ product }) => {
         {product?.images.map((image, index) => {
           return (
             <div key={index} className="w-full">
-              <img src={image} alt="" className="w-full"/>
-
+              <img src={image} alt="" className="w-full" />
             </div>
           );
         })}
