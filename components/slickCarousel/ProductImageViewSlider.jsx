@@ -15,7 +15,7 @@ const ProductImageViewSlider = ({product}) => {
         {product?.images.map((image, index) => {
           return (
             <div key={index} className="w-full">
-              <img src={image} alt="" className="w-full" />
+              <img src={image} alt="" className="w-full"/>
             </div>
           );
         })}
