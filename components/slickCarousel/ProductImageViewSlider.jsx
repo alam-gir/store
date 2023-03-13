@@ -1,7 +1,7 @@
 import Slider from "react-slick";
 
-const ProductImageViewSlider = ({ product }) => {
-    console.log(product?.images)
+const ProductImageViewSlider = ({product}) => {
+  console.log(product?.images);
   const settings = {
     dots: true,
     infinite: true,
