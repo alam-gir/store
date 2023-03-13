@@ -112,6 +112,7 @@ const ProductView = ({
 
           {/* productSlider  */}
           <div className="w-[100%] mt-24">
+            <h2 className="capitalize text-gray-700">you might like</h2>
             <div className="w-[95%] m-auto">
               <ProductsCardSlider products={allProducts} />
             </div>
