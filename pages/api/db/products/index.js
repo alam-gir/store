@@ -40,7 +40,10 @@ const handler = async (req, res) => {
         const product = await db
           .collection("products")
           .insertOne({ ...data, createdAt: new Date().toLocaleString() });
-        // then we will send a response that data added.
+          
+          const id = product.insertedId 
+          console.log({product})
+          // then we will send a response that data added.
         return res
           .status(201)
           .json({ success: true, message: "Product added." });

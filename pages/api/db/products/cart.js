@@ -38,12 +38,15 @@ const cart = async (req, res) => {
           }
           return temp;
         });
+
         // calculate price
         const priceDetails = modifiedProducts.reduce(
           (prevValue, currentValue) => {
-            prevValue.totalAmount =
-              (prevValue.totalAmount += parseInt(currentValue.price)) *
-              parseInt(currentValue.quantity);
+            // calculate a product price
+            const productPrice = parseInt(currentValue.quantity) * parseInt(currentValue.price)
+
+            //sum product price
+            prevValue.totalAmount += productPrice 
             prevValue.bagDiscount = prevValue.bagDiscount = 0; // implement will later
             prevValue.estimatedTax = prevValue.estimatedTax = 0; // implement will later
             prevValue.deliveryCharge = prevValue.deliveryCharge;
