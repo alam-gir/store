@@ -19,14 +19,6 @@ const AddProductForm = () => {
   const [input, setInput] = useState(initialInput);
   const [errorEmpty, setErrorEmpty] = useState(null);
 
-  // useeffect for set image in input whenever change images data
-  // useEffect(() => {
-  //   setInput((prev) => ({
-  //     ...prev,
-  //     images: images.length > 0 ? images : [],
-  //   }));
-  // }, [images]);
-
   // image pick handler
   const handlePickImage = async (e) => {
     const data = e.target.files;
