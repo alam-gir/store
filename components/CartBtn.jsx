@@ -1,12 +1,28 @@
+import { useEffect } from 'react'
 import { toggleCartState } from "@/utils/atom/cartRecoil";
 import { cartState } from "@/utils/atom/cartState";
 import { ShoppingBagIcon } from "@heroicons/react/24/solid";
 import { useRecoilState } from "recoil";
+import { cartProductsIdState } from '@/utils/atom/cartProductsIdState';
 
 const CartBtn = () => {
   const [isOpenCart, setOpenCart] = useRecoilState(toggleCartState);
   const [cart, setCart] = useRecoilState(cartState);
   const handleClick = () => setOpenCart(!isOpenCart);
+  const [cartProductsId, setCartProductsId] =
+    useRecoilState(cartProductsIdState);
+
+
+
+    // get cart items from local storage if previously had
+    useEffect(() => {
+      const data =
+        JSON.parse(localStorage.getItem("ramzansStoreCartProductsId")) || [];
+      if (data.length > 0) {
+        setCartProductsId(data);
+      }
+    }, []);
+
   return (
     <>
       <div className="relative">
