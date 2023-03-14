@@ -1,4 +1,5 @@
 import React from "react";
+import {useRecoilState} from "recoil";
 import CheckoutPage from "../../components/CheckoutPage";
 
 export default function Checkout() {
@@ -8,7 +9,3 @@ export default function Checkout() {
     </>
   );
 }
-
-Checkout.getLayout = function pageLayout(page) {
-  return <>{page}</>;
-};

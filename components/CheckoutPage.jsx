@@ -2,7 +2,16 @@ import React from "react";
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import Button from "./Button";
-// import CartItem from "./CartItem";
+import CartItem from "./CartItem";
+import {
+  handleDecrease,
+  handleDelete,
+  handleIncrease,
+} from "@/utils/cart/cartFunctions";
+import {useRecoilState} from "recoil";
+import {cartState} from "@/utils/atom/cartState";
+import {cartProductsIdState} from "@/utils/atom/cartProductsIdState";
+import CartPricing from "./CartPricing";
 
 const userInputValidation = Yup.object({
   fullName: Yup.string()
@@ -18,6 +27,9 @@ const userInputValidation = Yup.object({
 });
 
 export default function CheckoutPage() {
+  const [cartProductsId, setCartProductsId] =
+    useRecoilState(cartProductsIdState);
+  const [cart, setCart] = useRecoilState(cartState);
   const formik = useFormik({
     initialValues: {
       fullName: "",
@@ -34,7 +46,7 @@ export default function CheckoutPage() {
 
   return (
     <>
-      {/* <CartItem /> */}
+      <CartItem />
 
       <div className="wrapper">
         <section className="userContactForm">
@@ -143,6 +155,9 @@ export default function CheckoutPage() {
             <Button type="submit" text="Confirm Order" />
           </form>
         </section>
+      </div>
+      <div>
+        <CartPricing cart={cart} />
       </div>
     </>
   );
