@@ -12,7 +12,7 @@ const AddProductForm = () => {
     brand: "",
     category: "",
     stock: "",
-    images: "",
+    images:[]
   };
   const pickImage = useRef(null);
   const [images, setImages] = useState([]);
@@ -20,12 +20,12 @@ const AddProductForm = () => {
   const [errorEmpty, setErrorEmpty] = useState(null);
 
   // useeffect for set image in input whenever change images data
-  useEffect(() => {
-    setInput((prev) => ({
-      ...prev,
-      images: images.length > 0 ? images : "",
-    }));
-  }, [images]);
+  // useEffect(() => {
+  //   setInput((prev) => ({
+  //     ...prev,
+  //     images: images.length > 0 ? images : [],
+  //   }));
+  // }, [images]);
 
   // image pick handler
   const handlePickImage = async (e) => {
@@ -53,6 +53,7 @@ const AddProductForm = () => {
     setInput((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
+      images:[]
     }));
 
     // check error empty
@@ -66,16 +67,16 @@ const AddProductForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // condition for submit form
-    const submitCondition =
-      input.id.trim() &&
-      input.name.trim() &&
-      input.description.trim() &&
-      input.weight.trim() &&
-      input.price.trim() &&
-      input.discountPercentage.trim() &&
-      input.brand.trim() &&
-      input.category.trim() &&
-      input.stock.trim();
+    // const submitCondition =
+    //   input.id.trim() &&
+    //   input.name.trim() &&
+    //   input.description.trim() &&
+    //   input.weight.trim() &&
+    //   input.price.trim() &&
+    //   input.discountPercentage.trim() &&
+    //   input.brand.trim() &&
+    //   input.category.trim() &&
+    //   input.stock.trim();
 
     setErrorEmpty((prev) => ({
       ...prev,
@@ -89,7 +90,7 @@ const AddProductForm = () => {
       category: input.category.trim() ? false : true,
       stock: input.stock.trim() ? false : true,
     }));
-
+  
     //post req...
     const res = await fetch("api/db/products", {
       method: "POST",
@@ -97,7 +98,7 @@ const AddProductForm = () => {
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-      body: JSON.stringify(input),
+      body: JSON.stringify({productInfo: input, productImages: images}),
     });
     const data = await res.json();
     if (data.success) {
@@ -117,6 +118,7 @@ const AddProductForm = () => {
   const handleRemove = (image) => {
     setImages((prev) => prev.filter((item) => item !== image));
   };
+
 
   return (
     <div>
