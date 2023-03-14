@@ -8,6 +8,7 @@ const ProductImageViewSlider = ({product}) => {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
+  
 
   const productDefaultImg =
     "https://i.ibb.co/P9fVhj6/pngfind-com-lemon-tea-png-6661129.png";
@@ -17,7 +18,7 @@ const ProductImageViewSlider = ({product}) => {
         {product?.images?.map((image, index) => {
           return (
             <div key={index} className="w-full">
-              <img src="https://i.ibb.co/P9fVhj6/pngfind-com-lemon-tea-png-6661129.png" alt="" className="w-full"/>
+              <img src={product?.images?.length > 0 ? product?.images[0] : productDefaultImg} alt="" className="w-full"/>
             </div>
           );
         })}

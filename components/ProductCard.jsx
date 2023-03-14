@@ -15,7 +15,7 @@ export default function ProductCard({
       <div className={`product-card ${bgColor}`}>
         <div className={`img-wrapper h-[8rem] w-auto object-contain`}>
           <img
-            src={images.length > 0 ? images[0] : productDefaultImg}
+            src={images?.length > 0 ? images[0] : productDefaultImg}
             alt="productImg"
             loading="lazy"
             className={`product-img h-full ${imgHeight}`}
