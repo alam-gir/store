@@ -1,16 +1,17 @@
-import {toggleCartState} from "@/utils/atom/cartRecoil";
-import {useEffect} from "react";
-import {useRecoilState} from "recoil";
-import {XCircleIcon} from "@heroicons/react/24/outline";
+import { toggleCartState } from "@/utils/atom/cartRecoil";
+import { useEffect } from "react";
+import { useRecoilState } from "recoil";
+import { XCircleIcon } from "@heroicons/react/24/outline";
 import CartItem from "./CartItem";
 import CartPricing from "./CartPricing";
-import {cartProductsIdState} from "@/utils/atom/cartProductsIdState";
-import {cartState} from "@/utils/atom/cartState";
+import { cartProductsIdState } from "@/utils/atom/cartProductsIdState";
+import { cartState } from "@/utils/atom/cartState";
 import {
   handleDecrease,
   handleDelete,
   handleIncrease,
 } from "@/utils/cart/cartFunctions";
+import Link from "next/link";
 
 const CartModal = () => {
   const [isOpenCart, setOpenCart] = useRecoilState(toggleCartState);
@@ -85,6 +86,13 @@ const CartModal = () => {
                 {/* pricing section  */}
                 <div className="h-fit rounded-md shadow-[0_-2px_10px_rgba(0,0,0,0.1)] px-2 py-4">
                   <CartPricing cart={cart} />
+                  <div className="">
+              <Link href="/placeorder">
+                <button className="text-center w-full bg-[#FF4C4C] text-white capitalize font-semibold py-1 tracking-wide hover:brightness-90 rounded">
+                  order now
+                </button>
+              </Link>
+            </div>
                 </div>
               </div>
             ) : (
@@ -92,6 +100,7 @@ const CartModal = () => {
                 no products in cart!
               </h2>
             )}
+            
           </div>
         </div>
       )}
