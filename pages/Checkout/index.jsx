@@ -1,5 +1,5 @@
 import React from "react";
-import CheckoutPage from "./../../components/CheckoutPage";
+import CheckoutPage from "../../components/CheckoutPage";
 
 export default function Checkout() {
   return (
@@ -8,3 +8,7 @@ export default function Checkout() {
     </>
   );
 }
+
+Checkout.getLayout = function pageLayout(page) {
+  return <>{page}</>;
+};

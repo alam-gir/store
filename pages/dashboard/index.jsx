@@ -13,3 +13,13 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+
+//define layout
+Dashboard.getLayout = function PageLayout(page){
+  return (
+    <>
+    {page}
+    </>
+  )
+}
