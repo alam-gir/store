@@ -1,12 +1,16 @@
-import { toggleCartState } from "@/utils/atom/cartRecoil";
-import { useEffect } from "react";
-import { useRecoilState } from "recoil";
-import { XCircleIcon } from "@heroicons/react/24/outline";
+import {toggleCartState} from "@/utils/atom/cartRecoil";
+import {useEffect} from "react";
+import {useRecoilState} from "recoil";
+import {XCircleIcon} from "@heroicons/react/24/outline";
 import CartItem from "./CartItem";
 import CartPricing from "./CartPricing";
-import { cartProductsIdState } from "@/utils/atom/cartProductsIdState";
-import { cartState } from "@/utils/atom/cartState";
-import { handleDecrease, handleDelete, handleIncrease } from "@/utils/cart/cartFunctions";
+import {cartProductsIdState} from "@/utils/atom/cartProductsIdState";
+import {cartState} from "@/utils/atom/cartState";
+import {
+  handleDecrease,
+  handleDelete,
+  handleIncrease,
+} from "@/utils/cart/cartFunctions";
 
 const CartModal = () => {
   const [isOpenCart, setOpenCart] = useRecoilState(toggleCartState);
@@ -64,9 +68,15 @@ const CartModal = () => {
                     <div className="h-20" key={product._id}>
                       <CartItem
                         product={product}
-                        handleIncrease={() => handleIncrease(product,setCartProductsId)}
-                        handleDecrease={() => handleDecrease(product, setCartProductsId)}
-                        handleDelete={() => handleDelete(product, setCartProductsId)}
+                        handleIncrease={() =>
+                          handleIncrease(product, setCartProductsId)
+                        }
+                        handleDecrease={() =>
+                          handleDecrease(product, setCartProductsId)
+                        }
+                        handleDelete={() =>
+                          handleDelete(product, setCartProductsId)
+                        }
                       />
                     </div>
                   ))}
@@ -78,7 +88,9 @@ const CartModal = () => {
                 </div>
               </div>
             ) : (
-              <h2 className="capitalize text-gray-700 text-center mt-[50%]">no products in cart!</h2>
+              <h2 className="capitalize text-gray-700 text-center mt-[50%]">
+                no products in cart!
+              </h2>
             )}
           </div>
         </div>

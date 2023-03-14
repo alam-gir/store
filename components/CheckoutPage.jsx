@@ -2,6 +2,7 @@ import React from "react";
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import Button from "./Button";
+import CartItem from "./CartItem";
 
 const userInputValidation = Yup.object({
   fullName: Yup.string()
@@ -20,7 +21,7 @@ export default function CheckoutPage() {
   const formik = useFormik({
     initialValues: {
       fullName: "",
-      mobileNum: "01",
+      mobileNum: "",
       email: "",
       cityName: "",
     },
@@ -33,6 +34,8 @@ export default function CheckoutPage() {
 
   return (
     <>
+      <CartItem />
+
       <div className="wrapper">
         <section className="userContactForm">
           <form onSubmit={formik.handleSubmit}>
