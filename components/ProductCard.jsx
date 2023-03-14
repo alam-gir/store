@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React from "react";
+
 export default function ProductCard({
   product: {_id, images, name, weight, price},
   bgColor,

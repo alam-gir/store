@@ -1,11 +1,11 @@
-import { toggleCartState } from "@/utils/atom/cartRecoil";
-import { useEffect } from "react";
-import { useRecoilState } from "recoil";
-import { XCircleIcon } from "@heroicons/react/24/outline";
+import {toggleCartState} from "@/utils/atom/cartRecoil";
+import {useEffect} from "react";
+import {useRecoilState} from "recoil";
+import {XCircleIcon} from "@heroicons/react/24/outline";
 import CartItem from "./CartItem";
 import CartPricing from "./CartPricing";
-import { cartProductsIdState } from "@/utils/atom/cartProductsIdState";
-import { cartState } from "@/utils/atom/cartState";
+import {cartProductsIdState} from "@/utils/atom/cartProductsIdState";
+import {cartState} from "@/utils/atom/cartState";
 
 const CartModal = () => {
   const [isOpenCart, setOpenCart] = useRecoilState(toggleCartState);
@@ -115,7 +115,9 @@ const CartModal = () => {
                 </div>
               </div>
             ) : (
-              <h2 className="capitalize text-gray-700 text-center mt-[50%]">no products in cart!</h2>
+              <h2 className="capitalize text-gray-700 text-center mt-[50%]">
+                no products in cart!
+              </h2>
             )}
           </div>
         </div>
