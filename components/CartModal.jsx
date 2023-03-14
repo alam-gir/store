@@ -6,6 +6,11 @@ import CartItem from "./CartItem";
 import CartPricing from "./CartPricing";
 import {cartProductsIdState} from "@/utils/atom/cartProductsIdState";
 import {cartState} from "@/utils/atom/cartState";
+import {
+  handleDecrease,
+  handleDelete,
+  handleIncrease,
+} from "@/utils/cart/cartFunctions";
 
 const CartModal = () => {
   const [isOpenCart, setOpenCart] = useRecoilState(toggleCartState);
@@ -40,44 +45,6 @@ const CartModal = () => {
     setOpenCart(!isOpenCart);
   };
 
-  const handleIncrease = (serverProduct) => {
-    // update cartProductsId quantity
-    setCartProductsId((prev) => {
-      return prev.map((product) => {
-        return {
-          ...product,
-          quantity:
-            serverProduct._id === product.id &&
-            product.quantity <= serverProduct.stock
-              ? product.quantity + 1
-              : product.quantity,
-        };
-      });
-    });
-  };
-  const handleDecrease = (serverProduct) => {
-    // update cartProductsId quantity
-    setCartProductsId((prev) => {
-      return prev.map((product) => {
-        return {
-          ...product,
-          quantity:
-            serverProduct._id === product.id && product.quantity > 1
-              ? product.quantity - 1
-              : product.quantity,
-        };
-      });
-    });
-  };
-
-  const handleDelete = (serverProduct) => {
-    // filter cart
-    setCartProductsId((prev) => {
-      const temp = prev.filter((product) => product.id !== serverProduct._id);
-      return temp;
-    });
-  };
-
   return (
     <>
       {isOpenCart && (
@@ -101,9 +68,15 @@ const CartModal = () => {
                     <div className="h-20" key={product._id}>
                       <CartItem
                         product={product}
-                        handleIncrease={() => handleIncrease(product)}
-                        handleDecrease={() => handleDecrease(product)}
-                        handleDelete={() => handleDelete(product)}
+                        handleIncrease={() =>
+                          handleIncrease(product, setCartProductsId)
+                        }
+                        handleDecrease={() =>
+                          handleDecrease(product, setCartProductsId)
+                        }
+                        handleDelete={() =>
+                          handleDelete(product, setCartProductsId)
+                        }
                       />
                     </div>
                   ))}
