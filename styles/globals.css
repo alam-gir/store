@@ -7,6 +7,10 @@
     @apply font-sans;
   }
 
+  body {
+    @apply bg-zinc-100;
+  }
+
   img {
     @apply h-full;
   }
@@ -147,4 +151,54 @@
 
   /* Product Card End */
   /* Product Section End */
+
+  /* Checkout Form Design Start */
+
+  .userContactForm {
+    @apply bg-white my-4 rounded-lg px-4 py-4;
+  }
+
+  .userContactForm form {
+    @apply flex flex-col items-start w-full gap-3;
+  }
+
+  .userContactForm span {
+    @apply text-red-600;
+  }
+
+  .inputForm {
+    @apply w-full flex flex-col gap-1;
+  }
+
+  .inputForm label {
+    @apply w-full mx-2;
+  }
+
+  .inputForm input,
+  .inputForm select,
+  .inputForm textarea {
+    @apply w-full py-2 px-2 bg-zinc-100 rounded-md placeholder:text-[#cccccc] text-zinc-700;
+  }
+
+  .inputForm textarea {
+    @apply h-24;
+  }
+
+  .selectForm {
+    @apply grid grid-cols-2 gap-2 w-full;
+  }
+
+  .userMobileNum {
+    @apply relative;
+  }
+
+  .userMobileNum button {
+    @apply absolute left-0 px-3 h-full bg-zinc-200 rounded-md text-zinc-700;
+  }
+
+  .userMobileNum input {
+    @apply pl-16;
+  }
+
+  /* Checkout Form Design End */
 }
