@@ -6,6 +6,7 @@ import { useRecoilState } from "recoil";
 import { addToLocalstorage } from "@/utils/addToLocalstorage";
 import { cartProductsIdState } from "@/utils/atom/cartProductsIdState";
 import ProductView from "@/components/ProductView";
+import { firebaseStorage } from "@/lib/firebase/firebase";
 
 const View = ({ singleProduct, allProducts }) => {
   const [cartProductsId, setCartProductsId] =
