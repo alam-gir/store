@@ -2,7 +2,7 @@ import React from "react";
 import {useFormik} from "formik";
 import * as Yup from "yup";
 import Button from "./Button";
-import CartItem from "./CartItem";
+// import CartItem from "./CartItem";
 
 const userInputValidation = Yup.object({
   fullName: Yup.string()
@@ -34,7 +34,7 @@ export default function CheckoutPage() {
 
   return (
     <>
-      <CartItem />
+      {/* <CartItem /> */}
 
       <div className="wrapper">
         <section className="userContactForm">
