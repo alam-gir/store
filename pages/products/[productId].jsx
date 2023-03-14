@@ -1,12 +1,8 @@
-import Button from "@/components/Button";
-import ProductsCardSlider from "@/components/slickCarousel/ProductsCardSlider";
-import ProductImageSlider from "@/components/ProductImageSlider";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { addToLocalstorage } from "@/utils/addToLocalstorage";
 import { cartProductsIdState } from "@/utils/atom/cartProductsIdState";
 import ProductView from "@/components/ProductView";
-import { firebaseStorage } from "@/lib/firebase/firebase";
 
 const View = ({ singleProduct, allProducts }) => {
   const [cartProductsId, setCartProductsId] =
@@ -34,15 +30,7 @@ const View = ({ singleProduct, allProducts }) => {
     });
   };
 
-  // get cart items from local storage if previously had
-  useEffect(() => {
-    const data =
-      JSON.parse(localStorage.getItem("ramzansStoreCartProductsId")) || [];
-    if (data.length > 0) {
-      setCartProductsId(data);
-    }
-  }, []);
-
+  // item get from local storage in cartbtn component
   // set car to local storage
   useEffect(() => {
     addToLocalstorage("ramzansStoreCartProductsId", cartProductsId);
