@@ -185,7 +185,19 @@
   }
 
   .selectForm {
-    @apply grid grid-cols-2 gap-2;
+    @apply grid grid-cols-2 gap-2 w-full;
+  }
+
+  .userMobileNum {
+    @apply relative;
+  }
+
+  .userMobileNum button {
+    @apply absolute left-0 px-3 h-full bg-zinc-200 rounded-md text-zinc-700;
+  }
+
+  .userMobileNum input {
+    @apply pl-16;
   }
 
   /* Checkout Form Design End */

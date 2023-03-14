@@ -1,30 +1,99 @@
 import React from "react";
-import CartPricing from "./CartPricing";
+import {useFormik} from "formik";
+import * as Yup from "yup";
+import Button from "./Button";
+
+const userInputValidation = Yup.object({
+  fullName: Yup.string()
+    .min(3, "Too Short!")
+    .max(30, "Too Long!")
+    .required("Required"),
+  mobileNum: Yup.string()
+    .min(10, "Minimum 10 Character")
+    .max(10, "Minimum 10 Character")
+    .required("Required"),
+  email: Yup.string().email("Enter a valid E-mail").required("Required"),
+  cityName: Yup.string().required("Required"),
+});
 
 export default function CheckoutPage() {
+  const formik = useFormik({
+    initialValues: {
+      fullName: "",
+      mobileNum: "01",
+      email: "",
+      cityName: "",
+    },
+    validationSchema: userInputValidation,
+    onSubmit: (values, {resetForm}) => {
+      console.log(values);
+      resetForm({values: ""});
+    },
+  });
+
   return (
     <>
       <div className="wrapper">
         <section className="userContactForm">
-          <form>
+          <form onSubmit={formik.handleSubmit}>
             <div className="inputForm">
               <label htmlFor="userName">
                 Full Name <span title="Information must be provided">*</span>
               </label>
-              <input type="text" id="userName" placeholder="Type Your Name" />
+              <input
+                type="text"
+                id="userName"
+                name="fullName"
+                placeholder="Type Your Name"
+                onChange={formik.handleChange}
+                value={formik.values.fullName}
+              />
+              {formik.touched.fullName && formik.touched.fullName && (
+                <span className="text-red-600 text-sm">
+                  {formik.errors.fullName}
+                </span>
+              )}
             </div>
             <div className="inputForm">
               <label htmlFor="userMobile">
                 Mobile Number{" "}
                 <span title="Information must be provided">*</span>
               </label>
-              <input type="text" id="userMobile" placeholder="+88 01*******" />
+              <div className="userMobileNum">
+                <button>+880</button>
+                <input
+                  type="number"
+                  maxLength={11}
+                  id="userMobile"
+                  name="mobileNum"
+                  placeholder="+88 01*******"
+                  onChange={formik.handleChange}
+                  value={formik.values.mobileNum}
+                />
+              </div>
+              {formik.touched.mobileNum && formik.touched.mobileNum && (
+                <span className="text-red-600 text-sm">
+                  {formik.errors.mobileNum}
+                </span>
+              )}
             </div>
             <div className="inputForm">
               <label htmlFor="userEmail">
                 E-mail <span title="Information must be provided">*</span>
               </label>
-              <input type="text" id="userEmail" placeholder="example@xyz.com" />
+              <input
+                type="email"
+                id="userEmail"
+                name="email"
+                placeholder="example@xyz.com"
+                onChange={formik.handleChange}
+                value={formik.values.email}
+              />
+              {formik.touched.email && formik.touched.email && (
+                <span className="text-red-600 text-sm">
+                  {formik.errors.email}
+                </span>
+              )}
             </div>
             <div className="selectForm">
               <div className="inputForm">
@@ -42,7 +111,19 @@ export default function CheckoutPage() {
                 <label htmlFor="userCity">
                   City name <span title="Information must be provided">*</span>
                 </label>
-                <input type="text" id="userCity" placeholder="Type here..." />
+                <input
+                  type="text"
+                  id="userCity"
+                  name="cityName"
+                  placeholder="Type here..."
+                  onChange={formik.handleChange}
+                  value={formik.values.cityName}
+                />
+                {formik.touched.cityName && formik.touched.cityName && (
+                  <span className="text-red-600 text-sm">
+                    {formik.errors.cityName}
+                  </span>
+                )}
               </div>
             </div>
             <div className="inputForm selectArea">
@@ -55,6 +136,8 @@ export default function CheckoutPage() {
                 id="userAddress"
                 placeholder="Type here..."></textarea>
             </div>
+
+            <Button type="submit" text="Confirm Order" />
           </form>
         </section>
       </div>
