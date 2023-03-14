@@ -40,13 +40,7 @@ const CartPricing = ({ cart: { priceDetails } }) => {
             ${priceDetails?.subTotal?.toFixed(2)}
           </h3>
         </div>
-        <div className="">
-          <Link href="/placeorder">
-            <button className="text-center w-full bg-[#FF4C4C] text-white capitalize font-semibold py-1 tracking-wide hover:brightness-90 rounded">
-              order now
-            </button>
-          </Link>
-        </div>
+        
       </div>
     </div>
   );
