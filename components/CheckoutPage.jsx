@@ -24,7 +24,7 @@ const userInputValidation = Yup.object({
     .required("Required"),
   email: Yup.string().email("Enter a valid E-mail").required("Required"),
   cityName: Yup.string().required("Required"),
-});
+}); 
 
 export default function CheckoutPage() {
   const [cartProductsId, setCartProductsId] =
