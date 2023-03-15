@@ -70,6 +70,8 @@ const AddProductForm = () => {
     //   input.category.trim() &&
     //   input.stock.trim();
 
+    // condition applied in backend ****
+
     setErrorEmpty((prev) => ({
       ...prev,
       id: input.id.trim() ? false : true,

@@ -4,14 +4,16 @@ import Button from "./Button";
 import { useState, useEffect } from "react";
 import ProductImageViewSlider from "./slickCarousel/ProductImageViewSlider";
 import ProductsCardSlider from "./slickCarousel/ProductsCardSlider";
-import { useRecoilValue } from "recoil";
-import { cartState } from "@/utils/atom/cartState";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { cartState } from "@/lib/atom/cartState";
+import { cartProductsIdState } from "@/lib/atom/cartProductsIdState";
+import { handleAddToCart } from "@/lib/cart/cartFunctions";
 
 const ProductView = ({
   allProducts,
   price: { offer, offerPrice, regularPrice },
-  handleAddToCart,
 }) => {
+  const [cartProductsId, setCartProductsId] = useRecoilState(cartProductsIdState)
   const [currentProduct, setCurrentProduct] = useState(null);
   const router = useRouter();
   const queryProductId = router.query.productId;
@@ -106,7 +108,7 @@ const ProductView = ({
               bgColor={"bg-[#227C70]"}
               textSize={"text-[16px]"}
               px={"px-12"}
-              handleClick={() => handleAddToCart(currentProduct?._id)}
+              handleClick={() => handleAddToCart(currentProduct?._id, setCartProductsId)}
             />
           </div>
 
