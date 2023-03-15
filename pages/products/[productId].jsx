@@ -1,10 +1,10 @@
-import { useEffect } from "react";
-import { useRecoilState } from "recoil";
-import { addToLocalstorage } from "@/utils/addToLocalstorage";
-import { cartProductsIdState } from "@/utils/atom/cartProductsIdState";
+import {useEffect} from "react";
+import {useRecoilState} from "recoil";
+import {addToLocalstorage} from "@/utils/addToLocalstorage";
+import {cartProductsIdState} from "@/utils/atom/cartProductsIdState";
 import ProductView from "@/components/ProductView";
 
-const View = ({ singleProduct, allProducts }) => {
+const View = ({singleProduct, allProducts}) => {
   const [cartProductsId, setCartProductsId] =
     useRecoilState(cartProductsIdState);
 
@@ -17,21 +17,21 @@ const View = ({ singleProduct, allProducts }) => {
 
       // if no prouducts in cart
       if (temp.length < 0) {
-        temp.push({ id, quantity: 1 });
+        temp.push({id, quantity: 1});
         return temp;
       }
 
       // else
       const isCarted = temp.some((product) => product.id === id);
       if (!isCarted) {
-        temp.push({ id, quantity: 1 });
+        temp.push({id, quantity: 1});
       }
       return temp;
     });
   };
 
-  // item get from local storage in cartbtn component
-  // set car to local storage
+  // Item get from local storage in cartbtn component
+  // Set card id to local storage
   useEffect(() => {
     addToLocalstorage("ramzansStoreCartProductsId", cartProductsId);
   }, [cartProductsId]);
@@ -43,7 +43,12 @@ const View = ({ singleProduct, allProducts }) => {
 
   return (
     <div>
-    <ProductView allProducts={allProducts} singleProduct={singleProduct} price={{offer, offerPrice, regularPrice}} handleAddToCart={handleAddToCart}/>
+      <ProductView
+        allProducts={allProducts}
+        singleProduct={singleProduct}
+        price={{offer, offerPrice, regularPrice}}
+        handleAddToCart={handleAddToCart}
+      />
     </div>
   );
 };

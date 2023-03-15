@@ -47,9 +47,9 @@
   /* .cart-modal-container{
     @apply fixed z-50 h-full w-full bg-red-400 top-0;
   } */
-  .cart-modal-wrapper {
-    @apply fixed h-full w-full backdrop-blur-lg top-0 z-50 sm:w-1/2 sm:right-0 sm:min-w-[20rem] sm:max-w-[25rem];
-  }
+  /* .cart-modal-wrapper {
+    @apply fixed h-full w-full bg-white top-0 z-50 sm:w-1/2 sm:right-0 sm:min-w-[20rem] sm:max-w-[25rem];
+  } */
 
   .addProductInputBox {
     @apply grid grid-cols-5 w-[30rem] gap-2 items-center;
@@ -152,10 +152,16 @@
   /* Product Card End */
   /* Product Section End */
 
+  /*
+  ----------------------------
+  ------ CheckOut Page -------
+  ----------------------------
+  */
+
   /* Checkout Form Design Start */
 
   .userContactForm {
-    @apply bg-white my-4 rounded-lg px-4 py-4;
+    @apply bg-white my-4 rounded-lg px-4 py-4 drop-shadow;
   }
 
   .userContactForm form {
@@ -201,4 +207,134 @@
   }
 
   /* Checkout Form Design End */
+
+  /* Cart Product Item Design Start */
+
+  .cartItemContainer {
+    @apply flex flex-col gap-4 mt-6;
+  }
+
+  .cartItem {
+    @apply flex flex-row gap-4 bg-white rounded-lg px-2 py-2 drop-shadow w-full capitalize;
+  }
+
+  .cartItemDetails {
+    @apply w-full flex flex-row justify-between;
+  }
+
+  .cartItemImgContainer {
+    @apply w-24 rounded-md overflow-hidden flex justify-center items-center;
+  }
+
+  .cartItemImg {
+    @apply h-[90%];
+  }
+
+  .cartItemNamePrice {
+    @apply flex flex-col items-start;
+  }
+
+  .cartItemName {
+    @apply text-base sm:text-base text-black hover:underline;
+  }
+
+  .cartItemName span {
+    @apply text-base sm:text-base text-black opacity-60;
+  }
+
+  .cartItemPrice {
+    @apply flex flex-row items-center gap-2 text-2xl sm:text-base font-semibold text-green-700;
+  }
+
+  .cartItemPrice span {
+    @apply text-base text-zinc-500 font-normal;
+  }
+
+  .cartItemPrice span strong {
+    @apply line-through font-normal;
+  }
+
+  .cartItemRemoveBtn {
+    @apply h-7 w-7 bg-white rounded drop-shadow flex justify-center items-center cursor-pointer active:drop-shadow-none active:scale-95;
+  }
+
+  .trashIcon {
+    @apply w-[75%] stroke-zinc-700 hover:stroke-red-500;
+  }
+
+  .cartItemQuantity {
+    @apply flex items-center gap-4;
+  }
+
+  .cartItemQuantity span {
+    @apply text-sm text-black;
+  }
+
+  .quantityController {
+    @apply flex flex-row gap-3 items-center;
+  }
+
+  .quantityController span {
+    @apply w-7 h-7 text-base bg-white drop-shadow rounded flex justify-center items-center;
+  }
+
+  .minusIconBtn,
+  .plusIconBtn {
+    @apply h-6 w-6 bg-white active:scale-125;
+  }
+
+  .minusIcon,
+  .plusIcon {
+    @apply w-[82%] h-[82%] stroke-zinc-700;
+  }
+
+  /* Cart Product Item Design End */
+
+  /* Price Details Design Start */
+
+  .totalPricingList li {
+    @apply flex flex-row justify-between items-center font-normal text-base;
+  }
+
+  .subTotalAmount {
+    @apply pt-3 mt-3 border-t border-zinc-100;
+  }
+
+  /* Price Details Design End */
+
+  /*
+  ------------------------------
+  ------ Cart Modal View -------
+  ------------------------------
+  */
+
+  /* Cart Modal Header */
+
+  .cartModal {
+    @apply h-screen w-full pt-10 pb-6 overflow-y-scroll bg-zinc-100 fixed top-0 z-50 rounded-md sm:w-1/2 sm:right-0 sm:min-w-[20rem] sm:max-w-[25rem];
+  }
+
+  .cartModalWrapper {
+    @apply w-full;
+  }
+
+  .cartModalHeader {
+    @apply bg-white fixed w-full top-0 left-0 py-3 z-50 flex justify-between items-center drop-shadow;
+  }
+
+  .cartModalHeader h2 {
+    @apply text-xl capitalize w-full text-center;
+  }
+
+  .modalCloseBtn {
+    @apply absolute right-[5%] top-1/2 -translate-y-1/2 h-6 text-zinc-700 cursor-pointer hover:text-red-500;
+  }
+
+  .cartInnerWrapper {
+    @apply flex flex-col justify-between h-auto;
+  }
+
+  .checkOutBtn {
+    @apply text-center w-full  bg-red-500 text-white capitalize font-semibold py-1 tracking-wide hover:brightness-90 rounded;
+  }
 }

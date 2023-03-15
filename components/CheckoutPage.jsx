@@ -46,20 +46,31 @@ export default function CheckoutPage() {
 
   return (
     <>
-      <div className="max-h-full overflow-y-scroll px-2 py-4 flex flex-col gap-6 customScrollbar">
-        {cart?.products?.map((product) => (
-          <div className="h-20" key={product._id}>
-            <CartItem
-              product={product}
-              handleIncrease={() => handleIncrease(product, setCartProductsId)}
-              handleDecrease={() => handleDecrease(product, setCartProductsId)}
-              handleDelete={() => handleDelete(product, setCartProductsId)}
-            />
-          </div>
-        ))}
-      </div>
-
       <div className="wrapper">
+        {/* Cart Product Section */}
+        <div className="cartItemContainer">
+          {cart?.products?.map((product) => (
+            <div className="" key={product._id}>
+              <CartItem
+                product={product}
+                handleIncrease={() =>
+                  handleIncrease(product, setCartProductsId)
+                }
+                handleDecrease={() =>
+                  handleDecrease(product, setCartProductsId)
+                }
+                handleDelete={() => handleDelete(product, setCartProductsId)}
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Pricing Details Section */}
+        <section>
+          <CartPricing cart={cart} />
+        </section>
+
+        {/* Checkout Form Section */}
         <section className="userContactForm">
           <form onSubmit={formik.handleSubmit}>
             <div className="inputForm">
@@ -166,9 +177,6 @@ export default function CheckoutPage() {
             <Button type="submit" text="Confirm Order" />
           </form>
         </section>
-      </div>
-      <div>
-        <CartPricing cart={cart} />
       </div>
     </>
   );
