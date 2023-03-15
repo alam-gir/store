@@ -1,10 +1,10 @@
 import { connectMongoDB } from "@/lib/mongodb/connectDB";
+import { textEncode } from "@/lib/textEncoder/encodeText";
 import { serialize } from "cookie";
 import { SignJWT } from "jose";
 
 
-const encoder = new TextEncoder()
-const secret = encoder.encode(process.env.SECRET_JWT)
+const secret = textEncode(process.env.SECRET_JWT)
 const signin = async (req, res) => {
   if (req.method === "POST") {
     const data = req.body;
