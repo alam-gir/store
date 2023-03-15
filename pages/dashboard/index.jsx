@@ -1,5 +1,6 @@
 import AddProductForm from "@/components/AddProductForm";
 import { verifyUser } from "@/lib/jwt/jwtVerify";
+import { textEncode } from "@/lib/textEncoder/encodeText";
 const Dashboard = ({admin}) => {
   return (
     <div className="px-20">
@@ -23,8 +24,7 @@ Dashboard.getLayout = function PageLayout(page) {
 
 
 export const getServerSideProps = async (context) => {
-  const encoder = new TextEncoder()
-  const secret = encoder.encode(process.env.SECRET_JWT)
+  const secret = textEncode(process.env.SECRET_JWT)
   const adminJWT = context.req.cookies.adminJWT
   const verifiedAdmin = await verifyUser(adminJWT,secret)
   const admin = verifiedAdmin.payload
