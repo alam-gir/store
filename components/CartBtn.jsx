@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
-import { toggleCartState } from "@/utils/atom/cartRecoil";
-import { cartState } from "@/utils/atom/cartState";
+import { toggleCartState } from "@/lib/atom/cartRecoil";
+import { cartState } from "@/lib/atom/cartState";
 import { ShoppingBagIcon } from "@heroicons/react/24/solid";
 import { useRecoilState } from "recoil";
-import { cartProductsIdState } from '@/utils/atom/cartProductsIdState';
+import { cartProductsIdState } from '@/lib/atom/cartProductsIdState';
 
 const CartBtn = () => {
   const [isOpenCart, setOpenCart] = useRecoilState(toggleCartState);

@@ -5,7 +5,6 @@ const CartItem = ({
   handleIncrease,
   handleDecrease,
   handleDelete,
-  localCartProduct,
   product: {_id, name, images, price, discountPercentage, weight, quantity},
 }) => {
   return (

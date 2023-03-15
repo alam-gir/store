@@ -1,16 +1,16 @@
-import {toggleCartState} from "@/utils/atom/cartRecoil";
+import {toggleCartState} from "@/lib/atom/cartRecoil";
 import {useEffect} from "react";
 import {useRecoilState} from "recoil";
-import {XMarkIcon} from "@heroicons/react/24/outline";
+import {XCircleIcon} from "@heroicons/react/24/outline";
 import CartItem from "./CartItem";
 import CartPricing from "./CartPricing";
-import {cartProductsIdState} from "@/utils/atom/cartProductsIdState";
-import {cartState} from "@/utils/atom/cartState";
+import {cartProductsIdState} from "@/lib/atom/cartProductsIdState";
+import {cartState} from "@/lib/atom/cartState";
 import {
   handleDecrease,
   handleDelete,
   handleIncrease,
-} from "@/utils/cart/cartFunctions";
+} from "@/lib/cart/cartFunctions";
 import Link from "next/link";
 
 const CartModal = () => {
