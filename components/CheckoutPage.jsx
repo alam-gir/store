@@ -7,10 +7,10 @@ import {
   handleDecrease,
   handleDelete,
   handleIncrease,
-} from "@/utils/cart/cartFunctions";
+} from "@/lib/cart/cartFunctions";
 import { useRecoilState } from "recoil";
-import { cartState } from "@/utils/atom/cartState";
-import { cartProductsIdState } from "@/utils/atom/cartProductsIdState";
+import { cartState } from "@/lib/atom/cartState";
+import { cartProductsIdState } from "@/lib/atom/cartProductsIdState";
 import CartPricing from "./CartPricing";
 
 const userInputValidation = Yup.object({
