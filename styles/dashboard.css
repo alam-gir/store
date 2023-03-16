@@ -5,7 +5,7 @@
 @layer base {
 }
 @layer components {
-  /* landing  ======================*/
+  /*! landing  ======================*/
   .landing {
     @apply p-4;
   }
@@ -19,7 +19,7 @@
     @apply w-auto;
   }
 
-  /* header  ======================*/
+  /*! header  ======================*/
   .header {
     @apply h-auto w-full px-2 py-4 bg-white;
   }
@@ -42,7 +42,7 @@
     @apply h-6 w-6 text-gray-600;
   }
 
-  /* routing  ======================*/
+  /*! routing  ======================*/
   .routing-container {
     @apply flex w-full justify-center border-b cursor-pointer;
   }
@@ -59,7 +59,7 @@
     @apply h-4 text-gray-400 cursor-pointer group-hover:text-gray-600;
   }
 
-  /* menu   ======================*/
+  /*! menu   ======================*/
 
   /* left */
   .menu-container {
@@ -105,5 +105,22 @@
   }
   .menu-status-icon {
     @apply h-3.5 w-3.5 text-gray-500;
+  }
+
+  /*! menu   ======================*/
+  .product-table {
+    @apply text-left text-sm capitalize text-gray-700 tracking-wider font-light;
+  }
+  .product-table-header {
+    @apply border-b font-medium;
+  }
+  .product-table-head {
+    @apply px-6 py-4;
+  }
+  .product-table-body-row {
+    @apply border-b;
+  }
+  .product-table-data {
+    @apply whitespace-nowrap px-6 py-4 group-hover:underline cursor-pointer;
   }
 }

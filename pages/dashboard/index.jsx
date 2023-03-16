@@ -6,8 +6,6 @@ import DashboardLanding from "@/components/dashboard/DashboardLanding";
 import DashboardRoute from "@/components/dashboard/routing/DashboardRoute";
 import { verifyUser } from "@/lib/jwt/jwtVerify";
 import { textEncode } from "@/lib/textEncoder/encodeText";
-import { ArrowRightIcon, HomeIcon } from "@heroicons/react/24/outline";
-import Link from "next/link";
 import { useRouter } from "next/router";
 const Dashboard = ({ admin }) => {
   const router = useRouter();
