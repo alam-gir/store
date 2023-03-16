@@ -1,11 +1,11 @@
-import {toggleCartState} from "@/lib/atom/cartRecoil";
-import {useEffect} from "react";
-import {useRecoilState} from "recoil";
-import {XCircleIcon, XMarkIcon} from "@heroicons/react/24/outline";
+import { toggleCartState } from "@/lib/atom/cartRecoil";
+import { useEffect } from "react";
+import { useRecoilState } from "recoil";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import CartItem from "./CartItem";
 import CartPricing from "./CartPricing";
-import {cartProductsIdState} from "@/lib/atom/cartProductsIdState";
-import {cartState} from "@/lib/atom/cartState";
+import { cartProductsIdState } from "@/lib/atom/cartProductsIdState";
+import { cartState } from "@/lib/atom/cartState";
 import {
   handleDecrease,
   handleDelete,
@@ -17,6 +17,7 @@ const CartModal = () => {
   const [isOpenCart, setOpenCart] = useRecoilState(toggleCartState);
   const [cartProductsId, setCartProductsId] =
     useRecoilState(cartProductsIdState);
+
   const [cart, setCart] = useRecoilState(cartState);
 
   //fetch documents by id
@@ -85,7 +86,7 @@ const CartModal = () => {
                   </div>
 
                   {/* Pricing Section  */}
-                  <CartPricing cart={cart} isSubTotalAmount/>
+                  <CartPricing cart={cart} isSubTotalAmount />
                   <div className="">
                     <Link href="/placeorder">
                       <button className="checkOutBtn">Check Out</button>
