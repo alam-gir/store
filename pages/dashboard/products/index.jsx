@@ -1,9 +1,9 @@
 import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
-import DashboardProducts from "@/components/dashboard/DashboardProducts";
+import DashboardProducts from "@/components/dashboard/dashboardProducts/DashboardProducts";
 import DashboardProductsRoute from "@/components/dashboard/routing/DashboardProductsRoute";
 
-const index = () => {
+const index = ({products}) => {
   return (
     <div>
       <div>
@@ -14,7 +14,7 @@ const index = () => {
         <DashboardProductsRoute />
       </div>
       <div>
-        <DashboardProducts />
+        <DashboardProducts products={products}/>
       </div>
       <div>
         <DashboardFooter />
@@ -24,3 +24,13 @@ const index = () => {
 };
 
 export default index;
+
+export const getServerSideProps = async (context) => {
+  const res = await fetch("http://localhost:3000/api/db/products")
+  const data = await res.json()
+  return {
+    props:{
+      products: data?.products
+    }
+  }
+}
