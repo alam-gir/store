@@ -211,7 +211,7 @@
   /* Cart Product Item Design Start */
 
   .cartItemContainer {
-    @apply flex flex-col gap-4 mt-6;
+    @apply flex flex-col gap-4 mt-4;
   }
 
   .cartItem {

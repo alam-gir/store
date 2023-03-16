@@ -47,7 +47,7 @@ export default function CheckoutPage() {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({customer:values,cartProductsId}),
+        body: JSON.stringify({ customer: values, cartProductsId }),
       });
       const data = await res.json();
       if (data.success) {
@@ -60,35 +60,37 @@ export default function CheckoutPage() {
   return (
     <>
       <div className="wrapper">
-        {/* Cart Product Section */}
-        <div className="cartItemContainer">
-          {cart?.products?.map((product) => (
-            <div className="" key={product._id}>
-              <CartItem
-                product={product}
-                handleIncrease={() =>
-                  handleIncrease(product, setCartProductsId)
-                }
-                handleDecrease={() =>
-                  handleDecrease(product, setCartProductsId)
-                }
-                handleDelete={() => handleDelete(product, setCartProductsId)}
-              />
-            </div>
-          ))}
-        </div>
+        <section className="grid grid-cols-1 md:grid-cols-2 md:gap-4">
+          {/* Cart Product Section */}
+          <div className="cartItemContainer md:max-h-[25rem] overflow-y-scroll customScrollbar">
+            {cart?.products?.map((product) => (
+              <div className="" key={product._id}>
+                <CartItem
+                  product={product}
+                  handleIncrease={() =>
+                    handleIncrease(product, setCartProductsId)
+                  }
+                  handleDecrease={() =>
+                    handleDecrease(product, setCartProductsId)
+                  }
+                  handleDelete={() => handleDelete(product, setCartProductsId)}
+                />
+              </div>
+            ))}
+          </div>
 
-        {/* Pricing Details Section */}
-        <section>
-          <CartPricing
-            cart={cart}
-            isHeader
-            isTotalAmount
-            isDeliveryCharge
-            isBagDiscount
-            isEstimatedTax
-            isSubTotalAmount
-          />
+          {/* Pricing Details Section */}
+          <div>
+            <CartPricing
+              cart={cart}
+              isHeader
+              isTotalAmount
+              isDeliveryCharge
+              isBagDiscount
+              isEstimatedTax
+              isSubTotalAmount
+            />
+          </div>
         </section>
 
         {/* Checkout Form Section */}
