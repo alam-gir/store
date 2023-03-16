@@ -91,7 +91,7 @@ const ProductForm = ({ data}) => {
       brand: input.brand.trim() ? false : true,
       category: input.category.trim() ? false : true,
       stock: input.stock.trim() ? false : true,
-    }));
+    })); 
 
     //post req...
     const res = await fetch("api/db/products", {
