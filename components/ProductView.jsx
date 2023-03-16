@@ -22,8 +22,8 @@ const ProductView = ({
   );
   const cart = useRecoilValue(cartState)
 
-  useEffect(() => {
     // whenever change queryProduct set query product to current product 
+  useEffect(() => {
     setCurrentProduct(queryProduct[0])
   }, [queryProduct])
   

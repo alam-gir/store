@@ -1,19 +1,7 @@
-import {useEffect} from "react";
-import {useRecoilState} from "recoil";
-import {addToLocalstorage} from "@/lib/localStorage/addToLocalstorage";
-import {cartProductsIdState} from "@/lib/atom/cartProductsIdState";
 import ProductView from "@/components/ProductView";
 import {handleAddToCart} from "@/lib/cart/cartFunctions";
 
 const View = ({singleProduct, allProducts}) => {
-  const [cartProductsId, setCartProductsId] =
-    useRecoilState(cartProductsIdState);
-
-  // item get from local storage in cartbtn component
-  // set cart to local storage
-  useEffect(() => {
-    addToLocalstorage("ramzansStoreCartProductsId", cartProductsId);
-  }, [cartProductsId]);
 
   // price calculations
   const regularPrice = singleProduct.price;
