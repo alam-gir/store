@@ -1,9 +1,21 @@
-import Link from "next/link";
-import React from "react";
+import ModalPopup from "@/components/reactModal/ModalPopup";
+import { dashboardProductModalState } from "@/lib/atom/dashboardProductModalState";
+import React, { useState } from "react";
+import { useRecoilState } from "recoil";
 import DashboardProductTableRow from "./DashboardProductTableRow";
 
 const DashboardProductsTable = ({products}) => {
+  const [isOpenProductModal, setOpenProductModal] = useRecoilState(dashboardProductModalState)
+  const [currentProduct, setCurrentProduct] = useState(null)
   console.log(products)
+  const hadnleCloseProductModal = () => {
+    setOpenProductModal(false)
+  }
+  const handleClick = (_id) => {
+    //open modal
+    setOpenProductModal(true)
+
+  }
   return (
     <div className="product-table-container">
       <div className="product-table-wrapper">
@@ -24,10 +36,13 @@ const DashboardProductsTable = ({products}) => {
           {/* body */}
           <tbody className="product-table-body">
             {products?.map(product => (
-              <DashboardProductTableRow key={product._id} product={product}/>
+              <DashboardProductTableRow handleClick={() => handleClick(product._id)} key={product._id} product={product}/>
             ))}
           </tbody>
         </table>
+      </div>
+      <div>
+        <ModalPopup isOpen={isOpenProductModal} hadnleCloseProductModal={hadnleCloseProductModal}/>
       </div>
     </div>
   );

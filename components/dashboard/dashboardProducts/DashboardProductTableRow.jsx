@@ -1,9 +1,7 @@
-import Link from "next/link";
-import React from "react";
 
-const DashboardProductTableRow = ({product}) => {
+const DashboardProductTableRow = ({product, handleClick}) => {
   return (
-    <tr className="product-table-body-row group">
+    <tr onClick={handleClick} className="product-table-body-row group">
       <td className="product-table-data font-medium">{product?.id}</td>
       <td className="product-table-data">{product?.name}</td>
       <td className="product-table-data">{product?.price}</td>
