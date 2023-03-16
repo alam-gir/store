@@ -1,7 +1,7 @@
 import {toggleCartState} from "@/lib/atom/cartRecoil";
 import {useEffect} from "react";
 import {useRecoilState} from "recoil";
-import {XCircleIcon} from "@heroicons/react/24/outline";
+import {XMarkIcon} from "@heroicons/react/24/outline";
 import CartItem from "./CartItem";
 import CartPricing from "./CartPricing";
 import {cartProductsIdState} from "@/lib/atom/cartProductsIdState";
@@ -46,24 +46,25 @@ const CartModal = () => {
     setOpenCart(!isOpenCart);
   };
 
+  console.log(cart);
+
   return (
     <>
       {isOpenCart && (
-        <div className="cartModal">
-          <div className="cartModalWrapper">
-            <div className="wrapper">
-              {/* header  */}
-              <header className="cartModalHeader">
+        <>
+          <div className="cartModalOverlay" onClick={handleClose}></div>
+          <div className="cartModal customScrollbar">
+            {/* header  */}
+            <header className="cartModalHeader">
+              <div className="wrapper">
+                <h2 className="font-semibold text-black capitalize">My Cart</h2>
+                <XMarkIcon onClick={handleClose} className="modalCloseBtn" />
+              </div>
+            </header>
+            {/* body  */}
+            {cart?.products?.length > 0 ? (
+              <>
                 <div className="wrapper">
-                  <h2 className="font-semibold text-gray-1700 capitalize">
-                    My Cart
-                  </h2>
-                  <XMarkIcon onClick={handleClose} className="modalCloseBtn" />
-                </div>
-              </header>
-              {/* body  */}
-              {cart?.products?.length > 0 ? (
-                <div className="cartInnerWrapper">
                   {/* Product Items  */}
                   <div className="cartItemContainer">
                     {cart?.products?.map((product) => (
@@ -83,23 +84,40 @@ const CartModal = () => {
                       </div>
                     ))}
                   </div>
+                </div>
 
-                  {/* Pricing Section  */}
-                  <CartPricing cart={cart} />
-                  <div className="">
-                    <Link href="/placeorder">
-                      <button className="checkOutBtn">Check Out</button>
-                    </Link>
+                {/* Check Out Button  */}
+                <div className="checkOutSection">
+                  <div className="wrapper">
+                    <div className="checkOutWrapper">
+                      <ul className="w-3/5">
+                        <li>
+                          <span>Total: </span>
+                          <span className="text-red-500 font-semibold">
+                            ${cart.priceDetails.totalAmount}
+                          </span>
+                        </li>
+                        <li>
+                          <span>Delivery: </span>
+                          <span className="text-red-500 font-semibold">
+                            ${cart.priceDetails.deliveryCharge}
+                          </span>
+                        </li>
+                      </ul>
+                      <Link href="/placeorder" className="w-2/5">
+                        <button className="checkOutBtn">Check Out</button>
+                      </Link>
+                    </div>
                   </div>
                 </div>
-              ) : (
-                <h2 className="capitalize text-gray-700 text-center mt-[50%]">
-                  no products in cart!
-                </h2>
-              )}
-            </div>
+              </>
+            ) : (
+              <h2 className="capitalize text-gray-700 text-center mt-[50%]">
+                no products in cart!
+              </h2>
+            )}
           </div>
-        </div>
+        </>
       )}
     </>
   );

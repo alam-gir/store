@@ -93,7 +93,7 @@ export default function CheckoutPage() {
             </div>
             <div className="inputForm">
               <label htmlFor="userMobile">
-                Mobile Number{" "}
+                Mobile Number
                 <span title="Information must be provided">*</span>
               </label>
               <div className="userMobileNum">
@@ -165,7 +165,7 @@ export default function CheckoutPage() {
             </div>
             <div className="inputForm selectArea">
               <label htmlFor="userAddress">
-                Details Address{" "}
+                Details Address
                 <span title="Information must be provided">*</span>
               </label>
               <textarea
