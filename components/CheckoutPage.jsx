@@ -67,7 +67,7 @@ export default function CheckoutPage() {
 
         {/* Pricing Details Section */}
         <section>
-          <CartPricing cart={cart} />
+          <CartPricing cart={cart} isHeader isTotalAmount isDeliveryCharge isBagDiscount isEstimatedTax isSubTotalAmount/>
         </section>
 
         {/* Checkout Form Section */}
