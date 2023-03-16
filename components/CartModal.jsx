@@ -17,6 +17,7 @@ const CartModal = () => {
   const [isOpenCart, setOpenCart] = useRecoilState(toggleCartState);
   const [cartProductsId, setCartProductsId] =
     useRecoilState(cartProductsIdState);
+
   const [cart, setCart] = useRecoilState(cartState);
 
   //fetch documents by id

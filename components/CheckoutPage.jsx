@@ -8,7 +8,7 @@ import {
   handleDelete,
   handleIncrease,
 } from "@/lib/cart/cartFunctions";
-import {useRecoilState} from "recoil";
+import {useRecoilState, useRecoilValue} from "recoil";
 import {cartState} from "@/lib/atom/cartState";
 import {cartProductsIdState} from "@/lib/atom/cartProductsIdState";
 import CartPricing from "./CartPricing";
@@ -30,6 +30,7 @@ export default function CheckoutPage() {
   const [cartProductsId, setCartProductsId] =
     useRecoilState(cartProductsIdState);
   const [cart, setCart] = useRecoilState(cartState);
+
   const formik = useFormik({
     initialValues: {
       fullName: "",
@@ -38,9 +39,21 @@ export default function CheckoutPage() {
       cityName: "",
     },
     validationSchema: userInputValidation,
-    onSubmit: (values, {resetForm}) => {
-      console.log(values);
-      resetForm({values: ""});
+    onSubmit: async (values, {resetForm}) => {
+      // send data to sever for place order
+      const res = await fetch("/api/db/orders/placeorder", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({customer: values, cartProductsId}),
+      });
+      const data = await res.json();
+      if (data.success) {
+        console.log(data.orderId);
+        resetForm({values: ""});
+      }
     },
   });
 
@@ -69,8 +82,17 @@ export default function CheckoutPage() {
                 </div>
               ))}
             </section>
+
             {/* Pricing Details Section */}
-            <CartPricing cart={cart} />
+            <CartPricing
+              cart={cart}
+              isHeader
+              isTotalAmount
+              isDeliveryCharge
+              isBagDiscount
+              isEstimatedTax
+              isSubTotalAmount
+            />
           </section>
 
           {/* Checkout Form Section */}

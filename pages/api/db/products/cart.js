@@ -1,4 +1,6 @@
+import { getPriceDetails } from "@/lib/mongodb/calculatePoductsPrice";
 import { connectMongoDB } from "@/lib/mongodb/connectDB";
+import { findDocumentsWithObjectIds } from "@/lib/mongodb/queryFunctions";
 import { ObjectId } from "mongodb";
 
 const cart = async (req, res) => {
@@ -6,12 +8,12 @@ const cart = async (req, res) => {
   }
   if (req.method === "POST") {
     // get an array of products id
-    const localCartProducts = req.body; // [{id:..., quantity:..},{id:..., quantity:..}]
+    const localCartProductsId = req.body; // [{id:..., quantity:..},{id:..., quantity:..}]
 
-    if (localCartProducts.length > 0) {
+    if (localCartProductsId.length > 0) {
       try {
         // convert ids to ObjectIds
-        const objectedIds = localCartProducts.map(
+        const cartProductObjectdIds = localCartProductsId.map(
           (product) => new ObjectId(product.id)
         );
 
@@ -19,19 +21,20 @@ const cart = async (req, res) => {
         const { db } = await connectMongoDB();
 
         // find products
-        const products = await db
-          .collection("products")
-          .find({
-            _id: {
-              $in: objectedIds,
-            },
-          })
-          .toArray();
+        const products = await findDocumentsWithObjectIds(db,"products", cartProductObjectdIds)
+        // const products = await db
+        //   .collection("products")
+        //   .find({
+        //     _id: {
+        //       $in: cartProductObjectedIds,
+        //     },
+        //   })
+        //   .toArray();
 
         // modify products with quantity
         const modifiedProducts = products.map((product) => {
           let temp;
-          for (let item of localCartProducts) {
+          for (let item of localCartProductsId) {
             if (item.id === product._id.toString()) {
               temp = { ...product, quantity: item.quantity };
             }
@@ -40,31 +43,32 @@ const cart = async (req, res) => {
         });
 
         // calculate price
-        const priceDetails = modifiedProducts.reduce(
-          (prevValue, currentValue) => {
-            // calculate a product price
-            const productPrice = parseInt(currentValue.quantity) * parseInt(currentValue.price)
+        const priceDetails = getPriceDetails(modifiedProducts)
+        // const priceDetails = modifiedProducts.reduce(
+        //   (prevValue, currentValue) => {
+        //     // calculate a product price
+        //     const productPrice = parseInt(currentValue.quantity) * parseInt(currentValue.price)
 
-            //sum product price
-            prevValue.totalAmount += productPrice 
-            prevValue.bagDiscount = prevValue.bagDiscount = 0; // implement will later
-            prevValue.estimatedTax = prevValue.estimatedTax = 0; // implement will later
-            prevValue.deliveryCharge = prevValue.deliveryCharge;
-            prevValue.subTotal =
-              prevValue.totalAmount +
-              prevValue.estimatedTax +
-              prevValue.deliveryCharge -
-              prevValue.bagDiscount;
-            return prevValue;
-          },
-          {
-            totalAmount: 0,
-            bagDiscount: 0,
-            estimatedTax: 0,
-            deliveryCharge: 60,
-            subTotal: 0,
-          }
-        );
+        //     //sum product price
+        //     prevValue.totalAmount += productPrice 
+        //     prevValue.bagDiscount = prevValue.bagDiscount = 0; // implement will later
+        //     prevValue.estimatedTax = prevValue.estimatedTax = 0; // implement will later
+        //     prevValue.deliveryCharge = prevValue.deliveryCharge;
+        //     prevValue.subTotal =
+        //       prevValue.totalAmount +
+        //       prevValue.estimatedTax +
+        //       prevValue.deliveryCharge -
+        //       prevValue.bagDiscount;
+        //     return prevValue;
+        //   },
+        //   {
+        //     totalAmount: 0,
+        //     bagDiscount: 0,
+        //     estimatedTax: 0,
+        //     deliveryCharge: 60,
+        //     subTotal: 0,
+        //   }
+        // );
 
         //response
         return res.status(200).json({

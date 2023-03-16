@@ -305,7 +305,7 @@
   }
 
   .subTotalAmount {
-    @apply pt-3 mt-3 border-t border-zinc-100;
+    @apply border-zinc-100;
   }
 
   /* Price Details Design End */
