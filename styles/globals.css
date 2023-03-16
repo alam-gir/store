@@ -14,22 +14,6 @@
   img {
     @apply h-full;
   }
-
-  h1 {
-    /* @apply text-2xl font-bold; */
-  }
-
-  h2 {
-    @apply text-lg font-medium;
-  }
-
-  h3 {
-    @apply text-base font-medium;
-  }
-
-  strong {
-    @apply font-bold;
-  }
 }
 
 @layer components {
@@ -42,14 +26,6 @@
   .cart-btn {
     @apply fixed z-40 bottom-6 right-6;
   }
-
-  /* cart modal container  */
-  /* .cart-modal-container{
-    @apply fixed z-50 h-full w-full bg-red-400 top-0;
-  } */
-  /* .cart-modal-wrapper {
-    @apply fixed h-full w-full bg-white top-0 z-50 sm:w-1/2 sm:right-0 sm:min-w-[20rem] sm:max-w-[25rem];
-  } */
 
   .addProductInputBox {
     @apply grid grid-cols-5 w-[30rem] gap-2 items-center;
@@ -65,16 +41,26 @@
 
   /* Main Body Wrappar */
   .wrapper {
-    @apply mx-auto w-[92%];
+    @apply mx-auto w-[92%] xl:max-w-5xl;
+  }
+
+  /* 
+  --------------------------
+  ------- Home Page --------
+  --------------------------
+  */
+
+  .homeContainer {
+    @apply bg-zinc-100;
   }
 
   /* Home Slider Start */
   .home-slider {
-    @apply mt-4;
+    @apply mt-4 rounded-lg overflow-hidden;
   }
 
   .slider-card {
-    @apply bg-[#227C70] h-[120px] rounded-[10px] flex flex-col justify-center relative overflow-hidden;
+    @apply bg-green-700 rounded-lg h-32 md:h-48 lg:h-60 flex flex-col justify-center relative overflow-hidden;
   }
 
   .slider-text {
@@ -100,16 +86,17 @@
   /* Home Slider End */
 
   /* Product Section Start */
+
   .product-container {
     @apply mb-6;
   }
 
   .product-header {
-    @apply flex flex-row justify-between my-4;
+    @apply flex flex-row justify-between my-6;
   }
 
   .product-header h2 {
-    @apply text-xl;
+    @apply text-zinc-900 text-xl font-medium md:text-2xl;
   }
 
   .product-header span {
@@ -121,24 +108,34 @@
   }
 
   /* Product Card Start */
-  .product-card {
-    @apply h-auto flex flex-col px-4 bg-red-100 w-auto rounded-lg;
+
+  .productsGroup {
+    @apply grid gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
+  }
+
+  .productCard {
+    /* @apply mt-6 w-[calc(50%-0.75rem)] md:w-[calc(33.33%-1rem)]; */
+    @apply mt-6 w-full;
+  }
+
+  .productCardBg {
+    @apply h-auto flex flex-col px-4 w-auto rounded-lg drop-shadow;
   }
 
   .img-wrapper {
-    @apply w-full mx-auto relative;
+    @apply w-full mx-auto;
   }
 
   .product-img {
-    @apply mx-auto -mt-4 shadow-[0_-2px_10px_rgba(0,0,0,0.1)] rounded;
+    @apply mx-auto rounded w-3/5 -mt-6;
   }
 
   .product-details {
-    @apply pb-4 capitalize;
+    @apply py-4 capitalize text-zinc-900;
   }
 
   .product-name {
-    @apply text-base text-neutral-700;
+    @apply text-base;
   }
 
   .product-price {
