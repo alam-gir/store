@@ -1,7 +1,7 @@
 import {toggleCartState} from "@/lib/atom/cartRecoil";
 import {useEffect} from "react";
 import {useRecoilState} from "recoil";
-import {XCircleIcon} from "@heroicons/react/24/outline";
+import {XCircleIcon, XMarkIcon} from "@heroicons/react/24/outline";
 import CartItem from "./CartItem";
 import CartPricing from "./CartPricing";
 import {cartProductsIdState} from "@/lib/atom/cartProductsIdState";
@@ -85,7 +85,7 @@ const CartModal = () => {
                   </div>
 
                   {/* Pricing Section  */}
-                  <CartPricing cart={cart} />
+                  <CartPricing cart={cart} isSubTotalAmount/>
                   <div className="">
                     <Link href="/placeorder">
                       <button className="checkOutBtn">Check Out</button>
