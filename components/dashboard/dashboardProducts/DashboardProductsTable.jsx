@@ -2,16 +2,25 @@ import ModalPopup from "@/components/reactModal/ModalPopup";
 import { dashboardProductModalState } from "@/lib/atom/dashboardProductModalState";
 import React, { useState } from "react";
 import { useRecoilState } from "recoil";
-import DashboardProductTableRow from "./DashboardProductTableRow";
+import DashboardProductList from "./DashboardProductList";
+import ProductForm from "./ProductForm";
 
 const DashboardProductsTable = ({products}) => {
   const [isOpenProductModal, setOpenProductModal] = useRecoilState(dashboardProductModalState)
   const [currentProduct, setCurrentProduct] = useState(null)
-  console.log(products)
   const hadnleCloseProductModal = () => {
     setOpenProductModal(false)
+    // start body scrolling
+    document.body.style.overflow = 'unset'
   }
   const handleClick = (_id) => {
+    // stop body scrolling
+    document.body.style.overflow = 'hidden'
+    //set current product 
+    setCurrentProduct(() => {
+      return products.filter(product => product._id === _id)[0]
+    })
+
     //open modal
     setOpenProductModal(true)
 
@@ -19,30 +28,27 @@ const DashboardProductsTable = ({products}) => {
   return (
     <div className="product-table-container">
       <div className="product-table-wrapper">
-        <table className="product-table">
-          {/* header */}
-          <thead className="product-table-header">
-            <tr>
-              <th scope="col" className="product-table-head">id</th>
-              <th scope="col" className="product-table-head">name</th>
-              <th scope="col" className="product-table-head">price</th>
-              <th scope="col" className="product-table-head">brand</th>
-              <th scope="col" className="product-table-head">category</th>
-              <th scope="col" className="product-table-head">stock</th>
-              <th scope="col" className="product-table-head">created date</th>
-              <th scope="col" className="product-table-head">action</th>
-            </tr>
-          </thead>
-          {/* body */}
-          <tbody className="product-table-body">
-            {products?.map(product => (
-              <DashboardProductTableRow handleClick={() => handleClick(product._id)} key={product._id} product={product}/>
-            ))}
-          </tbody>
-        </table>
+        {/* header  */}
+        <div className="product-table-header">
+          <h2 className="product-table-head">id</h2>
+          <h2 className="product-table-head">name</h2>
+          <h2 className="product-table-head">price</h2>
+          <h2 className="product-table-head">brand</h2>
+          <h2 className="product-table-head hidden md:inline">category</h2>
+          <h2 className="product-table-head hidden md:inline">weight</h2>
+          <h2 className="product-table-head hidden md:inline">date</h2>
+          <h2 className="product-table-head">Delete</h2>
+        </div>
+      {/* body  */}
+      <div>
+        {products?.map(product => (
+          <DashboardProductList key={product?._id} product={product} handleClick={() => handleClick(product?._id)}/>
+        ))}
+      </div>
+    
       </div>
       <div>
-        <ModalPopup isOpen={isOpenProductModal} hadnleCloseProductModal={hadnleCloseProductModal}/>
+        <ModalPopup Component={ProductForm} data={currentProduct} hadnleOpen={isOpenProductModal} hadnleClose={hadnleCloseProductModal} style={"dashboard-product-modal"}/>
       </div>
     </div>
   );
