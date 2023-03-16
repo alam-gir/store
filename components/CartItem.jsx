@@ -1,22 +1,23 @@
 import { cartProductsIdState } from "@/lib/atom/cartProductsIdState";
-import {TrashIcon, PlusIcon, MinusIcon} from "@heroicons/react/24/outline";
+import { TrashIcon, PlusIcon, MinusIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { useRecoilValue } from "recoil";
-import { useEffect } from 'react'
+import { useEffect } from "react";
 import { addToLocalstorage } from "@/lib/localStorage/addToLocalstorage";
 
 const CartItem = ({
   handleIncrease,
   handleDecrease,
   handleDelete,
-  product: {_id, name, images, price, discountPercentage, weight, quantity},
+  product: { _id, name, images, price, discountPercentage, weight, quantity },
 }) => {
-  const cartProductsId = useRecoilValue(cartProductsIdState)
-    // set cart to local storage whenver changes cartProductsId
-    useEffect(() => {
-      addToLocalstorage("ramzansStoreCartProductsId", cartProductsId);
-      console.log('updated');
-    }, [cartProductsId]);
+  const cartProductsId = useRecoilValue(cartProductsIdState);
+
+  // set cart to local storage whenver changes cartProductsId
+  useEffect(() => {
+    addToLocalstorage("ramzansStoreCartProductsId", cartProductsId);
+  }, [cartProductsId]);
+  
   return (
     <div className="cartItem">
       {/* Product Image */}
