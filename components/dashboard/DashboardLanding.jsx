@@ -3,8 +3,9 @@ import {
   BriefcaseIcon,
   ShoppingCartIcon,
   CurrencyBangladeshiIcon,
-  UsersIcon
+  UsersIcon,
 } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 const DashboardLanding = () => {
   return (
@@ -12,15 +13,17 @@ const DashboardLanding = () => {
       <div className="landing-wrapper">
         {/* dashboard menu's  */}
         <div className="landing-menu-container">
-          <div className="landing-menu">
-            <DashboardMenu
-              Icon={BriefcaseIcon}
-              IconCustomStyle={""}
-              quantity={120}
-              tagline={"total products"}
-              status={25.42}
-            />
-          </div>
+          <Link href="/dashboard/products">
+            <div className="landing-menu">
+              <DashboardMenu
+                Icon={BriefcaseIcon}
+                IconCustomStyle={""}
+                quantity={120}
+                tagline={"total products"}
+                status={25.42}
+              />
+            </div>
+          </Link>
           <div className="landing-menu">
             <DashboardMenu
               Icon={ShoppingCartIcon}

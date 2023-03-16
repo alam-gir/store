@@ -3,6 +3,7 @@ import Button from "@/components/Button";
 import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import DashboardLanding from "@/components/dashboard/DashboardLanding";
+import DashboardRoute from "@/components/dashboard/routing/DashboardRoute";
 import { verifyUser } from "@/lib/jwt/jwtVerify";
 import { textEncode } from "@/lib/textEncoder/encodeText";
 import { ArrowRightIcon, HomeIcon } from "@heroicons/react/24/outline";
@@ -27,17 +28,13 @@ const Dashboard = ({ admin }) => {
       </div>
       {/* //dashboard routing... */}
       <div className="routing-container">
-        <div className="routing-wrapper">
-          <Link href={"#"} className="group routing-link">
+        <DashboardRoute />
+        {/* <div className="routing-wrapper">
+          <Link href={"/dashboard"} className="group routing-link">
             <span className="routing-label">dashboard</span>
             <HomeIcon className="routing-icon" />
           </Link>
-          {/* <span><ArrowRightIcon className="h-3"/></span>
-        <Link href={"#"} className="group routing-link">
-            <span className="routing-label">dashboard</span>
-            <HomeIcon className="routing-icon" />
-  </Link>*/}
-        </div>
+        </div> */}
       </div>
       <div>
         <DashboardLanding />
