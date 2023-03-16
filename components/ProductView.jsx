@@ -1,52 +1,53 @@
-import { useRouter } from "next/router";
+import {useRouter} from "next/router";
 import React from "react";
 import Button from "./Button";
-import { useState, useEffect } from "react";
+import {useState, useEffect} from "react";
 import ProductImageViewSlider from "./slickCarousel/ProductImageViewSlider";
 import ProductsCardSlider from "./slickCarousel/ProductsCardSlider";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { cartState } from "@/lib/atom/cartState";
-import { cartProductsIdState } from "@/lib/atom/cartProductsIdState";
-import { handleAddToCart } from "@/lib/cart/cartFunctions";
+import {useRecoilState, useRecoilValue} from "recoil";
+import {cartState} from "@/lib/atom/cartState";
+import {cartProductsIdState} from "@/lib/atom/cartProductsIdState";
+import {handleAddToCart} from "@/lib/cart/cartFunctions";
 
 const ProductView = ({
   allProducts,
-  price: { offer, offerPrice, regularPrice },
+  price: {offer, offerPrice, regularPrice},
 }) => {
-  const [cartProductsId, setCartProductsId] = useRecoilState(cartProductsIdState)
+  const [cartProductsId, setCartProductsId] =
+    useRecoilState(cartProductsIdState);
   const [currentProduct, setCurrentProduct] = useState(null);
   const router = useRouter();
   const queryProductId = router.query.productId;
   const queryProduct = allProducts.filter(
     (product) => product._id === queryProductId
   );
-  const cart = useRecoilValue(cartState)
+  const cart = useRecoilValue(cartState);
 
-    // whenever change queryProduct set query product to current product 
+  // whenever change queryProduct set query product to current product
   useEffect(() => {
-    setCurrentProduct(queryProduct[0])
-  }, [queryProduct])
-  
-  const cartBtnText = (id) => {
-    const cartProductsIds = cart?.products?.map(product => product._id)
-    if(cartProductsIds?.includes(id)) return 'product added in cart'
+    setCurrentProduct(queryProduct[0]);
+  }, [queryProduct]);
 
-    // initially 
-    return "add to cart"
-  }
+  const cartBtnText = (id) => {
+    const cartProductsIds = cart?.products?.map((product) => product._id);
+    if (cartProductsIds?.includes(id)) return "product added in cart";
+
+    // initially
+    return "add to cart";
+  };
 
   return (
     <div className="relative w-full">
       <div className="md:flex w-full md:w-[80%] md:m-auto">
         {/* product image sliderrrrrrr */}
-        <div className="sticky md:top-8 top-0 left-0 md:block md:w-[35%] md:max-h-[calc(100vh-4rem)] mad:mx-4 md:mt-8 px-4 py-6 md:rounded-lg md:shadow-[0_-2px_10px_rgba(0,0,0,0.15)] backdrop-blur-2xl bg-gradient-to-b from-gray-200">
+        <div className="sticky md:top-8 top-0 left-0 md:block md:w-[35%] md:max-h-[calc(100vh-4rem)] mad:mx-4 md:mt-8 px-4 py-6 md:rounded-lg bg-gradient-to-b from-gray-200">
           <div className="w-full h-full">
-            <ProductImageViewSlider product={currentProduct}/>
+            <ProductImageViewSlider product={currentProduct} />
           </div>
         </div>
 
         {/* product details  */}
-        <div className=" z-30 mx-4 mt-8 px-4 py-6 md:w-[65%] rounded-lg shadow-[0_-2px_10px_rgba(0,0,0,0.15)] backdrop-blur-2xl">
+        <div className=" z-30 mx-4 mt-8 px-4 py-6 md:w-[65%] rounded-lg ">
           {/* header  */}
           <div className=" grid grid-cols-4 items-center">
             {/* left */}
@@ -108,7 +109,9 @@ const ProductView = ({
               bgColor={"bg-[#227C70]"}
               textSize={"text-[16px]"}
               px={"px-12"}
-              handleClick={() => handleAddToCart(currentProduct?._id, setCartProductsId)}
+              handleClick={() =>
+                handleAddToCart(currentProduct?._id, setCartProductsId)
+              }
             />
           </div>
 
