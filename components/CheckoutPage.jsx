@@ -1,5 +1,5 @@
 import React from "react";
-import { useFormik } from "formik";
+import {useFormik} from "formik";
 import * as Yup from "yup";
 import Button from "./Button";
 import CartItem from "./CartItem";
@@ -8,9 +8,9 @@ import {
   handleDelete,
   handleIncrease,
 } from "@/lib/cart/cartFunctions";
-import { useRecoilState } from "recoil";
-import { cartState } from "@/lib/atom/cartState";
-import { cartProductsIdState } from "@/lib/atom/cartProductsIdState";
+import {useRecoilState} from "recoil";
+import {cartState} from "@/lib/atom/cartState";
+import {cartProductsIdState} from "@/lib/atom/cartProductsIdState";
 import CartPricing from "./CartPricing";
 
 const userInputValidation = Yup.object({
@@ -24,7 +24,7 @@ const userInputValidation = Yup.object({
     .required("Required"),
   email: Yup.string().email("Enter a valid E-mail").required("Required"),
   cityName: Yup.string().required("Required"),
-}); 
+});
 
 export default function CheckoutPage() {
   const [cartProductsId, setCartProductsId] =
@@ -38,28 +38,39 @@ export default function CheckoutPage() {
       cityName: "",
     },
     validationSchema: userInputValidation,
-    onSubmit: (values, { resetForm }) => {
+    onSubmit: (values, {resetForm}) => {
       console.log(values);
-      resetForm({ values: "" });
+      resetForm({values: ""});
     },
   });
 
   return (
     <>
-      <div className="max-h-full overflow-y-scroll px-2 py-4 flex flex-col gap-6 customScrollbar">
-        {cart?.products?.map((product) => (
-          <div className="h-20" key={product._id}>
-            <CartItem
-              product={product}
-              handleIncrease={() => handleIncrease(product, setCartProductsId)}
-              handleDecrease={() => handleDecrease(product, setCartProductsId)}
-              handleDelete={() => handleDelete(product, setCartProductsId)}
-            />
-          </div>
-        ))}
-      </div>
-
       <div className="wrapper">
+        {/* Cart Product Section */}
+        <div className="cartItemContainer">
+          {cart?.products?.map((product) => (
+            <div className="" key={product._id}>
+              <CartItem
+                product={product}
+                handleIncrease={() =>
+                  handleIncrease(product, setCartProductsId)
+                }
+                handleDecrease={() =>
+                  handleDecrease(product, setCartProductsId)
+                }
+                handleDelete={() => handleDelete(product, setCartProductsId)}
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* Pricing Details Section */}
+        <section>
+          <CartPricing cart={cart} />
+        </section>
+
+        {/* Checkout Form Section */}
         <section className="userContactForm">
           <form onSubmit={formik.handleSubmit}>
             <div className="inputForm">
@@ -160,16 +171,12 @@ export default function CheckoutPage() {
               <textarea
                 className="textarea"
                 id="userAddress"
-                placeholder="Type here..."
-              ></textarea>
+                placeholder="Type here..."></textarea>
             </div>
 
             <Button type="submit" text="Confirm Order" />
           </form>
         </section>
-      </div>
-      <div>
-        <CartPricing cart={cart}/>
       </div>
     </>
   );

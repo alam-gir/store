@@ -1,11 +1,11 @@
-import { useEffect } from "react";
-import { useRecoilState } from "recoil";
-import { addToLocalstorage } from "@/lib/localStorage/addToLocalstorage";
-import { cartProductsIdState } from "@/lib/atom/cartProductsIdState";
+import {useEffect} from "react";
+import {useRecoilState} from "recoil";
+import {addToLocalstorage} from "@/lib/localStorage/addToLocalstorage";
+import {cartProductsIdState} from "@/lib/atom/cartProductsIdState";
 import ProductView from "@/components/ProductView";
-import { handleAddToCart } from "@/lib/cart/cartFunctions";
+import {handleAddToCart} from "@/lib/cart/cartFunctions";
 
-const View = ({ singleProduct, allProducts }) => {
+const View = ({singleProduct, allProducts}) => {
   const [cartProductsId, setCartProductsId] =
     useRecoilState(cartProductsIdState);
 
@@ -22,7 +22,11 @@ const View = ({ singleProduct, allProducts }) => {
 
   return (
     <div>
-    <ProductView allProducts={allProducts} price={{offer, offerPrice, regularPrice}} handleAddToCart={handleAddToCart}/>
+      <ProductView
+        allProducts={allProducts}
+        price={{offer, offerPrice, regularPrice}}
+        handleAddToCart={handleAddToCart}
+      />
     </div>
   );
 };
