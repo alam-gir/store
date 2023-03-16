@@ -158,10 +158,18 @@
   ----------------------------
   */
 
+  .checkoutSection {
+    @apply grid grid-cols-1 md:grid-cols-2 md:items-start gap-4 py-8 md:flex-row md:h-screen md:overflow-y-scroll;
+  }
+
+  .cartItemAndPricing {
+    @apply flex flex-col gap-4;
+  }
+
   /* Checkout Form Design Start */
 
   .userContactForm {
-    @apply bg-white my-4 rounded-lg px-4 py-4 drop-shadow;
+    @apply bg-white rounded-lg px-4 py-4 drop-shadow md:sticky md:top-0;
   }
 
   .userContactForm form {
@@ -211,7 +219,7 @@
   /* Cart Product Item Design Start */
 
   .cartItemContainer {
-    @apply flex flex-col gap-4 mt-6;
+    @apply flex flex-col gap-4;
   }
 
   .cartItem {
@@ -314,7 +322,7 @@
   }
 
   .cartModal {
-    @apply fixed top-0 right-0 h-screen w-full sm:w-96 max-w-md pb-6 overflow-y-scroll bg-zinc-100  z-50 rounded-md drop-shadow-md;
+    @apply fixed top-0 right-0 h-screen w-full sm:w-96 max-w-md pb-6 overflow-y-scroll bg-zinc-100  z-50 rounded-tl rounded-bl drop-shadow-md;
   }
 
   .cartModalHeader {
@@ -329,11 +337,7 @@
     @apply absolute right-[5%] top-1/2 -translate-y-1/2 h-6 text-zinc-700 cursor-pointer hover:text-red-500;
   }
 
-  .checkOutBtn {
-    @apply text-center w-full  bg-red-500 text-white capitalize font-semibold py-1 tracking-wide hover:brightness-90 rounded;
-  }
-
-  /* Checkout Section Start */
+  /* Checkout Button Section Start */
 
   .checkOutSection {
     @apply bg-white fixed bottom-0 mt-4 py-4 w-full drop-shadow;
@@ -345,5 +349,9 @@
 
   .checkOutSection li {
     @apply text-xl font-medium last:text-sm last:text-zinc-600 last:font-normal last:tracking-wider;
+  }
+
+  .checkOutBtn {
+    @apply text-center w-full  bg-red-500 text-white capitalize font-semibold py-2 tracking-wide hover:brightness-90 rounded-md;
   }
 }
