@@ -1,5 +1,5 @@
 import React from "react";
-import {useFormik} from "formik";
+import { useFormik } from "formik";
 import * as Yup from "yup";
 import Button from "./Button";
 import CartItem from "./CartItem";
@@ -8,9 +8,9 @@ import {
   handleDelete,
   handleIncrease,
 } from "@/lib/cart/cartFunctions";
-import {useRecoilState} from "recoil";
-import {cartState} from "@/lib/atom/cartState";
-import {cartProductsIdState} from "@/lib/atom/cartProductsIdState";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { cartState } from "@/lib/atom/cartState";
+import { cartProductsIdState } from "@/lib/atom/cartProductsIdState";
 import CartPricing from "./CartPricing";
 
 const userInputValidation = Yup.object({
@@ -30,6 +30,7 @@ export default function CheckoutPage() {
   const [cartProductsId, setCartProductsId] =
     useRecoilState(cartProductsIdState);
   const [cart, setCart] = useRecoilState(cartState);
+
   const formik = useFormik({
     initialValues: {
       fullName: "",
@@ -38,9 +39,21 @@ export default function CheckoutPage() {
       cityName: "",
     },
     validationSchema: userInputValidation,
-    onSubmit: (values, {resetForm}) => {
-      console.log(values);
-      resetForm({values: ""});
+    onSubmit: async (values, { resetForm }) => {
+      // send data to sever for place order
+      const res = await fetch("/api/db/orders/placeorder", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({customer:values,cartProductsId}),
+      });
+      const data = await res.json();
+      if (data.success) {
+        console.log(data.orderId);
+        resetForm({ values: "" });
+      }
     },
   });
 
@@ -67,7 +80,15 @@ export default function CheckoutPage() {
 
         {/* Pricing Details Section */}
         <section>
-          <CartPricing cart={cart} isHeader isTotalAmount isDeliveryCharge isBagDiscount isEstimatedTax isSubTotalAmount/>
+          <CartPricing
+            cart={cart}
+            isHeader
+            isTotalAmount
+            isDeliveryCharge
+            isBagDiscount
+            isEstimatedTax
+            isSubTotalAmount
+          />
         </section>
 
         {/* Checkout Form Section */}
@@ -171,7 +192,8 @@ export default function CheckoutPage() {
               <textarea
                 className="textarea"
                 id="userAddress"
-                placeholder="Type here..."></textarea>
+                placeholder="Type here..."
+              ></textarea>
             </div>
 
             <Button type="submit" text="Confirm Order" />
