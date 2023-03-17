@@ -9,7 +9,9 @@ const DashboardProductList = ({product:{id, name, price, brand, category, stock,
       <h2 className="product-table-data hidden md:inline">{category}</h2>
       <h2 className="product-table-data hidden md:inline">{stock}</h2>
       <h2 className="product-table-data hidden md:inline">{createdAt.toString().slice(0,9)}</h2>
-      <h2 className="product-table-data">delete</h2>
+      <h2 onClick={(e)=> {
+        e.stopPropagation()
+        console.log("delete")}} className="product-table-data delete-btn">delete</h2>
     </div>
   );
 };

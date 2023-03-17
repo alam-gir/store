@@ -108,8 +108,11 @@
   }
 
   /*! dashboard product table   ======================*/
-  .product-table-wrapper{
-    @apply p-4
+  .product-table-wrapper {
+    @apply p-4;
+  }
+  .product-table-list {
+    @apply grid grid-cols-5 md:grid-cols-8 font-light md:text-base;
   }
   .product-table-header {
     @apply grid grid-cols-5 text-sm md:text-base md:grid-cols-8 border-b text-left font-medium text-gray-600 capitalize py-3 bg-gray-200;
@@ -117,9 +120,11 @@
   .product-table-data {
     @apply text-gray-600 cursor-pointer border-b py-2 group-hover:bg-gray-200;
   }
-  .product-table-list {
-    @apply grid grid-cols-5 md:grid-cols-8 font-light md:text-base;
+
+  .product-table-data.delete-btn {
+    @apply text-[#e50914] capitalize font-medium;
   }
+  
   /*! product modal   ======================*/
   .dashboard-product-modal {
     @apply h-full w-full md:max-w-[80%] md:max-h-[80%] md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 fixed bg-red-50 outline-none rounded-lg p-4;
@@ -169,5 +174,26 @@
   }
   .product-form-image-preview-area {
     @apply flex flex-wrap p-2 gap-4;
+  }
+
+  /*! product update confirmation modal ======================*/
+
+  .confirmation-modal-wrapper {
+    @apply fixed top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2  bg-gray-200 w-[20rem] px-4 py-6 rounded-lg;
+  }
+  .confirmation-modal-close-icon {
+    @apply h-4 w-4 text-gray-500 hover:text-gray-900 fixed top-2 right-2;
+  }
+  .confirmation-modal-header {
+    @apply flex flex-col items-center gap-2;
+  }
+  .confirmation-modal-logo {
+    @apply h-12 w-12 text-gray-700;
+  }
+  .confirmation-modal-text {
+    @apply text-xl font-medium capitalize text-gray-700;
+  }
+  .confirmation-modal-btn-container {
+    @apply flex justify-between mt-6;
   }
 }

@@ -1,6 +1,6 @@
 import LoaderSVG from "@/components/LoaderSVG";
 import ModalPopup from "@/components/reactModal/ModalPopup";
-import { dashboardProductModalState } from "@/lib/atom/dashboardProductModalState";
+import { productModalOpenState } from "@/lib/atom/modalOpenState";
 import { fetchGET } from "@/lib/fetch/fetch";
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
@@ -10,7 +10,7 @@ import ProductForm from "./ProductForm";
 const DashboardProductsTable = () => {
   const [products, setProducts] = useState(null);
   const [isOpenProductModal, setOpenProductModal] = useRecoilState(
-    dashboardProductModalState
+    productModalOpenState
   );
   const [currentProduct, setCurrentProduct] = useState(null);
 
@@ -20,7 +20,7 @@ const DashboardProductsTable = () => {
     );
   });
 
-  const hadnleCloseProductModal = () => {
+  const handleCloseProductModal = () => {
     setOpenProductModal(false);
     // start body scrolling
     document.body.style.overflow = "unset";
@@ -71,8 +71,8 @@ const DashboardProductsTable = () => {
         <ModalPopup
           Component={ProductForm}
           data={currentProduct}
-          hadnleOpen={isOpenProductModal}
-          hadnleClose={hadnleCloseProductModal}
+          handleOpen={isOpenProductModal}
+          handleClose={handleCloseProductModal}
           style={"dashboard-product-modal"}
         />
       </div>
