@@ -6,7 +6,6 @@ import { ObjectId } from "mongodb";
 const placeorder = async (req, res) => {
   if (req.method === "POST") {
     const { customer, cartProductsId } = req.body;
-    console.log({ customer, cartProductsId });
     if (customer && cartProductsId) {
       //execute if customer and porducts id available.......
       try {

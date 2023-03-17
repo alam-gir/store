@@ -1,18 +1,11 @@
 import ProductView from "@/components/ProductView";
 import {handleAddToCart} from "@/lib/cart/cartFunctions";
 
-const View = ({singleProduct, allProducts}) => {
-
-  // price calculations
-  const regularPrice = singleProduct.price;
-  const offer = (singleProduct.price / 100) * singleProduct.discountPercentage;
-  const offerPrice = regularPrice - offer;
-
+const View = ({products}) => {
   return (
     <div>
       <ProductView
-        allProducts={allProducts}
-        price={{offer, offerPrice, regularPrice}}
+        products={products}
         handleAddToCart={handleAddToCart}
       />
     </div>
@@ -21,19 +14,13 @@ const View = ({singleProduct, allProducts}) => {
 
 export default View;
 
-export const getServerSideProps = async (context) => {
-  const productId = context.query.productId;
+export const getServerSideProps = async () => {
 
-  const [singleProduct, allProducts] = await Promise.all([
-    fetch(`http://localhost:3000/api/db/products/${productId}`).then((res) =>
-      res.json()
-    ),
-    fetch("http://localhost:3000/api/db/products").then((res) => res.json()),
-  ]);
+  const res = await fetch("http://localhost:3000/api/db/products")
+  const data = await res.json()
   return {
     props: {
-      singleProduct: singleProduct.product,
-      allProducts: allProducts.products,
+      products: data?.products
     },
   };
 };

@@ -47,7 +47,6 @@ const CartModal = () => {
     setOpenCart(!isOpenCart);
   };
 
-  console.log(cart);
 
   return (
     <>
