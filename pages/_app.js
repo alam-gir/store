@@ -1,13 +1,12 @@
 import "@/styles/globals.css";
-import "@/styles/product-view.css"
+import "@/styles/product-view.css";
 import "@/styles/dashboard.css";
 import "./../components/slickCarousel/slick.css";
 import "./../components/slickCarousel/slick-theme.css";
 import CartBtn from "@/components/CartBtn";
-import {RecoilRoot} from "recoil";
+import { RecoilRoot } from "recoil";
 import CartModal from "@/components/CartModal";
-
-export default function App({Component, pageProps}) {
+export default function App({ Component, pageProps }) {
   if (Component.getLayout) {
     return Component.getLayout(<Component {...pageProps} />);
   }

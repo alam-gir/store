@@ -2,8 +2,9 @@ import { cartProductsIdState } from "@/lib/atom/cartProductsIdState";
 import { TrashIcon, PlusIcon, MinusIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { useRecoilValue } from "recoil";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { addToLocalstorage } from "@/lib/localStorage/addToLocalstorage";
+import { calculateOfferPrice } from "@/lib/product/calculateOfferPrice";
 
 const CartItem = ({
   handleIncrease,
@@ -12,9 +13,11 @@ const CartItem = ({
   product: { _id, name, images, price, discountPercentage, weight, quantity },
 }) => {
   const cartProductsId = useRecoilValue(cartProductsIdState);
+  const [productPrice, setProductPrice] = useState(null)
 
   // set cart to local storage whenver changes cartProductsId
   useEffect(() => {
+    setProductPrice(calculateOfferPrice(price,discountPercentage))
     addToLocalstorage("ramzansStoreCartProductsId", cartProductsId);
   }, [cartProductsId]);
   
@@ -36,9 +39,9 @@ const CartItem = ({
               </h2>
             </Link>
             <h1 className="cartItemPrice">
-              ${price}
+              ${productPrice?.regularPrice}
               <span>
-                <strong>$73</strong>
+                <strong>${productPrice?.priceAfterDiscount}</strong>
                 {discountPercentage && ` ${discountPercentage}%`}
               </span>
             </h1>

@@ -14,11 +14,12 @@ const ProductImageViewSlider = ({product}) => {
     "https://i.ibb.co/P9fVhj6/pngfind-com-lemon-tea-png-6661129.png";
   return (
     <div className="p-4">
-      <Slider {...settings}>
+      <Slider {...settings} className="">
         {product?.images?.map((image, index) => {
           return (
-            <div key={index} className="w-full">
-              <img src={product?.images?.length > 0 ? product?.images[0] : productDefaultImg} alt="" className="w-full"/>
+            <div key={index} className="">
+              <div className=""></div>
+              <img src={product?.images?.length > 0 ? product?.images[0] : productDefaultImg} alt="" className=""/>
             </div>
           );
         })}

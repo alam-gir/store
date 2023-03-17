@@ -1,6 +1,5 @@
 import ProductView from "@/components/ProductView";
 import {handleAddToCart} from "@/lib/cart/cartFunctions";
-
 const View = ({products}) => {
   return (
     <div>
