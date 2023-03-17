@@ -1,12 +1,10 @@
-import { XMarkIcon } from "@heroicons/react/24/outline";
 import ReactModal from "react-modal";
 
-const ModalPopup = ({hadnleOpen, hadnleClose, Component, data, style}) => {
+const ModalPopup = ({handleOpen, handleClose, Component, data, style}) => {
   return (
     <div>
-      <ReactModal isOpen={hadnleOpen} onRequestClose={hadnleClose} className={`${style}`}>
-        <XMarkIcon  onClick={hadnleClose} className="modal-close-icon"/>
-        <Component data={data}/>
+      <ReactModal isOpen={handleOpen} onRequestClose={handleClose} className={`${style}`}>
+        <Component data={data} handleClose={handleClose}/>
       </ReactModal>
     </div>
   );

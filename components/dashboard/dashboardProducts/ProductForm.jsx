@@ -1,32 +1,51 @@
 import AddProductPreviewImg from "@/components/AddProductPreviewImg";
 import Button from "@/components/Button";
+import ModalPopup from "@/components/reactModal/ModalPopup";
+import { productUpdateConfirmationModalState } from "@/lib/atom/modalOpenState";
 import { PhotoIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 import React, { useRef, useState, useEffect } from "react";
+import { useRecoilState } from "recoil";
+import ConfirmationModal from "./ConfirmationModal";
 
-const ProductForm = ({ data}) => {
+const ProductForm = ({ data, handleClose }) => {
   const initialInput = {
     id: data?.id ? data.id : "",
     name: data?.name ? data?.name : "",
     description: data?.description ? data?.description : "",
     weight: data?.weight ? data?.weight : "",
     price: data?.price ? data?.price : "",
-    discountPercentage: data?.discountPercentage ? data?.discountPercentage : "",
+    discountPercentage: data?.discountPercentage
+      ? data?.discountPercentage
+      : "",
     brand: data?.brand ? data?.brand : "",
     category: data?.category ? data?.category : "",
     stock: data?.stock ? data?.stock : "",
     images: data?.images ? data?.images : [],
   };
+  const initialImages = data?.images;
+
   const pickImage = useRef(null);
   const [images, setImages] = useState([]);
   const [input, setInput] = useState(initialInput);
   const [errorEmpty, setErrorEmpty] = useState(null);
+  const [updateBtnStatus, setUpdateBtnStatus] = useState(true); // initailly should disable
+  const [isOpenConfirmationModal, setOpenConfirmationModal] = useRecoilState(
+    productUpdateConfirmationModalState
+  );
 
-  // check image 
+  // check image
   useEffect(() => {
-    if(data?.images?.length > 0){
-      setImages(prev => data?.images)
+    if (data?.images?.length > 0) {
+      setImages((prev) => data?.images);
     }
-  },[data])
+  }, []);
+
+  // change update btn status
+  const changeUpdateBtnStatus = () => {
+    if (initialInput !== input || initialImages !== images)
+      setUpdateBtnStatus(false);
+  };
   // image pick handler
   const handlePickImage = async (e) => {
     const data = e.target.files;
@@ -46,6 +65,9 @@ const ProductForm = ({ data}) => {
         };
       }
     }
+
+    //if change any pick check update btn status
+    changeUpdateBtnStatus();
   };
 
   //input box onchange data set
@@ -61,6 +83,8 @@ const ProductForm = ({ data}) => {
       ...prev,
       [e.target.name]: e.target.value.trim() ? false : true,
     }));
+    //if change any input check update btn status
+    changeUpdateBtnStatus();
   };
 
   //handle submit
@@ -91,7 +115,7 @@ const ProductForm = ({ data}) => {
       brand: input.brand.trim() ? false : true,
       category: input.category.trim() ? false : true,
       stock: input.stock.trim() ? false : true,
-    }));  
+    }));
 
     //post req...
     const res = await fetch("api/db/products", {
@@ -119,10 +143,13 @@ const ProductForm = ({ data}) => {
   // remove image
   const handleRemove = (image) => {
     setImages((prev) => prev.filter((item) => item !== image));
+    //if change any pick check update btn status
+    changeUpdateBtnStatus();
   };
-
+  
   return (
-    <div className="product-form-container max-h-full">
+    <div className="product-form-container max-h-full relative">
+      <XMarkIcon onClick={handleClose} className="h-6 w-6 fixed top-4 right-4 text-gray-500 hover:text-gray-900"/>
       <div className="product-form-wrapper">
         <div className="product-form-header">
           <h1 className="product-form-header-text">Edit Products</h1>
@@ -320,8 +347,23 @@ const ProductForm = ({ data}) => {
             </div>
           </form>
           {/* submit button */}
-          <Button text={"update product"} handleClick={handleSubmit} textColor={"text-white"} bgColor={"bg-[#e50914]"} px={"w-full sm:w-1/2 m-auto"}/>
+          <Button
+            text={"update product"}
+            handleClick={() => setOpenConfirmationModal(true)}
+            textColor={"text-white"}
+            bgColor={"bg-[#e50914]"}
+            px={"w-full sm:w-1/2 m-auto"}
+            disable={updateBtnStatus}
+          />
         </div>
+      </div>
+      {/* confirmation modal  */}
+      <div>
+        <ModalPopup
+          handleOpen={isOpenConfirmationModal}
+          handleClose={() => setOpenConfirmationModal(false)}
+          Component={ConfirmationModal}
+        />
       </div>
     </div>
   );
