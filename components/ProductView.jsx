@@ -1,82 +1,79 @@
-import {useRouter} from "next/router";
-import React from "react";
+import { useRouter } from "next/router";
 import Button from "./Button";
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import ProductImageViewSlider from "./slickCarousel/ProductImageViewSlider";
 import ProductsCardSlider from "./slickCarousel/ProductsCardSlider";
-import {useRecoilState, useRecoilValue} from "recoil";
-import {cartState} from "@/lib/atom/cartState";
-import {cartProductsIdState} from "@/lib/atom/cartProductsIdState";
-import {handleAddToCart} from "@/lib/cart/cartFunctions";
+import { useRecoilState } from "recoil";
+import { cartProductsIdState } from "@/lib/atom/cartProductsIdState";
+import { handleAddToCart } from "@/lib/cart/cartFunctions";
+import { calculateOfferPrice } from "@/lib/product/calculateOfferPrice";
+import { isCarted } from "@/lib/cart/checkStatus";
 
-const ProductView = ({
-  allProducts,
-  price: {offer, offerPrice, regularPrice},
-}) => {
+const ProductView = ({ products }) => {
   const [cartProductsId, setCartProductsId] =
     useRecoilState(cartProductsIdState);
+
   const [currentProduct, setCurrentProduct] = useState(null);
+
+  // user router for get params
   const router = useRouter();
-  const queryProductId = router.query.productId;
-  const queryProduct = allProducts.filter(
-    (product) => product._id === queryProductId
-  );
-  const cart = useRecoilValue(cartState);
+  const productId = router.query.productId;
 
-  // whenever change queryProduct set query product to current product
+  // whenever change productId set currentProduct
   useEffect(() => {
-    setCurrentProduct(queryProduct[0]);
-  }, [queryProduct]);
-
-  const cartBtnText = (id) => {
-    const cartProductsIds = cart?.products?.map((product) => product._id);
-    if (cartProductsIds?.includes(id)) return "product added in cart";
-
-    // initially
-    return "add to cart";
-  };
+    // setting current product and prices
+    setCurrentProduct(() => {
+      const product = products?.filter(
+        (product) => product._id === productId
+      )[0];
+      const price = calculateOfferPrice(
+        product?.price,
+        product?.discountPercentage
+      );
+      return { product, price };
+    });
+  }, [productId]);
 
   return (
-    <div className="relative w-full">
-      <div className="md:flex w-full md:w-[80%] md:m-auto">
+
+    //style provides in /styles/product-view.css
+    <div className="container">
+      <div className="wrapper">
         {/* product image sliderrrrrrr */}
-        <div className="sticky md:top-8 top-0 left-0 md:block md:w-[35%] md:max-h-[calc(100vh-4rem)] mad:mx-4 md:mt-8 px-4 py-6 md:rounded-lg bg-gradient-to-b from-gray-200">
-          <div className="w-full h-full">
-            <ProductImageViewSlider product={currentProduct} />
+        <div className="image-slider-container">
+          <div className="image-slider-wrapper">
+            <ProductImageViewSlider product={currentProduct?.product} />
           </div>
         </div>
 
         {/* product details  */}
-        <div className=" z-30 mx-4 mt-8 px-4 py-6 md:w-[65%] rounded-lg ">
+        <div className="details-container">
           {/* header  */}
-          <div className=" grid grid-cols-4 items-center">
+          <div className="details-header">
             {/* left */}
-            <div className=" col-span-3 flex flex-col">
-              <div className="flex gap-1 items-center">
-                <h2 className="text-gray-700 capitalize tracking-wide text-[18px] md:text-[22px] font-bold">
-                  {currentProduct?.name}
-                </h2>
-                <h2 className="text-gray-400 text-[18px] md:text-[22px] ">
-                  {currentProduct?.weight && `- ${currentProduct?.weight}`}
+            <div className="details-header-left ">
+              <div className="details-header-left-top">
+                <h2 className="name">{currentProduct?.product?.name}</h2>
+                <h2 className="weight">
+                  {currentProduct?.product?.weight &&
+                    `- ${currentProduct?.product?.weight}`}
                 </h2>
               </div>
-              <h2 className="text-[14px] md:text-[16px] text-[#67771E] tracking-wide font-bold capitalize">
-                {currentProduct?.category}
-              </h2>
+              <h2 className="category">{currentProduct?.product?.category}</h2>
             </div>
 
             {/* right */}
-            <div className={`col-span-1 text-end flex flex-col`}>
-              <h2 className="text-[#227C70] text-[18px] md:text-[22px] text-xl font-bold">
-                ${offerPrice}
+            <div className="details-header-right">
+              <h2 className="price">
+                ${currentProduct?.price?.priceAfterDiscount}
               </h2>
-              {offer > 0 && (
-                <h2 className="text-[12px]">
+              {currentProduct?.price?.discountPercentage > 0 && (
+                <h2 className="regular-price">
                   <span className="line-through text-[#9C9C9C]">
-                    ${regularPrice}
-                  </span>{" "}
+                    ${currentProduct?.price?.regularPrice}
+                  </span>
                   <span className="text-[#9C9C9C]">
-                    - {currentProduct?.discountPercentage}%
+                    - {currentProduct?.price?.discountPercentage}%
                   </span>
                 </h2>
               )}
@@ -84,18 +81,16 @@ const ProductView = ({
           </div>
 
           {/* description */}
-          <div className="mt-6">
+          <div className="description-container">
             {/* //header */}
-            <h1 className=" capitalize font-bold text-gray-600  tracking-wide text-[18px] md:text-[22px]">
-              description
-            </h1>
-            <p className="text-[14px] md:text-[18px] text-gray-700 tracking-wide text-justify py-2">
-              {currentProduct?.description}
+            <h1 className="description-header">description</h1>
+            <p className="description-text">
+              {currentProduct?.product?.description}
             </p>
           </div>
 
           {/*  action buttons */}
-          <div className="flex justify-end md:justify-start gap-4 mt-8">
+          <div className="action-btn-container">
             <Button
               text={"order now"}
               textColor={"text-gray-900"}
@@ -104,22 +99,26 @@ const ProductView = ({
               px={"px-12"}
             />
             <Button
-              text={cartBtnText(currentProduct?._id)}
+              text={
+                isCarted(currentProduct?.product?._id, cartProductsId)
+                  ? "in cart"
+                  : "add to cart"
+              }
               textColor={"text-white"}
               bgColor={"bg-[#227C70]"}
               textSize={"text-[16px]"}
               px={"px-12"}
               handleClick={() =>
-                handleAddToCart(currentProduct?._id, setCartProductsId)
+                handleAddToCart(currentProduct?.product?._id, setCartProductsId)
               }
             />
           </div>
 
           {/* productSlider  */}
           <div className="w-[100%] mt-24">
-            <h2 className="capitalize text-gray-700">you might like</h2>
+            <h2 className="capitalize py-2 text-gray-500">you might like also</h2>
             <div className="w-[95%] m-auto">
-              <ProductsCardSlider products={allProducts} />
+              <ProductsCardSlider products={products} />
             </div>
           </div>
         </div>

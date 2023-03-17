@@ -1,4 +1,5 @@
 import "@/styles/globals.css";
+import "@/styles/product-view.css"
 import "@/styles/dashboard.css";
 import "./../components/slickCarousel/slick.css";
 import "./../components/slickCarousel/slick-theme.css";

@@ -53,6 +53,9 @@
   .homeContainer {
     @apply bg-zinc-100;
   }
+  .homeContainer .wrapper{
+    @apply flex flex-col;
+  }
 
   /* Home Slider Start */
   .home-slider {
