@@ -320,7 +320,7 @@ const ProductForm = ({ data}) => {
             </div>
           </form>
           {/* submit button */}
-          <Button text={"update product"} handleClick={handleSubmit} textColor={"text-white"} bgColor={"bg-[#e50914]"} px={"w-full sm:w-1/2 m-auto"}/>
+          <Button text={"update product"} handleClick={(handleSubmit) => console.log('clicked')} textColor={"text-white"} bgColor={"bg-[#e50914]"} px={"w-full sm:w-1/2 m-auto"} disable={true}/>
         </div>
       </div>
     </div>

@@ -108,11 +108,14 @@
   }
 
   /*! dashboard product table   ======================*/
+  .product-table-wrapper{
+    @apply p-4
+  }
   .product-table-header {
-    @apply grid grid-cols-5 text-sm md:text-base md:grid-cols-8 border-b text-left font-medium text-gray-600 capitalize pb-1;
+    @apply grid grid-cols-5 text-sm md:text-base md:grid-cols-8 border-b text-left font-medium text-gray-600 capitalize py-3 bg-gray-200;
   }
   .product-table-data {
-    @apply text-gray-600 cursor-pointer group-hover:bg-gray-200;
+    @apply text-gray-600 cursor-pointer border-b py-2 group-hover:bg-gray-200;
   }
   .product-table-list {
     @apply grid grid-cols-5 md:grid-cols-8 font-light md:text-base;

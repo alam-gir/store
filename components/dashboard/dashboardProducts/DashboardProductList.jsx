@@ -2,7 +2,7 @@
 const DashboardProductList = ({product:{id, name, price, brand, category, stock, createdAt}, handleClick}) => {
   return (
     <div onClick={handleClick} className="product-table-list group  text-md">
-      <h2 className="product-table-data font-medium">{id}</h2>
+      <h2 className="product-table-data font-medium px-4">{id}</h2>
       <h2 className="product-table-data">{name.slice(0,10)}</h2>
       <h2 className="product-table-data">{price}</h2>
       <h2 className="product-table-data">{brand}</h2>
