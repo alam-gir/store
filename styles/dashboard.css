@@ -108,63 +108,63 @@
   }
 
   /*! dashboard product table   ======================*/
-  .product-table-header{
+  .product-table-header {
     @apply grid grid-cols-5 text-sm md:text-base md:grid-cols-8 border-b text-left font-medium text-gray-600 capitalize pb-1;
   }
-  .product-table-data{
-    @apply group-hover:underline text-gray-600;
+  .product-table-data {
+    @apply text-gray-600 cursor-pointer group-hover:bg-gray-200;
   }
-  .product-table-list{
-    @apply  grid grid-cols-5 md:grid-cols-8 font-light md:text-base
+  .product-table-list {
+    @apply grid grid-cols-5 md:grid-cols-8 font-light md:text-base;
   }
   /*! product modal   ======================*/
-  .dashboard-product-modal{
-    @apply h-full w-full md:max-w-[80%] md:max-h-[80%] md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 fixed bg-red-50 outline-none rounded-lg p-4
+  .dashboard-product-modal {
+    @apply h-full w-full md:max-w-[80%] md:max-h-[80%] md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 fixed bg-red-50 outline-none rounded-lg p-4;
   }
-  .modal-close-icon{
+  .modal-close-icon {
     @apply h-6 w-6 absolute top-2 right-2 z-10;
   }
   /*! product form ======================*/
-  .product-form-container{
-    @apply p-2 overflow-y-scroll
+  .product-form-container {
+    @apply p-2 overflow-y-scroll;
   }
-  .product-form-wrapper{
-    @apply h-auto
+  .product-form-wrapper {
+    @apply h-auto;
   }
-  .product-form-header{
-    @apply h-auto
+  .product-form-header {
+    @apply h-auto;
   }
-  .product-form-header-text{
-    @apply text-base capitalize font-medium text-gray-700 tracking-wider
+  .product-form-header-text {
+    @apply text-base capitalize font-medium text-gray-700 tracking-wider;
   }
-  .product-form{
-    @apply grid grid-cols-1 sm:grid-cols-2 sm:gap-2
-  }
-
-  .product-form-input{
-    @apply flex flex-col gap-1
-  }
-  .product-form-textarea{
-    @apply flex flex-col sm:col-span-2
-  }
-  .product-form-input-field{
-    @apply px-2 p-1
-  }
-  .product-form-textarea-field{
-    @apply px-2 p-1
-  }
-  .product-form-input-label{
-    @apply text-sm sm:text-base text-gray-600 capitalize
+  .product-form {
+    @apply grid grid-cols-1 sm:grid-cols-2 sm:gap-2;
   }
 
-  .product-form-image-pick-wrapper{
-    @apply sm:col-span-2 flex justify-between
+  .product-form-input {
+    @apply flex flex-col gap-1;
+  }
+  .product-form-textarea {
+    @apply flex flex-col sm:col-span-2;
+  }
+  .product-form-input-field {
+    @apply px-2 p-1;
+  }
+  .product-form-textarea-field {
+    @apply px-2 p-1;
+  }
+  .product-form-input-label {
+    @apply text-sm sm:text-base text-gray-600 capitalize;
   }
 
-  .product-form-image-pic-icon{
-    @apply h-12
+  .product-form-image-pick-wrapper {
+    @apply sm:col-span-2 flex justify-between;
   }
-  .product-form-image-preview-area{
-    @apply flex flex-wrap p-2 gap-4
+
+  .product-form-image-pic-icon {
+    @apply h-12;
+  }
+  .product-form-image-preview-area {
+    @apply flex flex-wrap p-2 gap-4;
   }
 }

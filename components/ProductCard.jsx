@@ -14,7 +14,6 @@ const ProductCard = ({
   useEffect(()=>{
     setProductPrice(calculateOfferPrice(price,discountPercentage))
   },[_id])
-  console.log(productPrice)
   //bg color
   const productDefaultImg =
     "https://i.ibb.co/P9fVhj6/pngfind-com-lemon-tea-png-6661129.png";
