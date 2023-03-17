@@ -15,7 +15,7 @@ import ProductCard from "./ProductCard";
 
 function HomePage({products}) {
   return (
-    <section className="bg-[#F8F8F8]">
+    <section className="homeContainer">
       <div className="wrapper">
         <header className="home-slider">
           <Swiper
@@ -23,7 +23,7 @@ function HomePage({products}) {
             spaceBetween={30}
             pagination={{clickable: true}}
             autoplay={{
-              delay: 3000,
+              delay: 5000,
               disableOnInteraction: false,
             }}
             modules={[Pagination, Autoplay]}
@@ -49,11 +49,11 @@ function HomePage({products}) {
               <a href="#">View All</a>
             </span>
           </header>
-          <main className="flex flex-wrap gap-6">
+          <main className="productsGroup">
             {/* products card  */}
             {products.map((product) => {
               return (
-                <div key={product._id} className="mt-6 w-[calc(50%-1rem)]">
+                <div key={product._id} className="productCard">
                   <ProductCard product={product} />
                 </div>
               );

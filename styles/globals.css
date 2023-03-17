@@ -14,22 +14,6 @@
   img {
     @apply h-full;
   }
-
-  h1 {
-    /* @apply text-2xl font-bold; */
-  }
-
-  h2 {
-    @apply text-lg font-medium;
-  }
-
-  h3 {
-    @apply text-base font-medium;
-  }
-
-  strong {
-    @apply font-bold;
-  }
 }
 
 @layer components {
@@ -42,14 +26,6 @@
   .cart-btn {
     @apply fixed z-40 bottom-6 right-6;
   }
-
-  /* cart modal container  */
-  /* .cart-modal-container{
-    @apply fixed z-50 h-full w-full bg-red-400 top-0;
-  } */
-  /* .cart-modal-wrapper {
-    @apply fixed h-full w-full bg-white top-0 z-50 sm:w-1/2 sm:right-0 sm:min-w-[20rem] sm:max-w-[25rem];
-  } */
 
   .addProductInputBox {
     @apply grid grid-cols-5 w-[30rem] gap-2 items-center;
@@ -65,16 +41,26 @@
 
   /* Main Body Wrappar */
   .wrapper {
-    @apply mx-auto w-[92%];
+    @apply mx-auto w-[92%] xl:max-w-5xl;
+  }
+
+  /* 
+  --------------------------
+  ------- Home Page --------
+  --------------------------
+  */
+
+  .homeContainer {
+    @apply bg-zinc-100;
   }
 
   /* Home Slider Start */
   .home-slider {
-    @apply mt-4;
+    @apply mt-4 rounded-lg overflow-hidden;
   }
 
   .slider-card {
-    @apply bg-[#227C70] h-[120px] rounded-[10px] flex flex-col justify-center relative overflow-hidden;
+    @apply bg-green-700 rounded-lg h-32 md:h-48 lg:h-60 flex flex-col justify-center relative overflow-hidden;
   }
 
   .slider-text {
@@ -100,16 +86,17 @@
   /* Home Slider End */
 
   /* Product Section Start */
+
   .product-container {
     @apply mb-6;
   }
 
   .product-header {
-    @apply flex flex-row justify-between my-4;
+    @apply flex flex-row justify-between my-6;
   }
 
   .product-header h2 {
-    @apply text-xl;
+    @apply text-zinc-900 text-xl font-medium md:text-2xl;
   }
 
   .product-header span {
@@ -121,24 +108,34 @@
   }
 
   /* Product Card Start */
-  .product-card {
-    @apply h-auto flex flex-col px-4 bg-red-100 w-auto rounded-lg;
+
+  .productsGroup {
+    @apply grid gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
+  }
+
+  .productCard {
+    /* @apply mt-6 w-[calc(50%-0.75rem)] md:w-[calc(33.33%-1rem)]; */
+    @apply mt-6 w-full;
+  }
+
+  .productCardBg {
+    @apply h-auto flex flex-col px-4 w-auto rounded-lg drop-shadow;
   }
 
   .img-wrapper {
-    @apply w-full mx-auto relative;
+    @apply w-full mx-auto;
   }
 
   .product-img {
-    @apply mx-auto -mt-4 shadow-[0_-2px_10px_rgba(0,0,0,0.1)] rounded;
+    @apply mx-auto rounded w-3/5 -mt-6;
   }
 
   .product-details {
-    @apply pb-4 capitalize;
+    @apply py-4 capitalize text-zinc-900;
   }
 
   .product-name {
-    @apply text-base text-neutral-700;
+    @apply text-base;
   }
 
   .product-price {
@@ -158,10 +155,18 @@
   ----------------------------
   */
 
+  .checkoutSection {
+    @apply grid grid-cols-1 md:grid-cols-2 md:items-start gap-4 py-8 md:flex-row md:h-screen md:overflow-y-scroll;
+  }
+
+  .cartItemAndPricing {
+    @apply flex flex-col gap-4;
+  }
+
   /* Checkout Form Design Start */
 
   .userContactForm {
-    @apply bg-white my-4 rounded-lg px-4 py-4 drop-shadow;
+    @apply bg-white rounded-lg px-4 py-4 drop-shadow md:sticky md:top-0;
   }
 
   .userContactForm form {
@@ -211,7 +216,7 @@
   /* Cart Product Item Design Start */
 
   .cartItemContainer {
-    @apply flex flex-col gap-4 mt-4;
+    @apply flex flex-col gap-4;
   }
 
   .cartItem {
@@ -243,7 +248,7 @@
   }
 
   .cartItemPrice {
-    @apply flex flex-row items-center gap-2 text-2xl sm:text-base font-semibold text-green-700;
+    @apply flex flex-row items-center gap-2 text-xl font-semibold text-green-700;
   }
 
   .cartItemPrice span {
@@ -259,7 +264,7 @@
   }
 
   .trashIcon {
-    @apply w-[75%] stroke-zinc-700 hover:stroke-red-500;
+    @apply w-[70%] stroke-zinc-700 hover:stroke-red-500;
   }
 
   .cartItemQuantity {
@@ -309,17 +314,16 @@
   */
 
   /* Cart Modal Header */
-
-  .cartModal {
-    @apply h-screen w-full pt-10 pb-6 overflow-y-scroll bg-zinc-100 fixed top-0 z-50 rounded-md sm:w-1/2 sm:right-0 sm:min-w-[20rem] sm:max-w-[25rem];
+  .cartModalOverlay {
+    @apply z-40 fixed top-0 w-screen overflow-hidden h-screen bg-[rgb(0,0,0,30%)];
   }
 
-  .cartModalWrapper {
-    @apply w-full;
+  .cartModal {
+    @apply fixed top-0 right-0 h-screen w-full sm:w-96 max-w-md pb-6 overflow-y-scroll bg-zinc-100  z-50 rounded-tl rounded-bl drop-shadow-md;
   }
 
   .cartModalHeader {
-    @apply bg-white fixed w-full top-0 left-0 py-3 z-50 flex justify-between items-center drop-shadow;
+    @apply bg-white sticky w-full top-0 left-0 py-3 z-50 flex justify-between items-center drop-shadow;
   }
 
   .cartModalHeader h2 {
@@ -330,11 +334,21 @@
     @apply absolute right-[5%] top-1/2 -translate-y-1/2 h-6 text-zinc-700 cursor-pointer hover:text-red-500;
   }
 
-  .cartInnerWrapper {
-    @apply flex flex-col justify-between h-auto;
+  /* Checkout Button Section Start */
+
+  .checkOutSection {
+    @apply bg-white fixed bottom-0 mt-4 py-4 w-full drop-shadow;
+  }
+
+  .checkOutWrapper {
+    @apply flex flex-row gap-2 justify-between items-center;
+  }
+
+  .checkOutSection li {
+    @apply text-xl font-medium last:text-sm last:text-zinc-600 last:font-normal last:tracking-wider;
   }
 
   .checkOutBtn {
-    @apply text-center w-full  bg-red-500 text-white capitalize font-semibold py-1 tracking-wide hover:brightness-90 rounded;
+    @apply text-center w-full  bg-red-500 text-white capitalize font-semibold py-2 tracking-wide hover:brightness-90 rounded-md;
   }
 }

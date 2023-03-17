@@ -2,7 +2,7 @@ import React from "react";
 
 const CartPricing = ({cart: {priceDetails},isHeader, isTotalAmount, isBagDiscount, isEstimatedTax, isDeliveryCharge, isSubTotalAmount}) => {
   return (
-    <div className="bg-white my-4 rounded-lg px-4 py-4 drop-shadow">
+    <div className="bg-white rounded-lg px-4 py-4 drop-shadow">
       <div className="capitalize flex flex-col gap-4">
         {/* Title Text */}
         { isHeader && <h2 className="font-semibold text-black">price details</h2>}
