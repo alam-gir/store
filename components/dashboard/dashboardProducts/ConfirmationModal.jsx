@@ -14,7 +14,7 @@ const ConfirmationModal = ({handleConfirm, handleClose, message}) => {
         <h2 className='confirmation-modal-message-container'>{message}</h2>
         <div className='confirmation-modal-btn-container'>
             <Button text="cancel" textColor="text-white" bgColor="bg-gray-400" px="px-8" handleClick={handleClose}/>
-            <Button text="delete" textColor="text-white" bgColor="bg-[#e50914]" px="px-8" handleClick={handleConfirm}/>
+            <Button text="update" textColor="text-white" bgColor="bg-[#e50914]" px="px-8" handleClick={handleConfirm}/>
         </div>
     </div>
   )
