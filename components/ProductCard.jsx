@@ -4,7 +4,8 @@ import React from "react";
 export default function ProductCard({
   product: {_id, images, name, weight, price},
   bgColor,
-  imgHeight,
+  defaultImgHeight,
+  desktopImgHeight,
   nameTextSize,
   priceTextSize,
 }) {
@@ -21,7 +22,7 @@ export default function ProductCard({
             src={images?.length > 0 ? images[0] : productDefaultImg}
             alt="productImg"
             loading="lazy"
-            className={`product-img ${imgHeight}`}
+            className={`product-img ${defaultImgHeight}`}
           />
         </div>
         <div className="product-details">
@@ -29,7 +30,12 @@ export default function ProductCard({
             {name.slice(0, 10)}
             {weight && <span className="text-sm"> - {weight}</span>}
           </h3>
-          <strong className={`product-price`}>${price}</strong>
+          <div className={`product-price`}>
+            ${price}{" "}
+            <span className="text-zinc-500 text-base font-normal">
+              <span className="line-through">$100 </span>(5%)
+            </span>
+          </div>
         </div>
       </div>
     </Link>

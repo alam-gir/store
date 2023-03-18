@@ -1,6 +1,6 @@
-import React, { useRef, useState } from "react";
+import React, {useRef, useState} from "react";
 // Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
+import {Swiper, SwiperSlide} from "swiper/react";
 
 // Import Swiper styles
 import "swiper/css";
@@ -11,7 +11,7 @@ import "swiper/css/thumbs";
 // import "./styles.css";
 
 // import required modules
-import { FreeMode, Navigation, Thumbs } from "swiper";
+import {FreeMode, Navigation, Thumbs} from "swiper";
 
 const ProductSliderThumb = () => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
@@ -27,9 +27,9 @@ const ProductSliderThumb = () => {
         spaceBetween={10}
         navigation={true}
         // thumbs={{ swiper: thumbsSwiper ? thumbsSwiper : '' }}
+        thumbs={{swiper: thumbsSwiper}}
         modules={[FreeMode, Navigation, Thumbs]}
-        className="mySwiper2"
-      >
+        className="mySwiper2">
         <SwiperSlide>
           <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
         </SwiperSlide>
@@ -69,8 +69,7 @@ const ProductSliderThumb = () => {
         freeMode={true}
         watchSlidesProgress={true}
         modules={[FreeMode, Navigation, Thumbs]}
-        className="mySwiper"
-      >
+        className="mySwiper">
         <SwiperSlide>
           <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
         </SwiperSlide>
@@ -104,7 +103,6 @@ const ProductSliderThumb = () => {
       </Swiper>
     </div>
   );
-}
+};
 
-
-export default ProductSliderThumb
+export default ProductSliderThumb;

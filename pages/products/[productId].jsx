@@ -2,7 +2,6 @@ import ProductView from "@/components/ProductView";
 import {handleAddToCart} from "@/lib/cart/cartFunctions";
 
 const View = ({singleProduct, allProducts}) => {
-
   // price calculations
   const regularPrice = singleProduct.price;
   const offer = (singleProduct.price / 100) * singleProduct.discountPercentage;

@@ -12,8 +12,9 @@ import {
   handleIncrease,
 } from "@/lib/cart/cartFunctions";
 import Link from "next/link";
+import {Button} from "@/components/Button";
 
-const CartModal = () => {
+export default function CartModal() {
   const [isOpenCart, setOpenCart] = useRecoilState(toggleCartState);
   const [cartProductsId, setCartProductsId] =
     useRecoilState(cartProductsIdState);
@@ -46,8 +47,6 @@ const CartModal = () => {
   const handleClose = () => {
     setOpenCart(!isOpenCart);
   };
-
-  console.log(cart);
 
   return (
     <>
@@ -94,19 +93,24 @@ const CartModal = () => {
                       <ul className="w-3/5">
                         <li>
                           <span>Total: </span>
-                          <span className="text-red-500 font-semibold">
+                          <span className="text-red-600 font-semibold">
                             ${cart.priceDetails.totalAmount}
                           </span>
                         </li>
                         <li>
                           <span>Delivery: </span>
-                          <span className="text-red-500 font-semibold">
+                          <span className="text-red-600 font-semibold">
                             ${cart.priceDetails.deliveryCharge}
                           </span>
                         </li>
                       </ul>
                       <Link href="/placeorder" className="w-2/5">
                         <button className="checkOutBtn">Check Out</button>
+                        {/* <Button
+                          text={"Check Out"}
+                          bgColor={"bg-red-600"}
+                          textColor={"text-white"}
+                        /> */}
                       </Link>
                     </div>
                   </div>
@@ -122,6 +126,4 @@ const CartModal = () => {
       )}
     </>
   );
-};
-
-export default CartModal;
+}

@@ -2,12 +2,15 @@ import {useRouter} from "next/router";
 import React from "react";
 import Button from "./Button";
 import {useState, useEffect} from "react";
-import ProductImageViewSlider from "./slickCarousel/ProductImageViewSlider";
-import ProductsCardSlider from "./slickCarousel/ProductsCardSlider";
+import MoreRelatedProduct from "./MoreRelatedProduct";
 import {useRecoilState, useRecoilValue} from "recoil";
 import {cartState} from "@/lib/atom/cartState";
 import {cartProductsIdState} from "@/lib/atom/cartProductsIdState";
 import {handleAddToCart} from "@/lib/cart/cartFunctions";
+
+// Carousel
+import {Carousel} from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 
 const ProductView = ({
   allProducts,
@@ -30,96 +33,98 @@ const ProductView = ({
 
   const cartBtnText = (id) => {
     const cartProductsIds = cart?.products?.map((product) => product._id);
-    if (cartProductsIds?.includes(id)) return "product added in cart";
+    if (cartProductsIds?.includes(id)) return "product added";
 
     // initially
     return "add to cart";
   };
 
+  const productDefaultImg =
+    "https://i.ibb.co/P9fVhj6/pngfind-com-lemon-tea-png-6661129.png";
+
   return (
-    <div className="relative w-full">
-      <div className="md:flex w-full md:w-[80%] md:m-auto">
+    <div className="productViewContainer">
+      <div className="productViewGrid">
         {/* product image sliderrrrrrr */}
-        <div className="sticky md:top-8 top-0 left-0 md:block md:w-[35%] md:max-h-[calc(100vh-4rem)] mad:mx-4 md:mt-8 px-4 py-6 md:rounded-lg bg-gradient-to-b from-gray-200">
-          <div className="w-full h-full">
-            <ProductImageViewSlider product={currentProduct} />
+        <div className="productCarousel">
+          <div className="productCarouselWrapper">
+            <Carousel
+              dynamicHeight={true}
+              showArrows={true}
+              showThumbs={true}
+              infiniteLoop={true}
+              stopOnHover={true}
+              swipeable={true}
+              emulateTouch={true}
+              showIndicators={false}
+              thumbWidth={60}>
+              {currentProduct?.images?.map((image, index) => {
+                return (
+                  <div key={index} className="carouselImgWrapper">
+                    <img
+                      src={
+                        currentProduct?.images?.length > 0
+                          ? currentProduct?.images[0]
+                          : productDefaultImg
+                      }
+                      className="h-full w-full object-contain"
+                    />
+                  </div>
+                );
+              })}
+
+              {/* This is for testing purpose --static design */}
+              {/* <div className="carouselImgWrapper">
+                <img
+                  src={productDefaultImg}
+                  className="h-full w-full object-contain"
+                />
+              </div> */}
+            </Carousel>
           </div>
         </div>
-
-        {/* product details  */}
-        <div className=" z-30 mx-4 mt-8 px-4 py-6 md:w-[65%] rounded-lg ">
-          {/* header  */}
-          <div className=" grid grid-cols-4 items-center">
-            {/* left */}
-            <div className=" col-span-3 flex flex-col">
-              <div className="flex gap-1 items-center">
-                <h2 className="text-gray-700 capitalize tracking-wide text-[18px] md:text-[22px] font-bold">
-                  {currentProduct?.name}
-                </h2>
-                <h2 className="text-gray-400 text-[18px] md:text-[22px] ">
-                  {currentProduct?.weight && `- ${currentProduct?.weight}`}
-                </h2>
-              </div>
-              <h2 className="text-[14px] md:text-[16px] text-[#67771E] tracking-wide font-bold capitalize">
-                {currentProduct?.category}
-              </h2>
-            </div>
-
-            {/* right */}
-            <div className={`col-span-1 text-end flex flex-col`}>
-              <h2 className="text-[#227C70] text-[18px] md:text-[22px] text-xl font-bold">
-                ${offerPrice}
-              </h2>
-              {offer > 0 && (
-                <h2 className="text-[12px]">
-                  <span className="line-through text-[#9C9C9C]">
-                    ${regularPrice}
-                  </span>{" "}
-                  <span className="text-[#9C9C9C]">
-                    - {currentProduct?.discountPercentage}%
+        {/* Product Details */}
+        <div className="productDetails">
+          <div className="productDetailsWrapper">
+            <div className="productNamePrice">
+              <div className="productName">
+                <h2>
+                  {currentProduct?.name}{" "}
+                  <span className="text-zinc-500 text-base">
+                    ({currentProduct?.weight && `${currentProduct?.weight}`})
                   </span>
                 </h2>
-              )}
+                <p>{currentProduct?.category}</p>
+              </div>
+              <div className="productPrice">
+                <h1>${offerPrice}</h1>
+                <p>
+                  <span className="line-through">${regularPrice} </span>-{" "}
+                  {currentProduct?.discountPercentage}%
+                </p>
+              </div>
             </div>
-          </div>
-
-          {/* description */}
-          <div className="mt-6">
-            {/* //header */}
-            <h1 className=" capitalize font-bold text-gray-600  tracking-wide text-[18px] md:text-[22px]">
-              description
-            </h1>
-            <p className="text-[14px] md:text-[18px] text-gray-700 tracking-wide text-justify py-2">
-              {currentProduct?.description}
-            </p>
-          </div>
-
-          {/*  action buttons */}
-          <div className="flex justify-end md:justify-start gap-4 mt-8">
-            <Button
-              text={"order now"}
-              textColor={"text-gray-900"}
-              bgColor={"bg-[#D9D9D9]"}
-              textSize={"text-[16px]"}
-              px={"px-12"}
-            />
-            <Button
-              text={cartBtnText(currentProduct?._id)}
-              textColor={"text-white"}
-              bgColor={"bg-[#227C70]"}
-              textSize={"text-[16px]"}
-              px={"px-12"}
-              handleClick={() =>
-                handleAddToCart(currentProduct?._id, setCartProductsId)
-              }
-            />
-          </div>
-
-          {/* productSlider  */}
-          <div className="w-[100%] mt-24">
-            <h2 className="capitalize text-gray-700">you might like</h2>
-            <div className="w-[95%] m-auto">
-              <ProductsCardSlider products={allProducts} />
+            <div className="productDesc">
+              <h2>Description</h2>
+              <p>{currentProduct?.description}</p>
+            </div>
+            <div className="orderBtns">
+              <Button text="Buy Now" />
+              <Button
+                text={cartBtnText(currentProduct?._id)}
+                bgColor={"bg-red-600"}
+                textColor={"text-white"}
+                handleClick={() =>
+                  handleAddToCart(currentProduct?._id, setCartProductsId)
+                }
+              />
+            </div>
+            <div className="moreRelatedProducts">
+              <h2>Related Products</h2>
+              {/* productSlider  */}
+              <div className="w-full m-auto">
+                <MoreRelatedProduct products={allProducts} />
+              </div>
             </div>
           </div>
         </div>

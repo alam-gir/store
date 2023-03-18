@@ -127,7 +127,7 @@
   }
 
   .product-img {
-    @apply mx-auto rounded w-3/5 -mt-6;
+    @apply mx-auto rounded -mt-6 h-[150px] sm:h-[200px];
   }
 
   .product-details {
@@ -348,7 +348,84 @@
     @apply text-xl font-medium last:text-sm last:text-zinc-600 last:font-normal last:tracking-wider;
   }
 
+  /*
+  --------------------------------
+  ------ Product View Page -------
+  --------------------------------
+  */
+
   .checkOutBtn {
     @apply text-center w-full  bg-red-500 text-white capitalize font-semibold py-2 tracking-wide hover:brightness-90 rounded-md;
+  }
+
+  .productViewContainer {
+    @apply w-full xl:max-w-7xl mx-auto;
+  }
+
+  .productViewGrid {
+    @apply grid grid-cols-1 md:grid-cols-2;
+  }
+
+  .productCarousel {
+    @apply bg-gradient-to-b from-gray-200 w-full md:h-screen md:sticky md:top-0;
+  }
+
+  .productCarouselWrapper {
+    @apply w-[90%] mx-auto mt-8 md:mt-6;
+  }
+
+  .carouselImgWrapper {
+    /* @apply w-4/5 sm:w-3/4 md:w-[70%] lg:w-3/5 h-2/5 md:h-4/5 mx-auto; */
+    @apply h-52 sm:h-60 md:h-72 lg:h-96 mx-auto;
+  }
+
+  .productDetails {
+    @apply w-full bg-white py-4 md:py-6 rounded-tl-lg rounded-tr-lg capitalize;
+  }
+
+  .productDetailsWrapper {
+    @apply w-[90%] md:w-[85%] mx-auto flex flex-col gap-6;
+  }
+
+  .productNamePrice {
+    @apply flex flex-col gap-2;
+  }
+
+  .productNamePrice .productName {
+    @apply text-xl md:text-2xl font-medium text-zinc-900;
+  }
+
+  .productNamePrice .productName p {
+    @apply text-sm py-1 px-2 bg-green-100 text-green-900 rounded-full inline-block cursor-pointer mt-2;
+  }
+
+  .productNamePrice .productPrice {
+    @apply text-2xl lg:text-3xl font-semibold text-red-600;
+  }
+
+  .productNamePrice .productPrice p {
+    @apply text-base lg:text-lg text-zinc-500;
+  }
+
+  .productDesc,
+  .moreRelatedProducts {
+    @apply flex flex-col gap-2 text-zinc-900;
+  }
+
+  .productDesc h2,
+  .moreRelatedProducts h2 {
+    @apply text-lg lg:text-xl font-medium;
+  }
+
+  .productDesc p {
+    @apply text-base text-zinc-600;
+  }
+
+  .orderBtns {
+    @apply grid grid-cols-2 gap-2;
+  }
+
+  .relatedProductSlider {
+    @apply grid grid-cols-3;
   }
 }
