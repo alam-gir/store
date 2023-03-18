@@ -3,6 +3,7 @@ import "@/styles/product-view.css";
 import "@/styles/dashboard.css";
 import "./../components/slickCarousel/slick.css";
 import "./../components/slickCarousel/slick-theme.css";
+import 'react-toastify/dist/ReactToastify.css';
 import CartBtn from "@/components/CartBtn";
 import { RecoilRoot } from "recoil";
 import CartModal from "@/components/CartModal";
