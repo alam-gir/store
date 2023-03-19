@@ -61,7 +61,10 @@ const DashboardProductsTable = () => {
               <DashboardProductList
                 key={product?._id}
                 product={product}
-                handleClick={() => handleClick(product?._id)}
+                handleClick={() =>{
+                  console.log('dashboard table get clicked')
+                  handleClick(product?._id)}
+                } 
               />
             ))
           )}
@@ -71,7 +74,7 @@ const DashboardProductsTable = () => {
         <ReactModal
           isOpen={isOpenProductUpdateModal}
           onRequestClose={() => setOpenProductUpdateModal(false)}
-          className="dashboard-product-update-modal"
+          className="modal"
         >
           <ProductForm
             data={currentProduct}

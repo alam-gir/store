@@ -19,7 +19,7 @@ const ProductImageViewSlider = ({product}) => {
           return (
             <div key={index} className="">
               <div className=""></div>
-              <img src={product?.images?.length > 0 ? product?.images[0] : productDefaultImg} alt="" className=""/>
+              <img src={product?.images?.length > 0 ? image  : productDefaultImg} alt="" className=""/>
             </div>
           );
         })}
