@@ -1,8 +1,13 @@
+import Confirmation from "@/components/confirmation/Confirmation";
 import LoaderSVG from "@/components/LoaderSVG";
-import { productUpdatemodalState } from "@/lib/atom/modalOpenState";
-import { fetchGET } from "@/lib/fetch/fetch";
+import {
+  productDeleteConfirmationModalState,
+  productUpdatemodalState,
+} from "@/lib/atom/modalOpenState";
+import { fetchDELETE, fetchGET } from "@/lib/fetch/fetch";
 import React, { useEffect, useState } from "react";
 import ReactModal from "react-modal";
+import { toast } from "react-toastify";
 import { useRecoilState } from "recoil";
 import DashboardProductList from "./DashboardProductList";
 import ProductForm from "./ProductForm";
@@ -12,6 +17,8 @@ const DashboardProductsTable = () => {
   const [isOpenProductUpdateModal, setOpenProductUpdateModal] = useRecoilState(
     productUpdatemodalState
   );
+  const [isOpenDeleteConfirmationModal, setOpenDeleteConfirmationModal] =
+    useRecoilState(productDeleteConfirmationModalState);
   const [currentProduct, setCurrentProduct] = useState(null);
 
   useEffect(() => {
@@ -20,21 +27,57 @@ const DashboardProductsTable = () => {
     );
   });
 
-  const handleCloseProductModal = () => {
-    setOpenProductModal(false);
-    // start body scrolling
-    document.body.style.overflow = "unset";
-  };
-  const handleClick = (_id) => {
-    // stop body scrolling
-    document.body.style.overflow = "hidden";
-    //set current product
+  const changeCurrentProduct = (_id) => {
     setCurrentProduct(() => {
       return products.filter((product) => product._id === _id)[0];
     });
+  };
 
+  const openProductUpdateModal = (_id) => {
+    // stop body scrolling
+    document.body.style.overflow = "hidden";
+    changeCurrentProduct(_id);
     //open modal
     setOpenProductUpdateModal(true);
+  };
+
+  const closeProductUpdateModal = () => {
+    setOpenProductUpdateModal(false);
+    // start body scrolling
+    document.body.style.overflow = "unset";
+  };
+  const openDeleteConfirmationModal = (_id) => {
+    // stop body scrolling
+    document.body.style.overflow = "hidden";
+    changeCurrentProduct(_id);
+    //open modal
+    setOpenDeleteConfirmationModal(true);
+  };
+
+  const closeDeleteConfirmationModal = () => {
+    setOpenDeleteConfirmationModal(false);
+    // start body scrolling
+    document.body.style.overflow = "unset";
+  };
+
+  const handleDelete = async (_id) => {
+    // close the confirmation modal when clicked
+    setOpenDeleteConfirmationModal(false);
+
+    //start an toast when fetching start
+    await toast.promise(
+      fetchDELETE("/api/db/products", {
+        _id,
+      }).then((data) => console.log(data)),
+      {
+        pending: "Product is Deleteing...",
+        success: "Product Deleted",
+        error: "Something Error! Please Try Again",
+      }
+    );
+  };
+  const handleer = (p) => {
+    console.log(p);
   };
   return (
     <div className="product-table-container">
@@ -61,10 +104,12 @@ const DashboardProductsTable = () => {
               <DashboardProductList
                 key={product?._id}
                 product={product}
-                handleClick={() =>{
-                  console.log('dashboard table get clicked')
-                  handleClick(product?._id)}
-                } 
+                openProductUpdateModal={() =>
+                  openProductUpdateModal(product?._id)
+                }
+                openDeleteConfirmationModal={() =>
+                  openDeleteConfirmationModal(product?._id)
+                }
               />
             ))
           )}
@@ -73,12 +118,25 @@ const DashboardProductsTable = () => {
       <div>
         <ReactModal
           isOpen={isOpenProductUpdateModal}
-          onRequestClose={() => setOpenProductUpdateModal(false)}
+          onRequestClose={closeProductUpdateModal}
           className="modal"
         >
           <ProductForm
             data={currentProduct}
-            handleClose={() => setOpenProductUpdateModal(false)}
+            handleClose={closeProductUpdateModal}
+          />
+        </ReactModal>
+      </div>
+      <div>
+        <ReactModal
+          isOpen={isOpenDeleteConfirmationModal}
+          onRequestClose={closeDeleteConfirmationModal}
+          className="product-update-confirmation-modal"
+        >
+          <Confirmation
+            handleConfirm={() => handleDelete(currentProduct?._id)}
+            handleClose={closeDeleteConfirmationModal}
+            actionText="delete"
           />
         </ReactModal>
       </div>
