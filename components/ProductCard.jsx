@@ -1,14 +1,21 @@
+import {calculateOfferPrice} from "@/lib/product/calculateOfferPrice";
 import Link from "next/link";
-import React from "react";
+import React, {useEffect, useState} from "react";
 
-export default function ProductCard({
-  product: {_id, images, name, weight, price},
+const ProductCard = ({
+  product: {_id, images, name, weight, price, discountPercentage},
   bgColor,
   defaultImgHeight,
   desktopImgHeight,
   nameTextSize,
   priceTextSize,
-}) {
+}) => {
+  const [productPrice, setProductPrice] = useState(null);
+
+  useEffect(() => {
+    setProductPrice(calculateOfferPrice(price, discountPercentage));
+  }, [_id]);
+  //bg color
   const productDefaultImg =
     "https://i.ibb.co/P9fVhj6/pngfind-com-lemon-tea-png-6661129.png";
 
@@ -31,13 +38,18 @@ export default function ProductCard({
             {weight && <span className="text-sm"> - {weight}</span>}
           </h3>
           <div className={`product-price`}>
-            ${price}{" "}
+            ${productPrice?.priceAfterDiscount}{" "}
             <span className="text-zinc-500 text-base font-normal">
-              <span className="line-through">$100 </span>(5%)
+              <span className="line-through">
+                ${productPrice?.regularPrice}{" "}
+              </span>
+              ({discountPercentage})
             </span>
           </div>
         </div>
       </div>
     </Link>
   );
-}
+};
+
+export default ProductCard;

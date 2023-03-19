@@ -33,7 +33,7 @@
     @apply relative flex h-6 items-center gap-1 cursor-pointer hover:bg-gray-200 p-2 py-4 rounded;
   }
   .header-icon-notify {
-    @apply absolute z-10 h-2 w-2 top-1 left-2 rounded-full;
+    @apply absolute h-2 w-2 top-1 left-2 rounded-full;
   }
   .header-label {
     @apply hidden md:inline text-base capitalize text-gray-600;
@@ -107,20 +107,93 @@
     @apply h-3.5 w-3.5 text-gray-500;
   }
 
-  /*! menu   ======================*/
-  .product-table {
-    @apply text-left text-sm capitalize text-gray-700 tracking-wider font-light;
+  /*! dashboard product table   ======================*/
+  .product-table-wrapper {
+    @apply p-4;
+  }
+  .product-table-list {
+    @apply grid grid-cols-5 md:grid-cols-8 font-light md:text-base;
   }
   .product-table-header {
-    @apply border-b font-medium;
-  }
-  .product-table-head {
-    @apply px-6 py-4;
-  }
-  .product-table-body-row {
-    @apply border-b;
+    @apply grid grid-cols-5 text-sm md:text-base md:grid-cols-8 border-b text-left font-medium text-gray-600 capitalize py-3 bg-gray-200;
   }
   .product-table-data {
-    @apply whitespace-nowrap px-6 py-4 group-hover:underline cursor-pointer;
+    @apply text-gray-600 cursor-pointer border-b py-2 group-hover:bg-gray-200;
+  }
+
+  .product-table-data.delete-btn {
+    @apply text-[#e50914] capitalize font-medium;
+  }
+  
+  /*! product modal   ======================*/
+  .dashboard-product-modal {
+    @apply h-full w-full md:max-w-[80%] md:max-h-[80%] md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 fixed bg-red-50 outline-none rounded-lg p-4;
+  }
+  .modal-close-icon {
+    @apply h-6 w-6 absolute top-2 right-2 z-10;
+  }
+  /*! product form ======================*/
+  .product-form-container {
+    @apply p-2 overflow-y-scroll;
+  }
+  .product-form-wrapper {
+    @apply h-auto;
+  }
+  .product-form-header {
+    @apply h-auto;
+  }
+  .product-form-header-text {
+    @apply text-base capitalize font-medium text-gray-700 tracking-wider;
+  }
+  .product-form {
+    @apply grid grid-cols-1 sm:grid-cols-2 sm:gap-2;
+  }
+
+  .product-form-input {
+    @apply flex flex-col gap-1;
+  }
+  .product-form-textarea {
+    @apply flex flex-col sm:col-span-2 min-h-fit;
+  }
+  .product-form-input-field {
+    @apply px-2 p-1;
+  }
+  .product-form-textarea-field {
+    @apply px-2 p-1;
+  }
+  .product-form-input-label {
+    @apply text-sm sm:text-base text-gray-600 capitalize;
+  }
+
+  .product-form-image-pick-wrapper {
+    @apply sm:col-span-2 flex justify-between;
+  }
+
+  .product-form-image-pic-icon {
+    @apply h-12;
+  }
+  .product-form-image-preview-area {
+    @apply flex flex-wrap p-2 gap-4;
+  }
+
+  /*! product update confirmation modal ======================*/
+
+  .confirmation-modal-wrapper {
+    @apply fixed top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2  bg-gray-200 w-[20rem] px-4 py-6 rounded-lg;
+  }
+  .confirmation-modal-close-icon {
+    @apply h-4 w-4 text-gray-500 hover:text-gray-900 fixed top-2 right-2;
+  }
+  .confirmation-modal-header {
+    @apply flex flex-col items-center gap-2;
+  }
+  .confirmation-modal-logo {
+    @apply h-12 w-12 text-gray-700;
+  }
+  .confirmation-modal-text {
+    @apply text-xl font-medium capitalize text-gray-700;
+  }
+  .confirmation-modal-btn-container {
+    @apply flex justify-between mt-6;
   }
 }

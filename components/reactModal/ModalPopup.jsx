@@ -1,10 +1,10 @@
 import ReactModal from "react-modal";
 
-const ModalPopup = ({isOpen, hadnleCloseProductModal}) => {
+const ModalPopup = ({handleOpen, handleClose, Component, handleConfirm, data, style}) => {
   return (
     <div>
-      <ReactModal isOpen={isOpen} onRequestClose={hadnleCloseProductModal}>
-        <div>this is modal</div>
+      <ReactModal isOpen={handleOpen} onRequestClose={handleClose} className={`${style}`}>
+        <Component data={data} handleClose={handleClose} handleConfirm={handleConfirm}/>
       </ReactModal>
     </div>
   );

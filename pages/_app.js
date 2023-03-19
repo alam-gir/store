@@ -1,9 +1,9 @@
 import "@/styles/globals.css";
 import "@/styles/dashboard.css";
+import "react-toastify/dist/ReactToastify.css";
 import CartBtn from "@/components/CartBtn";
 import {RecoilRoot} from "recoil";
 import CartModal from "@/components/CartModal";
-
 export default function App({Component, pageProps}) {
   if (Component.getLayout) {
     return Component.getLayout(<Component {...pageProps} />);
