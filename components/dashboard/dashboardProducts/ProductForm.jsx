@@ -1,5 +1,6 @@
 import AddProductPreviewImg from "@/components/AddProductPreviewImg";
 import Button from "@/components/Button";
+import Confirmation from "@/components/confirmation/Confirmation";
 import { productUpdateConfirmationModalState } from "@/lib/atom/modalOpenState";
 import { fetchPUT } from "@/lib/fetch/fetch";
 import { PhotoIcon } from "@heroicons/react/24/outline";
@@ -8,7 +9,6 @@ import React, { useRef, useState, useEffect } from "react";
 import ReactModal from "react-modal";
 import { toast, ToastContainer } from "react-toastify";
 import { useRecoilState } from "recoil";
-import Confirmation from "./Confirmation";
 
 const ProductForm = ({ data, handleClose }) => {
   const initialInput = {
@@ -173,9 +173,8 @@ const ProductForm = ({ data, handleClose }) => {
       );
   };
 
-  // console debuggg
   return (
-    <div className="product-form-container max-h-full relative">
+    <div className=" product-form-containermax-h-full relative">
       <XMarkIcon
         onClick={handleClose}
         className="product-form-close-icon"

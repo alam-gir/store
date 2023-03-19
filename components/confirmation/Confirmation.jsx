@@ -9,7 +9,7 @@ const Confirmation = ({handleConfirm, handleClose, message}) => {
             <XMarkIcon onClick={handleClose} className='confirmation-modal-close-icon'/>
         <div className='confirmation-modal-header'>
             <DocumentTextIcon className='confirmation-modal-logo' />
-            <h1 className='confirmation-modal-text'>are you sure?</h1>
+            <h1 className='confirmation-modal-text'>are you sure to update?</h1>
         </div>
         <h2 className='confirmation-modal-message-container'>{message}</h2>
         <div className='confirmation-modal-btn-container'>
