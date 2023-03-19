@@ -1,16 +1,16 @@
 import LoaderSVG from "@/components/LoaderSVG";
-import ModalPopup from "@/components/reactModal/ModalPopup";
-import { productModalOpenState } from "@/lib/atom/modalOpenState";
+import { productUpdatemodalState } from "@/lib/atom/modalOpenState";
 import { fetchGET } from "@/lib/fetch/fetch";
 import React, { useEffect, useState } from "react";
+import ReactModal from "react-modal";
 import { useRecoilState } from "recoil";
 import DashboardProductList from "./DashboardProductList";
 import ProductForm from "./ProductForm";
 
 const DashboardProductsTable = () => {
   const [products, setProducts] = useState(null);
-  const [isOpenProductModal, setOpenProductModal] = useRecoilState(
-    productModalOpenState
+  const [isOpenProductUpdateModal, setOpenProductUpdateModal] = useRecoilState(
+    productUpdatemodalState
   );
   const [currentProduct, setCurrentProduct] = useState(null);
 
@@ -34,7 +34,7 @@ const DashboardProductsTable = () => {
     });
 
     //open modal
-    setOpenProductModal(true);
+    setOpenProductUpdateModal(true);
   };
   return (
     <div className="product-table-container">
@@ -68,13 +68,16 @@ const DashboardProductsTable = () => {
         </div>
       </div>
       <div>
-        <ModalPopup
-          Component={ProductForm}
-          data={currentProduct}
-          handleOpen={isOpenProductModal}
-          handleClose={handleCloseProductModal}
-          style={"dashboard-product-modal"}
-        />
+        <ReactModal
+          isOpen={isOpenProductUpdateModal}
+          onRequestClose={() => setOpenProductUpdateModal(false)}
+          className="dashboard-product-update-modal"
+        >
+          <ProductForm
+            data={currentProduct}
+            handleClose={() => setOpenProductUpdateModal(false)}
+          />
+        </ReactModal>
       </div>
     </div>
   );

@@ -1,14 +1,14 @@
 import AddProductPreviewImg from "@/components/AddProductPreviewImg";
 import Button from "@/components/Button";
-import ModalPopup from "@/components/reactModal/ModalPopup";
 import { productUpdateConfirmationModalState } from "@/lib/atom/modalOpenState";
 import { fetchPUT } from "@/lib/fetch/fetch";
 import { PhotoIcon } from "@heroicons/react/24/outline";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import React, { useRef, useState, useEffect } from "react";
+import ReactModal from "react-modal";
 import { toast, ToastContainer } from "react-toastify";
 import { useRecoilState } from "recoil";
-import ConfirmationModal from "./ConfirmationModal";
+import Confirmation from "./Confirmation";
 
 const ProductForm = ({ data, handleClose }) => {
   const initialInput = {
@@ -158,9 +158,9 @@ const ProductForm = ({ data, handleClose }) => {
       newProductImages: images !== initialImages ? images : null,
     };
     console.log(productUpdateInfo);
-    // close confirmation modal when get clicked 
+    // close confirmation modal when get clicked
     setOpenConfirmationModal(false),
-    //start an toast when fetching start
+      //start an toast when fetching start
       await toast.promise(
         fetchPUT(productUpdateServerUrl, productUpdateInfo).then((res) =>
           console.log(res)
@@ -178,7 +178,7 @@ const ProductForm = ({ data, handleClose }) => {
     <div className="product-form-container max-h-full relative">
       <XMarkIcon
         onClick={handleClose}
-        className="h-6 w-6 fixed top-4 right-4 text-gray-500 hover:text-gray-900"
+        className="product-form-close-icon"
       />
       <div className="product-form-wrapper">
         <div className="product-form-header">
@@ -389,12 +389,21 @@ const ProductForm = ({ data, handleClose }) => {
       </div>
       {/* confirmation modal  */}
       <div>
-        <ModalPopup
-          handleOpen={isOpenConfirmationModal}
-          handleClose={() => setOpenConfirmationModal(false)}
+        <ReactModal
+          isOpen={isOpenConfirmationModal}
+          onRequestClose={() => setOpenConfirmationModal(false)}
+          className="product-update-confirmation-modal"
+        >
+          <Confirmation handleConfirm={handleConfirm} handleClose={() => setOpenConfirmationModal(false)}/>
+        </ReactModal>
+
+        {/* <ReactModal>
+
+          isOpen={isOpenConfirmationModal}
+          handleClose={}
           Component={ConfirmationModal}
           handleConfirm={handleConfirm}
-        />
+        </ReactModal> */}
       </div>
 
       <ToastContainer />

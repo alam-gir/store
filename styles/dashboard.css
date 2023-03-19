@@ -120,17 +120,16 @@
   .product-table-data {
     @apply text-gray-600 cursor-pointer border-b py-2 group-hover:bg-gray-200;
   }
-
   .product-table-data.delete-btn {
-    @apply text-[#e50914] capitalize font-medium;
+    @apply text-[#e50914] capitalize font-medium hover:bg-[#e50914] hover:text-white hover:text-center transition-all;
   }
-  
+
   /*! product modal   ======================*/
-  .dashboard-product-modal {
+  .dashboard-product-update-modal {
     @apply h-full w-full md:max-w-[80%] md:max-h-[80%] md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 fixed bg-red-50 outline-none rounded-lg p-4;
   }
-  .modal-close-icon {
-    @apply h-6 w-6 absolute top-2 right-2 z-10;
+  .product-form-close-icon {
+    @apply h-6 w-6 fixed top-4 right-4 text-gray-500 hover:text-gray-900 z-10;
   }
   /*! product form ======================*/
   .product-form-container {
