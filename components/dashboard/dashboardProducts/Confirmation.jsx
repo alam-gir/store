@@ -2,7 +2,7 @@ import Button from '@/components/Button'
 import { DocumentTextIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import React from 'react'
 
-const ConfirmationModal = ({handleConfirm, handleClose, message}) => {
+const Confirmation = ({handleConfirm, handleClose, message}) => {
   return (
     // all styles provides from /styles/dashboard.css
     <div className='confirmation-modal-wrapper'>
@@ -20,4 +20,4 @@ const ConfirmationModal = ({handleConfirm, handleClose, message}) => {
   )
 }
 
-export default ConfirmationModal
+export default Confirmation
