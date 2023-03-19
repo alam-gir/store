@@ -2,9 +2,10 @@ import "@/styles/globals.css";
 import "@/styles/dashboard.css";
 import "react-toastify/dist/ReactToastify.css";
 import CartBtn from "@/components/CartBtn";
-import {RecoilRoot} from "recoil";
+import { RecoilRoot } from "recoil";
 import CartModal from "@/components/CartModal";
-export default function App({Component, pageProps}) {
+import { ToastContainer } from "react-toastify";
+export default function App({ Component, pageProps }) {
   if (Component.getLayout) {
     return Component.getLayout(<Component {...pageProps} />);
   }
@@ -19,6 +20,8 @@ export default function App({Component, pageProps}) {
           <CartModal />
         </div>
         <Component {...pageProps} />
+
+        <ToastContainer /> 
       </RecoilRoot>
     </>
   );

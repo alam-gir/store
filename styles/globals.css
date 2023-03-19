@@ -18,9 +18,7 @@
 
 @layer components {
   /* custom scrollbar  */
-  .customScrollbar {
-    @apply !scrollbar-thin !scrollbar-thumb-gray-300;
-  }
+  
 
   /* cart btns  */
   .cart-btn {

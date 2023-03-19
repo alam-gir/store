@@ -220,7 +220,26 @@ const handler = async (req, res) => {
   }
 
   if (req.method === "DELETE") {
-    // delete the post
+    const productDocId = req.body._id;
+    try {
+      //connect db
+      const { db } = await connectMongoDB();
+      // delete product
+      const res = await db
+        .collection("products")
+        .deleteOne({ _id: new ObjectId(productDocId) });
+      console.log("delete response", res);
+      return res
+        .status(200)
+        .json({
+          success: true,
+          message: `successfully deleted product _id: ${productDocId}`,
+        });
+    } catch (error) {
+      return res.send({ success: false, message: error.message });
+    }
+    console.log(id);
+    return res.status(200).json({ success: true, id });
   }
   return res.status(500).json({ message: "internal server error" });
 };

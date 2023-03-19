@@ -1,14 +1,14 @@
 import AddProductPreviewImg from "@/components/AddProductPreviewImg";
 import Button from "@/components/Button";
-import ModalPopup from "@/components/reactModal/ModalPopup";
+import Confirmation from "@/components/confirmation/Confirmation";
 import { productUpdateConfirmationModalState } from "@/lib/atom/modalOpenState";
 import { fetchPUT } from "@/lib/fetch/fetch";
 import { PhotoIcon } from "@heroicons/react/24/outline";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import React, { useRef, useState, useEffect } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import ReactModal from "react-modal";
+import { toast } from "react-toastify";
 import { useRecoilState } from "recoil";
-import ConfirmationModal from "./ConfirmationModal";
 
 const ProductForm = ({ data, handleClose }) => {
   const initialInput = {
@@ -157,14 +157,11 @@ const ProductForm = ({ data, handleClose }) => {
       newProductInfo: input,
       newProductImages: images !== initialImages ? images : null,
     };
-    console.log(productUpdateInfo);
-    // close confirmation modal when get clicked 
+    // close confirmation modal when get clicked
     setOpenConfirmationModal(false),
-    //start an toast when fetching start
+      //start an toast when fetching start
       await toast.promise(
-        fetchPUT(productUpdateServerUrl, productUpdateInfo).then((res) =>
-          console.log(res)
-        ),
+        fetchPUT(productUpdateServerUrl, productUpdateInfo),
         {
           pending: "Product is Updating...",
           success: "Product Updated",
@@ -173,13 +170,9 @@ const ProductForm = ({ data, handleClose }) => {
       );
   };
 
-  // console debuggg
   return (
     <div className="product-form-container max-h-full relative">
-      <XMarkIcon
-        onClick={handleClose}
-        className="h-6 w-6 fixed top-4 right-4 text-gray-500 hover:text-gray-900"
-      />
+      <XMarkIcon onClick={handleClose} className="product-form-close-icon" />
       <div className="product-form-wrapper">
         <div className="product-form-header">
           <h1 className="product-form-header-text">Edit Products</h1>
@@ -389,15 +382,18 @@ const ProductForm = ({ data, handleClose }) => {
       </div>
       {/* confirmation modal  */}
       <div>
-        <ModalPopup
-          handleOpen={isOpenConfirmationModal}
-          handleClose={() => setOpenConfirmationModal(false)}
-          Component={ConfirmationModal}
-          handleConfirm={handleConfirm}
-        />
+        <ReactModal
+          isOpen={isOpenConfirmationModal}
+          onRequestClose={() => setOpenConfirmationModal(false)}
+          className="product-update-confirmation-modal"
+        >
+          <Confirmation
+            handleConfirm={handleConfirm}
+            handleClose={() => setOpenConfirmationModal(false)}
+            actionText="update"
+          />
+        </ReactModal>
       </div>
-
-      <ToastContainer />
     </div>
   );
 };
