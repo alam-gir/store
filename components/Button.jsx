@@ -15,7 +15,7 @@ const Button = ({
   return (
     <button
       onClick={handleClick}
-      className={`${btnTextClr} ${btnBgClr} ${textSize} text-center w-full capitalize font-semibold py-2 tracking-wide rounded-md hover:brightness-90 ${
+      className={`${btnTextClr} ${btnBgClr} ${textSize} flex justify-center items-center text-center w-full capitalize font-semibold py-2 tracking-wide rounded-md hover:brightness-90 ${
         disable ? "brightness-75 cursor-not-allowed" : ""
       }`}
       disabled={disable}

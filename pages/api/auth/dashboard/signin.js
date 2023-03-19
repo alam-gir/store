@@ -34,20 +34,20 @@ const signin = async (req, res) => {
 
           res.setHeader('Set-Cookie', serialized)
         // set cookies
-        return res.status(200).json({ success: true, message: "user logged in" });
+        return res.status(200).json({ success: true, status:'success', message: "user logged in" });
       } else {
         return res
           .status(404)
-          .json({ success: false, message: "user not found." });
+          .json({ success: false, status:'notFound', message: "user not found." });
       }
     } catch (error) {
       console.log(error.message);
-      return res.send(error.message);
+      return res.send({success: false, status: 'error', error: error.message});
     }
   }
   return res
     .status(500)
-    .json({ success: false, message: "Internal server error!" });
+    .json({ success: false, status: 'error', message: "Internal server error!" });
 };
 
 export default signin;
