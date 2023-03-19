@@ -1,9 +1,9 @@
-import {calculateOfferPrice} from "@/lib/product/calculateOfferPrice";
+import { calculateOfferPrice } from "@/lib/product/calculateOfferPrice";
 import Link from "next/link";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 
 const ProductCard = ({
-  product: {_id, images, name, weight, price, discountPercentage},
+  product: { _id, images, name, weight, price, discountPercentage },
   bgColor,
   defaultImgHeight,
   desktopImgHeight,
@@ -43,7 +43,7 @@ const ProductCard = ({
               <span className="line-through">
                 ${productPrice?.regularPrice}{" "}
               </span>
-              ({discountPercentage})
+              - {discountPercentage}%
             </span>
           </div>
         </div>

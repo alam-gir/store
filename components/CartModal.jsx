@@ -1,18 +1,18 @@
-import {toggleCartState} from "@/lib/atom/cartRecoil";
-import {useEffect} from "react";
-import {useRecoilState} from "recoil";
-import {XMarkIcon} from "@heroicons/react/24/outline";
+import { toggleCartState } from "@/lib/atom/cartRecoil";
+import { useEffect } from "react";
+import { useRecoilState } from "recoil";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import CartItem from "./CartItem";
 import CartPricing from "./CartPricing";
-import {cartProductsIdState} from "@/lib/atom/cartProductsIdState";
-import {cartState} from "@/lib/atom/cartState";
+import { cartProductsIdState } from "@/lib/atom/cartProductsIdState";
+import { cartState } from "@/lib/atom/cartState";
 import {
   handleDecrease,
   handleDelete,
   handleIncrease,
 } from "@/lib/cart/cartFunctions";
 import Link from "next/link";
-import {Button} from "@/components/Button";
+import { Button } from "@/components/Button";
 
 export default function CartModal() {
   const [isOpenCart, setOpenCart] = useRecoilState(toggleCartState);
@@ -53,7 +53,7 @@ export default function CartModal() {
       {isOpenCart && (
         <>
           <div className="cartModalOverlay" onClick={handleClose}></div>
-          <div className="cartModal customScrollbar">
+          <div className="cartModal">
             {/* header  */}
             <header className="cartModalHeader">
               <div className="wrapper">
@@ -64,30 +64,28 @@ export default function CartModal() {
             {/* body  */}
             {cart?.products?.length > 0 ? (
               <>
-                <div className="wrapper">
-                  {/* Product Items  */}
-                  <div className="cartItemContainer">
-                    {cart?.products?.map((product) => (
-                      <div key={product._id}>
-                        <CartItem
-                          product={product}
-                          handleIncrease={() =>
-                            handleIncrease(product, setCartProductsId)
-                          }
-                          handleDecrease={() =>
-                            handleDecrease(product, setCartProductsId)
-                          }
-                          handleDelete={() =>
-                            handleDelete(product, setCartProductsId)
-                          }
-                        />
-                      </div>
-                    ))}
-                  </div>
+                {/* Product Items  */}
+                <div className="cartItemContainer customScrollbar px-4 my-4">
+                  {cart?.products?.map((product) => (
+                    <div key={product._id}>
+                      <CartItem
+                        product={product}
+                        handleIncrease={() =>
+                          handleIncrease(product, setCartProductsId)
+                        }
+                        handleDecrease={() =>
+                          handleDecrease(product, setCartProductsId)
+                        }
+                        handleDelete={() =>
+                          handleDelete(product, setCartProductsId)
+                        }
+                      />
+                    </div>
+                  ))}
                 </div>
 
                 {/* Check Out Button  */}
-                <div className="checkOutSection">
+                <div className="checkOutBtnSection">
                   <div className="wrapper">
                     <div className="checkOutWrapper">
                       <ul className="w-3/5">

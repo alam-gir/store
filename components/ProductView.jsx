@@ -6,6 +6,8 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { cartState } from "@/lib/atom/cartState";
 import { cartProductsIdState } from "@/lib/atom/cartProductsIdState";
 import { handleAddToCart } from "@/lib/cart/cartFunctions";
+import { isCarted } from "@/lib/cart/checkStatus";
+import { calculateOfferPrice } from "@/lib/product/calculateOfferPrice";
 
 // Carousel
 import { Carousel } from "react-responsive-carousel";
@@ -61,7 +63,7 @@ const ProductView = ({ products }) => {
                     <img
                       src={
                         currentProduct?.product?.images?.length > 0
-                          ? currentProduct?.product?.image
+                          ? image
                           : productDefaultImg
                       }
                       className="h-full w-full object-contain"
@@ -94,12 +96,12 @@ const ProductView = ({ products }) => {
                 <p>{currentProduct?.product?.category}</p>
               </div>
               <div className="productPrice">
-                <h1>${currentProduct?.product?.priceAfterDiscount}</h1>
+                <h1>${currentProduct?.price?.priceAfterDiscount}</h1>
                 <p>
                   <span className="line-through">
-                    ${currentProduct?.product?.regularPrice}{" "}
+                    ${currentProduct?.price?.regularPrice}{" "}
                   </span>
-                  - {currentProduct?.product?.discountPercentage}%
+                  - {currentProduct?.price?.discountPercentage}%
                 </p>
               </div>
             </div>
