@@ -5,15 +5,19 @@ const Button = ({
   bgColor,
   text,
   textSize,
-  px,
   handleClick,
   type,
-  disable
+  disable,
 }) => {
+  const btnTextClr = textColor ? textColor : "text-zinc-900";
+  const btnBgClr = bgColor ? bgColor : "bg-zinc-300";
+
   return (
     <button
       onClick={handleClick}
-      className={`${textColor} ${bgColor} ${textSize} capitalize rounded-lg flex justify-center px-4 ${px} font-semibold  py-1.5 hover:brightness-75 ${disable ? 'brightness-75 cursor-not-allowed' : ''}`}
+      className={`${btnTextClr} ${btnBgClr} ${textSize} text-center w-full capitalize font-semibold py-2 tracking-wide rounded-md hover:brightness-90 ${
+        disable ? "brightness-75 cursor-not-allowed" : ""
+      }`}
       disabled={disable}
       type={type}>
       {text}

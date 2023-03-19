@@ -1,19 +1,20 @@
-import {toggleCartState} from "@/lib/atom/cartRecoil";
-import {useEffect} from "react";
-import {useRecoilState} from "recoil";
-import {XMarkIcon} from "@heroicons/react/24/outline";
+import { toggleCartState } from "@/lib/atom/cartRecoil";
+import { useEffect } from "react";
+import { useRecoilState } from "recoil";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import CartItem from "./CartItem";
 import CartPricing from "./CartPricing";
-import {cartProductsIdState} from "@/lib/atom/cartProductsIdState";
-import {cartState} from "@/lib/atom/cartState";
+import { cartProductsIdState } from "@/lib/atom/cartProductsIdState";
+import { cartState } from "@/lib/atom/cartState";
 import {
   handleDecrease,
   handleDelete,
   handleIncrease,
 } from "@/lib/cart/cartFunctions";
 import Link from "next/link";
+import { Button } from "@/components/Button";
 
-const CartModal = () => {
+export default function CartModal() {
   const [isOpenCart, setOpenCart] = useRecoilState(toggleCartState);
   const [cartProductsId, setCartProductsId] =
     useRecoilState(cartProductsIdState);
@@ -47,13 +48,12 @@ const CartModal = () => {
     setOpenCart(!isOpenCart);
   };
 
-
   return (
     <>
       {isOpenCart && (
         <>
           <div className="cartModalOverlay" onClick={handleClose}></div>
-          <div className="cartModal customScrollbar">
+          <div className="cartModal">
             {/* header  */}
             <header className="cartModalHeader">
               <div className="wrapper">
@@ -64,48 +64,51 @@ const CartModal = () => {
             {/* body  */}
             {cart?.products?.length > 0 ? (
               <>
-                <div className="wrapper">
-                  {/* Product Items  */}
-                  <div className="cartItemContainer">
-                    {cart?.products?.map((product) => (
-                      <div key={product._id}>
-                        <CartItem
-                          product={product}
-                          handleIncrease={() =>
-                            handleIncrease(product, setCartProductsId)
-                          }
-                          handleDecrease={() =>
-                            handleDecrease(product, setCartProductsId)
-                          }
-                          handleDelete={() =>
-                            handleDelete(product, setCartProductsId)
-                          }
-                        />
-                      </div>
-                    ))}
-                  </div>
+                {/* Product Items  */}
+                <div className="cartItemContainer customScrollbar px-4 my-4">
+                  {cart?.products?.map((product) => (
+                    <div key={product._id}>
+                      <CartItem
+                        product={product}
+                        handleIncrease={() =>
+                          handleIncrease(product, setCartProductsId)
+                        }
+                        handleDecrease={() =>
+                          handleDecrease(product, setCartProductsId)
+                        }
+                        handleDelete={() =>
+                          handleDelete(product, setCartProductsId)
+                        }
+                      />
+                    </div>
+                  ))}
                 </div>
 
                 {/* Check Out Button  */}
-                <div className="checkOutSection">
+                <div className="checkOutBtnSection">
                   <div className="wrapper">
                     <div className="checkOutWrapper">
                       <ul className="w-3/5">
                         <li>
                           <span>Total: </span>
-                          <span className="text-red-500 font-semibold">
+                          <span className="text-red-600 font-semibold">
                             ${cart.priceDetails.totalAmount}
                           </span>
                         </li>
                         <li>
                           <span>Delivery: </span>
-                          <span className="text-red-500 font-semibold">
+                          <span className="text-red-600 font-semibold">
                             ${cart.priceDetails.deliveryCharge}
                           </span>
                         </li>
                       </ul>
                       <Link href="/placeorder" className="w-2/5">
                         <button className="checkOutBtn">Check Out</button>
+                        {/* <Button
+                          text={"Check Out"}
+                          bgColor={"bg-red-600"}
+                          textColor={"text-white"}
+                        /> */}
                       </Link>
                     </div>
                   </div>
@@ -121,6 +124,4 @@ const CartModal = () => {
       )}
     </>
   );
-};
-
-export default CartModal;
+}

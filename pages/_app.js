@@ -1,8 +1,5 @@
 import "@/styles/globals.css";
-import "@/styles/product-view.css";
 import "@/styles/dashboard.css";
-import "./../components/slickCarousel/slick.css";
-import "./../components/slickCarousel/slick-theme.css";
 import "react-toastify/dist/ReactToastify.css";
 import CartBtn from "@/components/CartBtn";
 import { RecoilRoot } from "recoil";
@@ -24,7 +21,7 @@ export default function App({ Component, pageProps }) {
         </div>
         <Component {...pageProps} />
 
-        <ToastContainer />
+        <ToastContainer /> 
       </RecoilRoot>
     </>
   );

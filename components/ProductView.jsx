@@ -1,13 +1,17 @@
 import { useRouter } from "next/router";
 import Button from "./Button";
 import { useState, useEffect } from "react";
-import ProductImageViewSlider from "./slickCarousel/ProductImageViewSlider";
-import ProductsCardSlider from "./slickCarousel/ProductsCardSlider";
-import { useRecoilState } from "recoil";
+import MoreRelatedProduct from "./MoreRelatedProduct";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { cartState } from "@/lib/atom/cartState";
 import { cartProductsIdState } from "@/lib/atom/cartProductsIdState";
 import { handleAddToCart } from "@/lib/cart/cartFunctions";
-import { calculateOfferPrice } from "@/lib/product/calculateOfferPrice";
 import { isCarted } from "@/lib/cart/checkStatus";
+import { calculateOfferPrice } from "@/lib/product/calculateOfferPrice";
+
+// Carousel
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 
 const ProductView = ({ products }) => {
   const [cartProductsId, setCartProductsId] =
@@ -34,91 +38,101 @@ const ProductView = ({ products }) => {
     });
   }, [productId]);
 
-  return (
+  const productDefaultImg =
+    "https://i.ibb.co/P9fVhj6/pngfind-com-lemon-tea-png-6661129.png";
 
-    //style provides in /styles/product-view.css
-    <div className="container">
-      <div className="wrapper">
+  return (
+    <div className="productViewContainer">
+      <div className="productViewGrid">
         {/* product image sliderrrrrrr */}
-        <div className="image-slider-container">
-          <div className="image-slider-wrapper">
-            <ProductImageViewSlider product={currentProduct?.product} />
+        <div className="productCarousel">
+          <div className="productCarouselWrapper">
+            <Carousel
+              dynamicHeight={true}
+              showArrows={true}
+              showThumbs={true}
+              infiniteLoop={true}
+              stopOnHover={true}
+              swipeable={true}
+              emulateTouch={true}
+              showIndicators={false}
+              thumbWidth={60}>
+              {currentProduct?.product?.images?.map((image, index) => {
+                return (
+                  <div key={index} className="carouselImgWrapper">
+                    <img
+                      src={
+                        currentProduct?.product?.images?.length > 0
+                          ? image
+                          : productDefaultImg
+                      }
+                      className="h-full w-full object-contain"
+                    />
+                  </div>
+                );
+              })}
+
+              {/* This is for testing purpose --static design */}
+              {/* <div className="carouselImgWrapper">
+                <img
+                  src={productDefaultImg}
+                  className="h-full w-full object-contain"
+                />
+              </div> */}
+            </Carousel>
           </div>
         </div>
-
-        {/* product details  */}
-        <div className="details-container">
-          {/* header  */}
-          <div className="details-header">
-            {/* left */}
-            <div className="details-header-left ">
-              <div className="details-header-left-top">
-                <h2 className="name">{currentProduct?.product?.name}</h2>
-                <h2 className="weight">
-                  {currentProduct?.product?.weight &&
-                    `- ${currentProduct?.product?.weight}`}
+        {/* Product Details */}
+        <div className="productDetails">
+          <div className="productDetailsWrapper">
+            <div className="productNamePrice">
+              <div className="productName">
+                <h2>
+                  {currentProduct?.product?.name}{" "}
+                  <span className="text-zinc-500 text-base">
+                    ({currentProduct?.product?.weight})
+                  </span>
                 </h2>
+                <p>{currentProduct?.product?.category}</p>
               </div>
-              <h2 className="category">{currentProduct?.product?.category}</h2>
-            </div>
-
-            {/* right */}
-            <div className="details-header-right">
-              <h2 className="price">
-                ${currentProduct?.price?.priceAfterDiscount}
-              </h2>
-              {currentProduct?.price?.discountPercentage > 0 && (
-                <h2 className="regular-price">
-                  <span className="line-through text-[#9C9C9C]">
-                    ${currentProduct?.price?.regularPrice}
+              <div className="productPrice">
+                <h1>${currentProduct?.price?.priceAfterDiscount}</h1>
+                <p>
+                  <span className="line-through">
+                    ${currentProduct?.price?.regularPrice}{" "}
                   </span>
-                  <span className="text-[#9C9C9C]">
-                    - {currentProduct?.price?.discountPercentage}%
-                  </span>
-                </h2>
-              )}
+                  - {currentProduct?.price?.discountPercentage}%
+                </p>
+              </div>
             </div>
-          </div>
-
-          {/* description */}
-          <div className="description-container">
-            {/* //header */}
-            <h1 className="description-header">description</h1>
-            <p className="description-text">
-              {currentProduct?.product?.description}
-            </p>
-          </div>
-
-          {/*  action buttons */}
-          <div className="action-btn-container">
-            <Button
-              text={"order now"}
-              textColor={"text-gray-900"}
-              bgColor={"bg-[#D9D9D9]"}
-              textSize={"text-[16px]"}
-              px={"px-12"}
-            />
-            <Button
-              text={
-                isCarted(currentProduct?.product?._id, cartProductsId)
-                  ? "in cart"
-                  : "add to cart"
-              }
-              textColor={"text-white"}
-              bgColor={"bg-[#227C70]"}
-              textSize={"text-[16px]"}
-              px={"px-12"}
-              handleClick={() =>
-                handleAddToCart(currentProduct?.product?._id, setCartProductsId)
-              }
-            />
-          </div>
-
-          {/* productSlider  */}
-          <div className="w-[100%] mt-24">
-            <h2 className="capitalize py-2 text-gray-500">you might like also</h2>
-            <div className="w-[95%] m-auto">
-              <ProductsCardSlider products={products} />
+            <div className="productDesc">
+              <h2>Description</h2>
+              <p>{currentProduct?.product?.description}</p>
+            </div>
+            <div className="orderBtns">
+              <Button text="Buy Now" />
+              <Button
+                text={
+                  isCarted(currentProduct?.product?._id, cartProductsId)
+                    ? "in cart"
+                    : "add to cart"
+                }
+                bgColor={"bg-red-600"}
+                textColor={"text-white"}
+                handleClick={() =>
+                  handleAddToCart(
+                    currentProduct?.product?._id,
+                    setCartProductsId
+                  )
+                }
+              />
+            </div>
+            <div className="moreRelatedProducts">
+              <h2>Related Products</h2>
+              {/* productSlider  */}
+              <div className="w-full m-auto">
+                <MoreRelatedProduct products={products} />
+              </div>
             </div>
           </div>
         </div>
