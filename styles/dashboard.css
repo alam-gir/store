@@ -289,7 +289,7 @@
     @apply h-full w-full object-contain;
   }
   .formik .image-section .body .image-container .remove-btn {
-    @apply absolute top-0 right-0 h-8 w-8 p-2 hover:p-0 transition-all duration-200 bg-[rgba(0,0,0,0.05)] z-10;
+    @apply absolute top-0 right-0 h-8 w-8 p-2 hover:p-1 transition-all duration-200 bg-white z-10;
   }
   .formik .image-section .body .image-container .remove-btn .icon {
     @apply h-full w-full text-[#e50914];

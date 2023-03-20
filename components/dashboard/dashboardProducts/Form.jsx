@@ -1,10 +1,15 @@
-import { MinusIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
+import { async } from "@firebase/util";
+import {
+  MinusIcon,
+  PlusCircleIcon,
+  TrashIcon,
+} from "@heroicons/react/24/outline";
 import { useFormik } from "formik";
 import React, { useRef, useState } from "react";
 
 const Form = ({ givenInitial }) => {
-    const fileInput = useRef(null)
-  const [selectedImages, setImages] = useState("");
+  const fileInput = useRef(null);
+  const [selectedImages, setImages] = useState([]);
   const initialValues = givenInitial
     ? givenInitial
     : {
@@ -24,12 +29,38 @@ const Form = ({ givenInitial }) => {
   const formik = useFormik({
     initialValues,
     onSubmit: (values) => {
-      console.log(values);
+      //   console.log(values);
     },
   });
 
-  console.log(fileInput)
-  const handleChangeImage = (e) => {};
+  //get images on change
+  const handleChangeImage = (e) => {
+    const data = e.target.files;
+    if (data.length) {
+      for (let file of data) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (ev) => {
+          const data = ev?.target?.result;
+          setImages((prev) => {
+            let temp = [...prev];
+            if (!temp.includes(data)) {
+              temp.push(data);
+            }
+            return temp;
+          });
+        };
+      }
+    }
+  };
+
+  // delete image from selected images
+  const handleDeleteImage = (image) => {
+    setImages((prev) => prev.filter((item) => item !== image));
+    //make file input null for taking same photo again
+    fileInput.current.value = null
+  };
+  console.log(selectedImages);
   return (
     // all design will provided from /styles/dashboard.css
     <div className="formik-container">
@@ -183,8 +214,8 @@ const Form = ({ givenInitial }) => {
             id="images"
             name="images"
             type="file"
-            onChange={(e) => handleChangeImage(e)}
-            value={selectedImages}
+            onChange={handleChangeImage}
+            multiple
           />
           {/* ------------------------------ */}
           {/* images section */}
@@ -194,16 +225,23 @@ const Form = ({ givenInitial }) => {
               <h4 className="text">photos</h4>
             </div>
             <div className="body">
-              <div className="image-container">
-                <button className="remove-btn">
-                  <MinusIcon className="icon" />
-                </button>
-                <img
-                  src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvZHVjdHxlbnwwfHwwfHw%3D&w=1000&q=80"
-                  alt=""
-                />
-              </div>
-              <button className="add-btn group">
+              {selectedImages.length > 0
+                ? selectedImages.map((image) => (
+                    <div className="image-container">
+                      <button className="remove-btn">
+                        <TrashIcon
+                          onClick={() => handleDeleteImage(image)}
+                          className="icon"
+                        />
+                      </button>
+                      <img src={image} alt="" />
+                    </div>
+                  ))
+                : null}
+              <button
+                onClick={() => fileInput.current.click()}
+                className="add-btn group"
+              >
                 <PlusCircleIcon className="icon group-hover:!p-1" />{" "}
                 <span className="text">add new photo</span>
               </button>
