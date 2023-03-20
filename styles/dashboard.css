@@ -117,8 +117,8 @@
   .dashboard-product-header .text {
     @apply col-start-1 row-start-2 md:col-start-1 md:row-start-1 text-gray-500 capitalize text-base tracking-wide flex items-end gap-1;
   }
-  .dashboard-product-header .text span{
-    @apply underline text-gray-800
+  .dashboard-product-header .text span {
+    @apply underline text-gray-800;
   }
   .dashboard-product-header .btn-container {
     @apply flex justify-start md:justify-center;
@@ -222,4 +222,99 @@
   .confirmation-modal-btn-container {
     @apply flex justify-between gap-4 mt-6;
   }
+
+  /*! Formik Product Form ======================*/
+  .formik-container {
+    @apply h-full w-full;
+  }
+  .formik-wrapper {
+    @apply h-full w-full;
+  }
+  .formik {
+    @apply w-full h-full grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3 auto-rows-max;
+  }
+  .formik .input-container,
+  .formik .textarea-container {
+    @apply relative h-full col-span-2 flex;
+  }
+  .formik .input-container.price,
+  .formik .input-container.weight,
+  .formik .input-container.brand,
+  .formik .input-container.stock {
+    @apply col-span-1;
+  }
+  /* for md  */
+  .formik .input-container.name,
+  .formik .input-container.category {
+    @apply md:col-span-2;
+  }
+  .formik .input-container.id,
+  .formik .input-container.price,
+  .formik .input-container.input-container.weight,
+  .formik .input-container.stock,
+  .formik .input-container.brand {
+    @apply md:col-span-1;
+  }
+  .formik .textarea-container.description, .formik .input-container.date {
+    @apply md:col-span-3;
+  }
+  .formik .input-container.date span{
+    @apply bg-red-100 px-4 flex items-center text-gray-600 font-medium tracking-widest
+  }
+  .formik .label {
+    @apply bg-[#e50914] h-full w-auto text-sm md:text-base flex items-center text-white capitalize p-2 md:px-4;
+  }
+  .formik .input-field,
+  .formik .textarea-field {
+    @apply border w-full h-full p-1 text-gray-500 tracking-wider outline-none focus:shadow-lg;
+  }
+  /* formik image section  */
+  .formik .image-section {
+    @apply col-span-2 md:col-span-3;
+  }
+  .formik .image-section .header {
+    @apply p-0 mt-1;
+  }
+  .formik .image-section .header h4 {
+    @apply capitalize px-2 p-1.5 text-base text-white bg-[#e50914] h-full w-full;
+  }
+  .formik .image-section .body {
+    @apply h-auto w-full border border-t-0 p-4 flex flex-wrap gap-2 justify-center;
+  }
+  .formik .image-section .body .image-container,
+  .formik .image-section .body .add-btn {
+    @apply h-40 w-28 md:h-52 md:w-36 bg-white border relative;
+  }
+  .formik .image-section .body .image-container img {
+    @apply h-full w-full object-contain;
+  }
+  .formik .image-section .body .image-container .remove-btn {
+    @apply absolute top-0 right-0 h-8 w-8 p-2 hover:p-0 transition-all duration-200 bg-[rgba(0,0,0,0.05)] z-10;
+  }
+  .formik .image-section .body .image-container .remove-btn .icon {
+    @apply h-full w-full text-[#e50914];
+  }
+  .formik .image-section .body .add-btn {
+    @apply p-2 hover:bg-red-50;
+  }
+  .formik .image-section .body .add-btn .icon {
+    @apply w-full p-3 text-gray-500 transition-all duration-200;
+  }
+  .formik .image-section .body .add-btn .text {
+    @apply text-sm capitalize text-gray-500 font-bold;
+  }
+  .formik .submit-btn{
+    @apply col-span-2 md:col-span-3 bg-[#e50914] text-white p-2 capitalize font-medium tracking-wider
+  }
+}
+
+/* ! product modal =================== */
+.product-modal{
+  @apply relative h-screen w-screen md:max-h-[80%] md:max-w-[80%] rounded-lg top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-red-50  overflow-y-scroll overflow-x-hidden
+}
+.product-modal-close-icon{
+  @apply h-6 w-6 fixed top-2 right-1 z-10 text-gray-600 hover:text-gray-800 hover:h-7 hover:w-7 transition-all duration-200
+}
+.product-modal-body{
+  @apply p-4
 }
