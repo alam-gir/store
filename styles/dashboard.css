@@ -107,6 +107,33 @@
     @apply h-3.5 w-3.5 text-gray-500;
   }
 
+  /*! dashboard product   ======================*/
+  .dashboard-product-wrapper {
+    @apply w-screen px-4 py-2;
+  }
+  .dashboard-product-header {
+    @apply w-full h-auto grid grid-cols-2 grid-rows-2 md:grid-cols-3 md:grid-rows-1;
+  }
+  .dashboard-product-header .text {
+    @apply col-start-1 row-start-2 md:col-start-1 md:row-start-1 text-gray-500 capitalize text-base tracking-wide flex items-end gap-1;
+  }
+  .dashboard-product-header .text span{
+    @apply underline text-gray-800
+  }
+  .dashboard-product-header .btn-container {
+    @apply flex justify-start md:justify-center;
+  }
+  .dashboard-product-header .searchbar-container {
+    @apply flex w-full justify-end;
+  }
+
+  .dashboard-product-header .btn-container .btn {
+    @apply w-fit whitespace-nowrap justify-start px-2 py-1 bg-[#e50914] gap-2 text-white hover:brightness-75;
+  }
+  .dashboard-product-header .btn-container .btn .icon {
+    @apply h-6 w-6;
+  }
+
   /*! dashboard product table   ======================*/
   .product-table-wrapper {
     @apply p-4;
@@ -175,10 +202,10 @@
     @apply flex flex-wrap p-2 gap-4;
   }
 
-  /*! product update confirmation modal ======================*/
+  /*! confirmation ======================*/
 
   .confirmation-modal-wrapper {
-    @apply fixed top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2  bg-gray-200 w-[20rem] px-4 py-6 rounded-lg;
+    @apply fixed top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2  bg-gray-200 min-w-[20rem] px-4 py-6 rounded-lg;
   }
   .confirmation-modal-close-icon {
     @apply h-4 w-4 text-gray-500 hover:text-gray-900 fixed top-2 right-2;
@@ -193,6 +220,6 @@
     @apply text-xl font-medium capitalize text-gray-700;
   }
   .confirmation-modal-btn-container {
-    @apply flex justify-between mt-6;
+    @apply flex justify-between gap-4 mt-6;
   }
 }
