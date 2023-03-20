@@ -14,11 +14,16 @@
   img {
     @apply h-full;
   }
+  input[type="search"]::-webkit-search-cancel-button {
+    display: none
+  }
+  input[type="number"]::-webkit-inner-spin-button{
+    display: none
+  }
 }
 
 @layer components {
   /* custom scrollbar  */
-  
 
   /* cart btns  */
   .cart-btn {
@@ -40,6 +45,28 @@
   /* Main Body Wrappar */
   .wrapper {
     @apply mx-auto w-[92%] xl:max-w-5xl;
+  }
+
+  /* 
+  --------------------------
+  ------- searchbar --------
+  --------------------------
+  */
+  .searchbar-wrapper {
+    @apply relative w-full 
+  }
+
+  .searchbar-form {
+    @apply w-[100%] h-auto;
+  }
+  .searchbar-form .icon-container {
+    @apply h-full w-8 md:w-12 absolute top-1/2 -translate-y-1/2 rounded-l flex justify-center items-center bg-[#e50914];
+  }
+  .searchbar-form .icon-container .icon {
+    @apply h-2/3 w-2/3 text-white;
+  }
+  .searchbar-form .input-field {
+    @apply h-full w-full px-2 pl-10 md:pl-14 py-2 rounded bg-red-50 shadow-sm text-gray-700 outline-none focus:bg-white appearance-none;
   }
 
   /* 

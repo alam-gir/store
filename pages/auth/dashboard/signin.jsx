@@ -1,74 +1,124 @@
 import LoaderSVG from "@/components/LoaderSVG";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { useFormik } from "formik";
+import { fetchPOST } from "@/lib/fetch/fetch";
+import Button from "@/components/Button";
 
 const signin = () => {
-  const initialInput = { email: "", password: "" };
-  const [input, setInput] = useState(initialInput);
-  const [isLoading, setLoading] = useState(false)
-
-
-
-  const changeHandler = (e) => {
-    setInput((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+  const initialResponse = {
+    error: "",
+    pending: false,
+    success: false,
   };
   const router = useRouter();
+  const [response, setResponse] = useState(initialResponse);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    //start loading
-    setLoading(true)
-
-    // send request
-    const res = await fetch("/api/auth/dashboard/signin", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(input),
-    });
-
-    const data = await res.json();
-    if (data.success) {
-      // redirect to dashboard
-      router.push('http://localhost:3000/dashboard')
-      //empty form
-      // setInput(initialInput);
-
+  //formik validation
+  const validate = (values) => {
+    const errors = {};
+    // validation logic
+    if (!values.email.trim()) {
+      errors.email = "email required!";
+    } else if (
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)
+    ) {
+      errors.email = "invalid email!";
     }
-    if (!data.success) {
-      console.log(data);
+    if (!values.password.trim()) {
+      errors.password = "password required!";
+    } else if (values.password.length < 5) {
+      errors.password = "password must be minimum 5 characters!";
+    } else if (values.password.length > 16) {
+      errors.password = "password must be less then 16 characters!";
     }
-
-    //stop loading
-    setLoading(false)
+    //return errors
+    return errors;
   };
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validate,
+    onSubmit: (values) => {
+      // start loading
+      setResponse((prev) => ({ ...initialResponse, pending: true }));
+      // send request for signin....
+      fetchPOST("/api/auth/dashboard/signin", values)
+        .then((data) => {
+          if (data.status === "success") {
+            // make response initialResponse
+            setResponse(initialResponse);
+            // redirect to the dashboard page
+            router.push("http://localhost:3000/dashboard");
+          } else {
+            if (data.status === "notFound") {
+              setResponse((prev) => ({
+                ...prev,
+                error: "wrong email or password!",
+                pending: false,
+              }));
+            } else if (data.status === "error") {
+              setResponse((prev) => ({
+                ...prev,
+                error: "something wrong please try again!",
+                pending: false,
+              }));
+            }
+          }
+        })
+        .catch((err) =>
+          setResponse((prev) => ({
+            ...prev,
+            error: {
+              ...prev.error,
+              status: true,
+              message: err.message,
+            },
+          }))
+        )
+        .finally(() => setResponse((prev) => ({ ...prev, pending: false })));
+    },
+  });
 
   return (
     <div>
-      <form>
+      {/* sign in form */}
+      <form onSubmit={formik.handleSubmit}>
+        <label htmlFor="email">Email Address</label>
         <input
-          onChange={changeHandler}
-          type="email"
-          placeholder="email"
+          id="email"
           name="email"
-          value={input.email}
+          type="email"
+          onChange={formik.handleChange}
+          value={formik.values.email}
         />
+        {formik.errors.email ? <div>{formik.errors.email}</div> : null}
+        <label htmlFor="password">Password</label>
         <input
-          onChange={changeHandler}
-          type="password"
-          placeholder="password"
+          id="password"
           name="password"
-          value={input.password}
+          type="password"
+          onChange={formik.handleChange}
+          value={formik.values.password}
         />
-        <button onClick={handleSubmit} disabled={isLoading} type="submit">
-          {isLoading ? <LoaderSVG color={"fill-gray-300"}/> : 'sign in'}
-        </button>
+        {formik.errors.password ? <div>{formik.errors.password}</div> : null}
+        <Button
+          text={
+            response.pending ? <LoaderSVG color={"fill-gray-400"} /> : "sign in"
+          }
+          type="submit"
+          bgColor="bg-[#e05914]"
+          textColor="text-white"
+          disable={response.pending}
+        />
+        {response.error ? (
+          <div className="text-red-600">{response.error}</div>
+        ) : null}
       </form>
+
+      {/* //////////// */}
     </div>
   );
 };
