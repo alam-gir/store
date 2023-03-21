@@ -28,34 +28,23 @@ const handler = async (req, res) => {
   // add products to db
   if (req.method === "POST") {
     //grab data from client side
-    const { productInfo, productImages } = req.body;
-
-    // before try, check that productInfo has not any undefined value***
-    const submitCondition =
-      productInfo.id.trim() &&
-      productInfo.name.trim() &&
-      productInfo.description.trim() &&
-      productInfo.weight.trim() &&
-      productInfo.price.trim() &&
-      productInfo.discountPercentage.trim() &&
-      productInfo.brand.trim() &&
-      productInfo.category.trim() &&
-      productInfo.stock.trim();
+    const product = req.body
 
     const errorMessage = () => {
-      return productImages.length <= 0
+      return product.images.length <= 0
         ? "need image"
         : "fill the required fieled!";
     };
 
-    if (submitCondition && productImages?.length) {
+    if (product?.images?.length) {
       try {
         //connect db
         const { db } = await connectMongoDB();
 
         // then we will store client productInfo in mongodb
         const productDoc = await db.collection("products").insertOne({
-          ...productInfo,
+          ...product,
+          images:[], //because images will push from fireStorage
           createdAt: new Date().toLocaleString(),
         });
 
@@ -64,7 +53,7 @@ const handler = async (req, res) => {
 
         //  store the images in fire storage
         await Promise.all(
-          productImages.map((image) => {
+          product.images.map((image) => {
             const imageRef = ref(
               firebaseStorage,
               `productImages/${productDocId}/images${Date.now()}`
