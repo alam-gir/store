@@ -1,5 +1,6 @@
 import Confirmation from "@/components/confirmation/Confirmation";
 import { productFormConfirmationState } from "@/lib/atom/modalOpenState";
+import { compareTwoObjByPrimaryObjKeys } from "@/lib/compare/caompareTwoObj";
 import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useFormik } from "formik";
 import React, { useEffect, useRef, useState } from "react";
@@ -14,6 +15,7 @@ const Form = ({ givenInitial, actionText, messageText, handleConfirm }) => {
     productFormConfirmationState
   );
   const [errors, setErrors] = useState({ form: true, image: true });
+  const [isValueSame, setValueSame] = useState(null)
 
   // initail value for formik
   const initialValues = givenInitial
@@ -50,7 +52,7 @@ const Form = ({ givenInitial, actionText, messageText, handleConfirm }) => {
     initialValues,
     validate,
     onSubmit: (values) => {
-      handleConfirm({ ...values, images: selectedImages })
+      handleConfirm({ ...values, images: selectedImages });
     },
   });
 
@@ -103,9 +105,20 @@ const Form = ({ givenInitial, actionText, messageText, handleConfirm }) => {
     const imageError = imagesState.length < 1;
     setErrors((prev) => ({ ...prev, form: formError, image: imageError }));
   };
+
+  //* use effects
   useEffect(() => {
     storeErrors(formik, selectedImages, setErrors);
   }, [formik.errors, selectedImages]);
+
+  //if given images available set in selected Images
+  //if given values and formik values are same update button shoul disable
+  useEffect(() => {
+    if(!givenInitial) return
+      setImages(givenInitial.images)
+      setValueSame(compareTwoObjByPrimaryObjKeys(formik.values, givenInitial))
+  }, [givenInitial, formik.values]);
+
   return (
     // all design will provided from /styles/dashboard.css
     <div className="formik-container">
@@ -327,7 +340,7 @@ const Form = ({ givenInitial, actionText, messageText, handleConfirm }) => {
                   ))
                 : null}
               <button
-              type="button"
+                type="button"
                 onClick={() => fileInput.current.click()}
                 className="add-btn group"
               >
@@ -343,7 +356,7 @@ const Form = ({ givenInitial, actionText, messageText, handleConfirm }) => {
           <button
             onClick={openConfirmation}
             type="button"
-            disabled={errors.form || errors.image ? true : false}
+            disabled={errors.form || errors.image ? true : false || isValueSame}
             className="submit-btn"
           >
             {"ready to " + actionText + "?"}

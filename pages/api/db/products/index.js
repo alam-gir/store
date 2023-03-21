@@ -25,7 +25,7 @@ const handler = async (req, res) => {
     }
   }
 
-  // add products to db
+  // add 
   if (req.method === "POST") {
     //grab data from client side
     const product = req.body
@@ -86,25 +86,17 @@ const handler = async (req, res) => {
     }
   }
 
+    // update 
   if (req.method === "PUT") {
-    // update the post
     //grab data from client side
-    const { productDocId, newProductInfo, newProductImages } = req.body;
-
-    // before try, check that productInfo has not any undefined value***
-    // const submitCondition =
-    //   newProductInfo.id.trim() &&
-    //   newProductInfo.name.trim() &&
-    //   newProductInfo.description.trim() &&
-    //   newProductInfo.weight.trim() &&
-    //   newProductInfo.price.trim() &&
-    //   newProductInfo.discountPercentage.trim() &&
-    //   newProductInfo.brand.trim() &&
-    //   newProductInfo.category.trim() &&
-    //   newProductInfo.stock.trim();
+    // const { productDocId, newProductInfo, newProductImages } = req.body;
+    const product = req.body
+    const productDocId = product._id
+    const images = product.images
+    const {_id, lastModified, ...updatedProduct} = product
 
     const errorMessage = () => {
-      return newProductImages.length <= 0
+      return updatedProduct.images.length <= 0
         ? "need image"
         : "fill the required fieled!";
     };
@@ -118,26 +110,21 @@ const handler = async (req, res) => {
           .updateOne(
             { _id: new ObjectId(productDocId) },
             {
-              $set: newProductInfo,
+              $set: updatedProduct,
               $currentDate: { lastModified: true },
             }
           );
 
-        if (newProductImages) {
-          console.log(newProductImages);
+        if (updatedProduct.images) {
           // image can two types. can http link and can data_url. data_url based images means new image. and http link image means old image. they already has in fire storage thats why links available.
-          const dataUrlImages = newProductImages.filter(
+          const dataUrlImages = updatedProduct?.images?.filter(
             (image) => checkURLProtocol(image) === "data"
           );
-          const httpurlImages = newProductImages.filter(
+          const httpurlImages = updatedProduct?.images?.filter(
             (image) =>
               checkURLProtocol(image) === "http" ||
               checkURLProtocol(image) === "https"
           );
-          console.log({
-            dataImg: dataUrlImages.length,
-            httpImg: httpurlImages.length,
-          });
 
           // **** notes step
           // at firts check that any old image missing or if missing then remove from storage and database also
@@ -164,9 +151,7 @@ const handler = async (req, res) => {
                 );
                 // delete from storage
                 deleteObject(imageRef)
-                  .then((res) => console.log("deleted"))
                   .catch((err) => console.log(err.message));
-                console.log("deleted", imageLink);
               }
             });
           });
@@ -200,7 +185,6 @@ const handler = async (req, res) => {
           res: documentUpdateResponse,
         });
       } catch (error) {
-        console.log(error.message);
         return res.send({ success: false, message: error.message });
       }
     } else {

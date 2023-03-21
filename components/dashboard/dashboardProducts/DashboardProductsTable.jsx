@@ -5,11 +5,14 @@ import {
   productUpdatemodalState,
 } from "@/lib/atom/modalOpenState";
 import { fetchDELETE, fetchGET } from "@/lib/fetch/fetch";
+import { updateProduct } from "@/lib/product/productCRUD";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import React, { useEffect, useState } from "react";
 import ReactModal from "react-modal";
 import { toast } from "react-toastify";
 import { useRecoilState } from "recoil";
 import DashboardProductList from "./DashboardProductList";
+import Form from "./Form";
 import ProductForm from "./ProductForm";
 
 const DashboardProductsTable = () => {
@@ -76,9 +79,7 @@ const DashboardProductsTable = () => {
       }
     );
   };
-  const handleer = (p) => {
-    console.log(p);
-  };
+
   return (
     <div className="product-table-container">
       <div className="product-table-wrapper">
@@ -119,26 +120,28 @@ const DashboardProductsTable = () => {
         <ReactModal
           isOpen={isOpenProductUpdateModal}
           onRequestClose={closeProductUpdateModal}
+          className="product-modal"
+        >
+          <XMarkIcon
+            onClick={closeProductUpdateModal}
+            className="product-modal-close-icon"
+          />
+          <div className="product-modal-body">
+            <Form
+              givenInitial={currentProduct}
+              handleConfirm={(data) => updateProduct(data)}
+              actionText={"update product"}
+              messageText="to update this product click 'update Product'. For cancel procces click 'Cancel'"
+            />
+          </div>
+        </ReactModal>
+        {/* <ReactModal
+          isOpen={isOpenProductUpdateModal}
+          onRequestClose={closeProductUpdateModal}
           className="modal"
         >
-          <ProductForm
-            data={currentProduct}
-            handleClose={closeProductUpdateModal}
-          />
-        </ReactModal>
-      </div>
-      <div>
-        <ReactModal
-          isOpen={isOpenDeleteConfirmationModal}
-          onRequestClose={closeDeleteConfirmationModal}
-          className="product-update-confirmation-modal"
-        >
-          <Confirmation
-            handleConfirm={() => handleDelete(currentProduct?._id)}
-            handleClose={closeDeleteConfirmationModal}
-            actionText="delete"
-          />
-        </ReactModal>
+          <Form data={currentProduct} handleClose={closeProductUpdateModal} />
+        </ReactModal> */}
       </div>
     </div>
   );
