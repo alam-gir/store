@@ -5,11 +5,13 @@ import {
   productUpdatemodalState,
 } from "@/lib/atom/modalOpenState";
 import { fetchDELETE, fetchGET } from "@/lib/fetch/fetch";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import React, { useEffect, useState } from "react";
 import ReactModal from "react-modal";
 import { toast } from "react-toastify";
 import { useRecoilState } from "recoil";
 import DashboardProductList from "./DashboardProductList";
+import Form from "./Form";
 import ProductForm from "./ProductForm";
 
 const DashboardProductsTable = () => {
@@ -119,26 +121,28 @@ const DashboardProductsTable = () => {
         <ReactModal
           isOpen={isOpenProductUpdateModal}
           onRequestClose={closeProductUpdateModal}
+          className="product-modal"
+        >
+          <XMarkIcon
+            onClick={closeProductUpdateModal}
+            className="product-modal-close-icon"
+          />
+          <div className="product-modal-body">
+            <Form
+              givenInitial={currentProduct}
+              handleConfirm={"addProduct"}
+              actionText={"add product"}
+              messageText="to add a product click 'Add Product'. for cancel procces click 'Cancel'"
+            />
+          </div>
+        </ReactModal>
+        {/* <ReactModal
+          isOpen={isOpenProductUpdateModal}
+          onRequestClose={closeProductUpdateModal}
           className="modal"
         >
-          <ProductForm
-            data={currentProduct}
-            handleClose={closeProductUpdateModal}
-          />
-        </ReactModal>
-      </div>
-      <div>
-        <ReactModal
-          isOpen={isOpenDeleteConfirmationModal}
-          onRequestClose={closeDeleteConfirmationModal}
-          className="product-update-confirmation-modal"
-        >
-          <Confirmation
-            handleConfirm={() => handleDelete(currentProduct?._id)}
-            handleClose={closeDeleteConfirmationModal}
-            actionText="delete"
-          />
-        </ReactModal>
+          <Form data={currentProduct} handleClose={closeProductUpdateModal} />
+        </ReactModal> */}
       </div>
     </div>
   );
