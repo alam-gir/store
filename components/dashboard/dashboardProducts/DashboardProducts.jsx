@@ -2,6 +2,7 @@ import Button from "@/components/Button";
 import Searchbar from "@/components/searchbar/Searchbar";
 import { productAddModalState } from "@/lib/atom/modalOpenState";
 import { fetchPOST } from "@/lib/fetch/fetch";
+import { addProduct } from "@/lib/product/productCRUD";
 import { PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import React, { useState } from "react";
 import ReactModal from "react-modal";
@@ -35,18 +36,6 @@ const DashboardProducts = () => {
     setOpenAddProductModal(false);
   };
 
-  //! add product
-  const addProduct = async (data) => {
-    const resData = await toast.promise(fetchPOST("/api/db/products", data), {
-      pending: "Product adding...",
-      success: "Product updated successfully",
-      error: "Something wrong! please try again.",
-    });
-    if(resData.success){
-      //close the product form
-      handleCloseAddProductForm()
-    }
-  };
   return (
     <div>
       <div className="dashboard-product-wrapper">
@@ -84,7 +73,9 @@ const DashboardProducts = () => {
         />
         <div className="product-modal-body">
           <Form
-            handleConfirm={addProduct}
+            handleConfirm={
+              (data) => addProduct(data, handleCloseAddProductForm) // addProduct function from lib/product/productCRUD.js
+            }
             actionText={"add product"}
             messageText="to add a product click 'Add Product'. for cancel procces click 'Cancel'"
           />

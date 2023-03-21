@@ -5,6 +5,7 @@ import {
   productUpdatemodalState,
 } from "@/lib/atom/modalOpenState";
 import { fetchDELETE, fetchGET } from "@/lib/fetch/fetch";
+import { updateProduct } from "@/lib/product/productCRUD";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import React, { useEffect, useState } from "react";
 import ReactModal from "react-modal";
@@ -78,9 +79,7 @@ const DashboardProductsTable = () => {
       }
     );
   };
-  const handleer = (p) => {
-    console.log(p);
-  };
+
   return (
     <div className="product-table-container">
       <div className="product-table-wrapper">
@@ -130,9 +129,9 @@ const DashboardProductsTable = () => {
           <div className="product-modal-body">
             <Form
               givenInitial={currentProduct}
-              handleConfirm={"addProduct"}
-              actionText={"add product"}
-              messageText="to add a product click 'Add Product'. for cancel procces click 'Cancel'"
+              handleConfirm={(data) => updateProduct(data)}
+              actionText={"update product"}
+              messageText="to update this product click 'update Product'. For cancel procces click 'Cancel'"
             />
           </div>
         </ReactModal>
