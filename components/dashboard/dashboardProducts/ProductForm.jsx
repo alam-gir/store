@@ -89,7 +89,7 @@ const ProductForm = ({ data, handleClose }) => {
     changeUpdateBtnStatus();
   };
 
-  //handle submit
+  //handle submit add product to db
   const handleSubmit = async (e) => {
     e.preventDefault();
     // condition for submit form
@@ -149,7 +149,7 @@ const ProductForm = ({ data, handleClose }) => {
     changeUpdateBtnStatus();
   };
 
-  // popup handle confirm
+  // popup handle confirm // update product
   const handleConfirm = async () => {
     const productUpdateServerUrl = "http://localhost:3000/api/db/products";
     const productUpdateInfo = {

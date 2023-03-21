@@ -1,9 +1,11 @@
 import Button from "@/components/Button";
 import Searchbar from "@/components/searchbar/Searchbar";
 import { productAddModalState } from "@/lib/atom/modalOpenState";
+import { fetchPOST } from "@/lib/fetch/fetch";
 import { PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import React, { useState } from "react";
 import ReactModal from "react-modal";
+import { toast } from "react-toastify";
 import { useRecoilState } from "recoil";
 import DashboardProductsTable from "./DashboardProductsTable";
 import Form from "./Form";
@@ -32,6 +34,19 @@ const DashboardProducts = () => {
     //true open add product form state for open form
     setOpenAddProductModal(false);
   };
+
+  //! add product
+  const addProduct = async (data) => {
+    const resData = await toast.promise(fetchPOST("/api/db/products", data), {
+      pending: "Product adding...",
+      success: "Product updated successfully",
+      error: "Something wrong! please try again.",
+    });
+    if(resData.success){
+      //close the product form
+      handleCloseAddProductForm()
+    }
+  };
   return (
     <div>
       <div className="dashboard-product-wrapper">
@@ -56,16 +71,23 @@ const DashboardProducts = () => {
             />
           </div>
         </div>
-        {/* <DashboardProductsTable/> */}
+        <DashboardProductsTable />
       </div>
       <ReactModal
         isOpen={isOpenAddProductModal}
         onRequestClose={handleCloseAddProductForm}
         className="product-modal"
       >
-        <XMarkIcon onClick={handleCloseAddProductForm} className="product-modal-close-icon" />
+        <XMarkIcon
+          onClick={handleCloseAddProductForm}
+          className="product-modal-close-icon"
+        />
         <div className="product-modal-body">
-          <Form />
+          <Form
+            handleConfirm={addProduct}
+            actionText={"add product"}
+            messageText="to add a product click 'Add Product'. for cancel procces click 'Cancel'"
+          />
         </div>
       </ReactModal>
     </div>

@@ -219,8 +219,14 @@
   .confirmation-modal-text {
     @apply text-xl font-medium capitalize text-gray-700;
   }
+  .confirmation-modal-message-container{
+    @apply w-full flex justify-center
+  }
+  .confirmation-modal-message{
+    @apply w-[90%] text-center text-sm text-gray-600 tracking-wider p-2 
+  }
   .confirmation-modal-btn-container {
-    @apply flex justify-between gap-4 mt-6;
+    @apply flex justify-between gap-4 mt-4;
   }
 
   /*! Formik Product Form ======================*/
@@ -235,27 +241,31 @@
   }
   .formik .input-container,
   .formik .textarea-container {
-    @apply relative h-full col-span-2 flex;
+    @apply relative h-full col-span-2 flex flex-col;
+  }
+  .formik .input-wrapper{
+    @apply flex
   }
   .formik .input-container.price,
   .formik .input-container.weight,
-  .formik .input-container.brand,
+  .formik .input-container.discountPercentage,
   .formik .input-container.stock {
     @apply col-span-1;
   }
   /* for md  */
   .formik .input-container.name,
-  .formik .input-container.category {
+  .formik .input-container.brand{
     @apply md:col-span-2;
   }
   .formik .input-container.id,
   .formik .input-container.price,
   .formik .input-container.input-container.weight,
   .formik .input-container.stock,
-  .formik .input-container.brand {
+  .formik .input-container.discountPercentage {
     @apply md:col-span-1;
   }
-  .formik .textarea-container.description, .formik .input-container.date {
+  .formik .textarea-container.description,
+  .formik .input-container.category, .formik .input-container.date {
     @apply md:col-span-3;
   }
   .formik .input-container.date span{
@@ -304,7 +314,7 @@
     @apply text-sm capitalize text-gray-500 font-bold;
   }
   .formik .submit-btn{
-    @apply col-span-2 md:col-span-3 bg-[#e50914] text-white p-2 capitalize font-medium tracking-wider
+    @apply col-span-2 md:col-span-3 bg-[#e50914] text-white p-2 capitalize font-medium tracking-wider disabled:brightness-75 disabled:cursor-not-allowed
   }
 }
 
