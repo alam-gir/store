@@ -4,14 +4,14 @@ import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import DashboardLanding from "@/components/dashboard/DashboardLanding";
 import DashboardRoute from "@/components/dashboard/routing/DashboardRoute";
+import { fetchGET } from "@/lib/fetch/fetch";
 import { verifyUser } from "@/lib/jwt/jwtVerify";
 import { textEncode } from "@/lib/textEncoder/encodeText";
 import { useRouter } from "next/router";
 const Dashboard = ({ admin }) => {
   const router = useRouter();
   const handleSignout = async () => {
-    const res = await fetch("/api/auth/dashboard/signout"); //for remove token
-    const data = await res.json();
+    const data = await fetchGET("/api/auth/dashboard/signout")//for remove token
     if (data.success) {
       // redirect to signin page
       router.push("http://localhost:3000/auth/dashboard/signin");

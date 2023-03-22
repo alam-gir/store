@@ -2,7 +2,7 @@ import Button from "@/components/Button";
 import Searchbar from "@/components/searchbar/Searchbar";
 import { productAddModalState } from "@/lib/atom/modalOpenState";
 import { addProduct } from "@/lib/product/productCRUD";
-import { PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { FunnelIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import React, { useState } from "react";
 import ReactModal from "react-modal";
 import { useRecoilState } from "recoil";
@@ -37,27 +37,46 @@ const DashboardProducts = () => {
     <div>
       <div className="dashboard-product-wrapper">
         <div className="dashboard-product-header">
-          <div className="btn-container">
-            <Button
-              handleClick={handleOpenAddProductForm}
-              text={"add Products"}
-              Icon={PlusIcon}
-              customStyle="btn"
-              iconCustomStyle="icon"
-            />
+          <div className="left">
+            <div className="btn-container add-products">
+              {/* add products btn  */}
+              <Button
+                handleClick={handleOpenAddProductForm}
+                text={"add Products"}
+                Icon={PlusIcon}
+                customStyle="btn"
+                iconCustomStyle="icon"
+              />
+            </div>
+            <h1 className="text">
+              results: <span>{"all products"}</span>
+            </h1>
           </div>
-          <h1 className="text">
-            results: <span>{"all products"}</span>
-          </h1>
-          <div className="searchbar-container">
-            <Searchbar
-              handleChange={handleChangeSearch}
-              value={searchValue}
-              placeholder={"search products..."}
-            />
+          <div className="right">
+            {/* filter btn container  */}
+            <div className="searchbar-container search">
+              <Searchbar
+                handleChange={handleChangeSearch}
+                value={searchValue}
+                placeholder={"search products..."}
+              />
+            </div>
+            {/* search btn container  */}
+            <div className="btn-container filter">
+              {/* add products btn  */}
+              <Button
+                handleClick={handleOpenAddProductForm}
+                text={"filter"}
+                Icon={FunnelIcon}
+                customStyle="btn"
+                iconCustomStyle="icon"
+              />
+            </div>
           </div>
         </div>
-        <DashboardProductsTable />
+        <div className="dashboard-product-body">
+          <DashboardProductsTable />
+        </div>
       </div>
       <ReactModal
         isOpen={isOpenAddProductModal}

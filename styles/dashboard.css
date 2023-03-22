@@ -112,24 +112,33 @@
     @apply w-screen px-4 py-2;
   }
   .dashboard-product-header {
-    @apply w-full h-auto grid grid-cols-2 grid-rows-2 md:grid-cols-3 md:grid-rows-1;
+    @apply w-full h-auto grid grid-cols-2;
+  }
+  .dashboard-product-header .left {
+    @apply flex flex-col justify-center items-start gap-2 md:flex-row md:justify-between md:flex-row-reverse;
+  }
+  .dashboard-product-header .right {
+    @apply flex flex-col items-end gap-2 md:gap-[20%] md:flex-row  md:justify-between;
   }
   .dashboard-product-header .text {
-    @apply col-start-1 row-start-2 md:col-start-1 md:row-start-1 text-gray-500 capitalize text-base tracking-wide flex items-end gap-1;
+    @apply flex items-end w-fit h-full whitespace-nowrap gap-2 text-gray-600 capitalize;
   }
   .dashboard-product-header .text span {
     @apply underline text-gray-800;
   }
   .dashboard-product-header .btn-container {
-    @apply flex justify-start md:justify-center;
+    @apply flex justify-start md:justify-center md:mr-[20%];
+  }
+  .dashboard-product-header .right .btn-container.filter {
+    @apply md:mr-0 ;
+  }
+  .dashboard-product-header .btn-container .btn {
+    @apply w-fit whitespace-nowrap px-2 py-2 bg-[#e50914] gap-2 text-white hover:brightness-75;
   }
   .dashboard-product-header .searchbar-container {
     @apply flex w-full justify-end;
   }
 
-  .dashboard-product-header .btn-container .btn {
-    @apply w-fit whitespace-nowrap justify-start px-2 py-1 bg-[#e50914] gap-2 text-white hover:brightness-75;
-  }
   .dashboard-product-header .btn-container .btn .icon {
     @apply h-6 w-6;
   }
@@ -219,11 +228,11 @@
   .confirmation-modal-text {
     @apply text-xl font-medium capitalize text-gray-700;
   }
-  .confirmation-modal-message-container{
-    @apply w-full flex justify-center
+  .confirmation-modal-message-container {
+    @apply w-full flex justify-center;
   }
-  .confirmation-modal-message{
-    @apply w-[90%] text-center text-sm text-gray-600 tracking-wider p-2 
+  .confirmation-modal-message {
+    @apply w-[90%] text-center text-sm text-gray-600 tracking-wider p-2;
   }
   .confirmation-modal-btn-container {
     @apply flex justify-between gap-4 mt-4;
@@ -243,8 +252,8 @@
   .formik .textarea-container {
     @apply relative h-full col-span-2 flex flex-col;
   }
-  .formik .input-wrapper{
-    @apply flex
+  .formik .input-wrapper {
+    @apply flex;
   }
   .formik .input-container.price,
   .formik .input-container.weight,
@@ -254,7 +263,7 @@
   }
   /* for md  */
   .formik .input-container.name,
-  .formik .input-container.brand{
+  .formik .input-container.brand {
     @apply md:col-span-2;
   }
   .formik .input-container.id,
@@ -265,11 +274,12 @@
     @apply md:col-span-1;
   }
   .formik .textarea-container.description,
-  .formik .input-container.category, .formik .input-container.date {
+  .formik .input-container.category,
+  .formik .input-container.date {
     @apply md:col-span-3;
   }
-  .formik .input-container.date span{
-    @apply bg-red-100 px-4 flex items-center text-gray-600 font-medium tracking-widest
+  .formik .input-container.date span {
+    @apply bg-red-100 px-4 flex items-center text-gray-600 font-medium tracking-widest;
   }
   .formik .label {
     @apply bg-[#e50914] h-full w-auto text-sm md:text-base flex items-center text-white capitalize p-2 md:px-4;
@@ -313,18 +323,18 @@
   .formik .image-section .body .add-btn .text {
     @apply text-sm capitalize text-gray-500 font-bold;
   }
-  .formik .submit-btn{
-    @apply col-span-2 md:col-span-3 bg-[#e50914] text-white p-2 capitalize font-medium tracking-wider disabled:brightness-75 disabled:cursor-not-allowed
+  .formik .submit-btn {
+    @apply col-span-2 md:col-span-3 bg-[#e50914] text-white p-2 capitalize font-medium tracking-wider disabled:brightness-75 disabled:cursor-not-allowed;
   }
 }
 
 /* ! product modal =================== */
-.product-modal{
-  @apply relative h-screen w-screen md:max-h-[80%] md:max-w-[80%] rounded-lg top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-red-50  overflow-y-scroll overflow-x-hidden
+.product-modal {
+  @apply relative h-screen w-screen md:max-h-[80%] md:max-w-[80%] rounded-lg top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-red-50  overflow-y-scroll overflow-x-hidden;
 }
-.product-modal-close-icon{
-  @apply h-6 w-6 fixed top-2 right-1 z-10 text-gray-600 hover:text-gray-800 hover:h-7 hover:w-7 transition-all duration-200
+.product-modal-close-icon {
+  @apply h-6 w-6 fixed top-2 right-1 z-10 text-gray-600 hover:text-gray-800 hover:h-7 hover:w-7 transition-all duration-200;
 }
-.product-modal-body{
-  @apply p-4
+.product-modal-body {
+  @apply p-4;
 }

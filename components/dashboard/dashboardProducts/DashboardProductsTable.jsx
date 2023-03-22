@@ -4,7 +4,7 @@ import {
   productDeleteConfirmationModalState,
   productUpdatemodalState,
 } from "@/lib/atom/modalOpenState";
-import { fetchDELETE, fetchGET } from "@/lib/fetch/fetch";
+import { fetchGET } from "@/lib/fetch/fetch";
 import { updateProduct, deleteProduct } from "@/lib/product/productCRUD";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import React, { useEffect, useState } from "react";
@@ -30,7 +30,7 @@ const DashboardProductsTable = () => {
 
   const changeCurrentProduct = (_id) => {
     setCurrentProduct(() => {
-      return products.filter((product) => product._id === _id)[0];
+      return products?.filter((product) => product._id === _id)[0];
     });
   };
 
@@ -90,7 +90,7 @@ const DashboardProductsTable = () => {
               <LoaderSVG color={"fill-gray-400"} />
             </div>
           ) : (
-            products.map((product) => (
+            products?.map((product) => (
               <DashboardProductList
                 key={product?._id}
                 product={product}

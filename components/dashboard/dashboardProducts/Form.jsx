@@ -125,8 +125,8 @@ const Form = ({ givenInitial, actionText, messageText, handleConfirm }) => {
   // disable submit btn
   const disableSubmitBtn = () => {
     // errors.form || errors.image ? true : false || isValueSame
-    if(givenInitial){
-      if(givenInitial.images !== selectedImages) return false
+    if (givenInitial) {
+      if (givenInitial.images !== selectedImages) return false;
     }
     if (errors.form) return true;
     if (errors.image) return true;
