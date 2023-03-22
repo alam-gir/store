@@ -7,22 +7,22 @@ const DashboardProductList = ({
     <div className="product-table-list group  text-md">
       <h2
         onClick={openProductUpdateModal}
-        className="product-table-data font-medium px-4"
+        className="product-table-data font-medium px-4 hidden md:inline"
       >
         {id}
       </h2>
-      <h2 onClick={openProductUpdateModal} className="product-table-data">
-        {name.slice(0, 10)}
+      <h2 onClick={openProductUpdateModal} className="product-table-data  col-span-3 sm:col-span-2">
+        {name}
       </h2>
-      <h2 onClick={openProductUpdateModal} className="product-table-data">
+      <h2 onClick={openProductUpdateModal} className="product-table-data hidden md:inline">
         {price}
       </h2>
-      <h2 onClick={openProductUpdateModal} className="product-table-data">
+      <h2 onClick={openProductUpdateModal} className="product-table-data hidden sm:inline">
         {brand}
       </h2>
       <h2
         onClick={openProductUpdateModal}
-        className="product-table-data hidden md:inline"
+        className="product-table-data"
       >
         {category}
       </h2>
