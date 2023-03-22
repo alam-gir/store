@@ -92,7 +92,6 @@ const handler = async (req, res) => {
     // const { productDocId, newProductInfo, newProductImages } = req.body;
     const product = req.body
     const productDocId = product._id
-    const images = product.images
     const {_id, lastModified, ...updatedProduct} = product
 
     const errorMessage = () => {

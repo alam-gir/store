@@ -1,4 +1,3 @@
-import Confirmation from "@/components/confirmation/Confirmation";
 import LoaderSVG from "@/components/LoaderSVG";
 import {
   productDeleteConfirmationModalState,
@@ -13,7 +12,6 @@ import { toast } from "react-toastify";
 import { useRecoilState } from "recoil";
 import DashboardProductList from "./DashboardProductList";
 import Form from "./Form";
-import ProductForm from "./ProductForm";
 
 const DashboardProductsTable = () => {
   const [products, setProducts] = useState(null);
@@ -135,13 +133,6 @@ const DashboardProductsTable = () => {
             />
           </div>
         </ReactModal>
-        {/* <ReactModal
-          isOpen={isOpenProductUpdateModal}
-          onRequestClose={closeProductUpdateModal}
-          className="modal"
-        >
-          <Form data={currentProduct} handleClose={closeProductUpdateModal} />
-        </ReactModal> */}
       </div>
     </div>
   );

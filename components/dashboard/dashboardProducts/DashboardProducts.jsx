@@ -1,16 +1,13 @@
 import Button from "@/components/Button";
 import Searchbar from "@/components/searchbar/Searchbar";
 import { productAddModalState } from "@/lib/atom/modalOpenState";
-import { fetchPOST } from "@/lib/fetch/fetch";
 import { addProduct } from "@/lib/product/productCRUD";
 import { PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import React, { useState } from "react";
 import ReactModal from "react-modal";
-import { toast } from "react-toastify";
 import { useRecoilState } from "recoil";
 import DashboardProductsTable from "./DashboardProductsTable";
 import Form from "./Form";
-import ProductForm from "./ProductForm";
 
 const DashboardProducts = () => {
   //* states
