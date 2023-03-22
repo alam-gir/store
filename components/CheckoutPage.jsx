@@ -57,6 +57,7 @@ export default function CheckoutPage() {
     },
   });
 
+  console.log('formik checkout')
   return (
     <>
       <div className="wrapper">

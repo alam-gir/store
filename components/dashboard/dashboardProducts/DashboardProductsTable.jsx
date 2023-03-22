@@ -5,15 +5,13 @@ import {
   productUpdatemodalState,
 } from "@/lib/atom/modalOpenState";
 import { fetchDELETE, fetchGET } from "@/lib/fetch/fetch";
-import { updateProduct } from "@/lib/product/productCRUD";
+import { updateProduct, deleteProduct } from "@/lib/product/productCRUD";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import React, { useEffect, useState } from "react";
 import ReactModal from "react-modal";
-import { toast } from "react-toastify";
 import { useRecoilState } from "recoil";
 import DashboardProductList from "./DashboardProductList";
 import Form from "./Form";
-import ProductForm from "./ProductForm";
 
 const DashboardProductsTable = () => {
   const [products, setProducts] = useState(null);
@@ -66,18 +64,9 @@ const DashboardProductsTable = () => {
   const handleDelete = async (_id) => {
     // close the confirmation modal when clicked
     setOpenDeleteConfirmationModal(false);
-
+    const productDocId = _id;
     //start an toast when fetching start
-    await toast.promise(
-      fetchDELETE("/api/db/products", {
-        _id,
-      }).then((data) => console.log(data)),
-      {
-        pending: "Product is Deleteing...",
-        success: "Product Deleted",
-        error: "Something Error! Please Try Again",
-      }
-    );
+    deleteProduct(productDocId);
   };
 
   return (
@@ -116,7 +105,10 @@ const DashboardProductsTable = () => {
           )}
         </div>
       </div>
+      {/* modals  */}
       <div>
+
+        {/* update modal  */}
         <ReactModal
           isOpen={isOpenProductUpdateModal}
           onRequestClose={closeProductUpdateModal}
@@ -135,13 +127,26 @@ const DashboardProductsTable = () => {
             />
           </div>
         </ReactModal>
-        {/* <ReactModal
-          isOpen={isOpenProductUpdateModal}
-          onRequestClose={closeProductUpdateModal}
-          className="modal"
+
+        {/* delete confirmation modal  */}
+        <ReactModal
+          isOpen={isOpenDeleteConfirmationModal}
+          onRequestClose={closeDeleteConfirmationModal}
+          className="h-auto w-auto relative"
         >
-          <Form data={currentProduct} handleClose={closeProductUpdateModal} />
-        </ReactModal> */}
+          <XMarkIcon
+            onClick={closeDeleteConfirmationModal}
+            className="product-modal-close-icon"
+          />
+          <div className="product-modal-body">
+            <Confirmation
+              actionText={"delete"}
+              message={"can't undo the deleted file!"}
+              handleClose={closeDeleteConfirmationModal}
+              handleConfirm={()=>handleDelete(currentProduct._id)}
+            />
+          </div>
+        </ReactModal>
       </div>
     </div>
   );

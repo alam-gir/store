@@ -15,7 +15,7 @@ const Form = ({ givenInitial, actionText, messageText, handleConfirm }) => {
     productFormConfirmationState
   );
   const [errors, setErrors] = useState({ form: true, image: true });
-  const [isValueSame, setValueSame] = useState(null)
+  const [isValueSame, setValueSame] = useState(null);
 
   // initail value for formik
   const initialValues = givenInitial
@@ -112,13 +112,27 @@ const Form = ({ givenInitial, actionText, messageText, handleConfirm }) => {
   }, [formik.errors, selectedImages]);
 
   //if given images available set in selected Images
+  useEffect(() => {
+    if (!givenInitial) return;
+    setImages(givenInitial.images);
+  }, []);
   //if given values and formik values are same update button shoul disable
   useEffect(() => {
-    if(!givenInitial) return
-      setImages(givenInitial.images)
-      setValueSame(compareTwoObjByPrimaryObjKeys(formik.values, givenInitial))
+    if (!givenInitial) return;
+    setValueSame(compareTwoObjByPrimaryObjKeys(formik.values, givenInitial));
   }, [givenInitial, formik.values]);
 
+  // disable submit btn
+  const disableSubmitBtn = () => {
+    // errors.form || errors.image ? true : false || isValueSame
+    if(givenInitial){
+      if(givenInitial.images !== selectedImages) return false
+    }
+    if (errors.form) return true;
+    if (errors.image) return true;
+    if (isValueSame) return true;
+    return false;
+  };
   return (
     // all design will provided from /styles/dashboard.css
     <div className="formik-container">
@@ -152,7 +166,9 @@ const Form = ({ givenInitial, actionText, messageText, handleConfirm }) => {
                 value={formik.values.id}
               />
             </div>
-            {formik.errors.id ? <div>{formik.errors.id}</div> : null}
+            {formik.touched.id && formik.errors.id ? (
+              <div>{formik.errors.id}</div>
+            ) : null}
           </div>
           {/* ------------------------------ */}
           {/* ------------------------------ */}
@@ -170,7 +186,9 @@ const Form = ({ givenInitial, actionText, messageText, handleConfirm }) => {
                 value={formik.values.name}
               />
             </div>
-            {formik.errors.name ? <div>{formik.errors.name}</div> : null}
+            {formik.touched.name && formik.errors.name ? (
+              <div>{formik.errors.name}</div>
+            ) : null}
           </div>
           {/* ------------------------------ */}
           {/* ------------------------------ */}
@@ -188,7 +206,9 @@ const Form = ({ givenInitial, actionText, messageText, handleConfirm }) => {
                 value={formik.values.price}
               />
             </div>
-            {formik.errors.price ? <div>{formik.errors.price}</div> : null}
+            {formik.touched.price && formik.errors.price ? (
+              <div>{formik.errors.price}</div>
+            ) : null}
           </div>
           {/* ------------------------------ */}
           {/* ------------------------------ */}
@@ -206,7 +226,9 @@ const Form = ({ givenInitial, actionText, messageText, handleConfirm }) => {
                 value={formik.values.weight}
               />
             </div>
-            {formik.errors.weight ? <div>{formik.errors.weight}</div> : null}
+            {formik.touched.weight && formik.errors.weight ? (
+              <div>{formik.errors.weight}</div>
+            ) : null}
           </div>
           {/* ------------------------------ */}
           {/* ------------------------------ */}
@@ -224,7 +246,9 @@ const Form = ({ givenInitial, actionText, messageText, handleConfirm }) => {
                 value={formik.values.stock}
               />
             </div>
-            {formik.errors.stock ? <div>{formik.errors.stock}</div> : null}
+            {formik.touched.stock && formik.errors.stock ? (
+              <div>{formik.errors.stock}</div>
+            ) : null}
           </div>
           {/* ------------------------------ */}
           {/* ------------------------------ */}
@@ -262,7 +286,9 @@ const Form = ({ givenInitial, actionText, messageText, handleConfirm }) => {
                 value={formik.values.brand}
               />
             </div>
-            {formik.errors.brand ? <div>{formik.errors.brand}</div> : null}
+            {formik.touched.brand && formik.errors.brand ? (
+              <div>{formik.errors.brand}</div>
+            ) : null}
           </div>
           {/* ------------------------------ */}
           {/* ------------------------------ */}
@@ -280,7 +306,7 @@ const Form = ({ givenInitial, actionText, messageText, handleConfirm }) => {
                 value={formik.values.category}
               />
             </div>
-            {formik.errors.category ? (
+            {formik.touched.category && formik.errors.category ? (
               <div>{formik.errors.category}</div>
             ) : null}
           </div>
@@ -301,7 +327,7 @@ const Form = ({ givenInitial, actionText, messageText, handleConfirm }) => {
                 value={formik.values.description}
               />
             </div>
-            {formik.errors.description ? (
+            {formik.touched.description && formik.errors.description ? (
               <div>{formik.errors.description}</div>
             ) : null}
           </div>
@@ -329,7 +355,7 @@ const Form = ({ givenInitial, actionText, messageText, handleConfirm }) => {
               {selectedImages.length > 0
                 ? selectedImages.map((image) => (
                     <div className="image-container">
-                      <button className="remove-btn">
+                      <button type="button" className="remove-btn">
                         <TrashIcon
                           onClick={() => handleDeleteImage(image)}
                           className="icon"
@@ -356,7 +382,7 @@ const Form = ({ givenInitial, actionText, messageText, handleConfirm }) => {
           <button
             onClick={openConfirmation}
             type="button"
-            disabled={errors.form || errors.image ? true : false || isValueSame}
+            disabled={disableSubmitBtn()}
             className="submit-btn"
           >
             {"ready to " + actionText + "?"}
