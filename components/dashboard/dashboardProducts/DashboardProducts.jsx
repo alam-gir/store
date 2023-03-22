@@ -1,9 +1,10 @@
 import Button from "@/components/Button";
 import Searchbar from "@/components/searchbar/Searchbar";
 import { productAddModalState } from "@/lib/atom/modalOpenState";
+import { fetchGET } from "@/lib/fetch/fetch";
 import { addProduct } from "@/lib/product/productCRUD";
 import { FunnelIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactModal from "react-modal";
 import { useRecoilState } from "recoil";
 import DashboardProductsTable from "./DashboardProductsTable";
@@ -17,9 +18,37 @@ const DashboardProducts = () => {
   const handleChangeSearch = (e) => {
     setSearchValue(e.target.value);
   };
+  const [products, setProducts] = useState(null);
+  const [filteredProducts, setFilteredProducts] = useState(null);
 
   //* functions
+  //fetch products
+  useEffect(() => {
+    fetchGET("http://localhost:3000/api/db/products").then((data) =>
+      setProducts(data.products)
+    );
+  });
 
+  // search product
+  useEffect(() => {
+    if (searchValue.trim()) {
+      setFilteredProducts(
+        products?.filter(
+          (product) =>
+            product.name
+              .toLocaleLowerCase()
+              .includes(searchValue.toLocaleLowerCase()) ||
+            product.category
+              .toLocaleLowerCase()
+              .includes(searchValue.toLocaleLowerCase()) ||
+            product.brand
+              .toLocaleLowerCase()
+              .includes(searchValue.toLocaleLowerCase())
+        )
+      );
+    }
+  }, [searchValue]);
+  console.log({ filteredProducts });
   const handleOpenAddProductForm = () => {
     //disable body scrolling
     document.body.style.overflow = "hidden";
@@ -49,7 +78,10 @@ const DashboardProducts = () => {
               />
             </div>
             <h1 className="text">
-              results: <span>{"all products"}</span>
+              results:{" "}
+              <span>
+                {searchValue.trim() ? `${searchValue}` : "all products"}
+              </span>
             </h1>
           </div>
           <div className="right">
@@ -75,7 +107,9 @@ const DashboardProducts = () => {
           </div>
         </div>
         <div className="dashboard-product-body">
-          <DashboardProductsTable />
+          <DashboardProductsTable
+            products={searchValue.length > 0 ? filteredProducts : products}
+          />
         </div>
       </div>
       <ReactModal

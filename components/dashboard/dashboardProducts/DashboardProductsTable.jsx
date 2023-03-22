@@ -4,29 +4,21 @@ import {
   productDeleteConfirmationModalState,
   productUpdatemodalState,
 } from "@/lib/atom/modalOpenState";
-import { fetchGET } from "@/lib/fetch/fetch";
 import { updateProduct, deleteProduct } from "@/lib/product/productCRUD";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ReactModal from "react-modal";
 import { useRecoilState } from "recoil";
 import DashboardProductList from "./DashboardProductList";
 import Form from "./Form";
 
-const DashboardProductsTable = () => {
-  const [products, setProducts] = useState(null);
+const DashboardProductsTable = ({ products }) => {
   const [isOpenProductUpdateModal, setOpenProductUpdateModal] = useRecoilState(
     productUpdatemodalState
   );
   const [isOpenDeleteConfirmationModal, setOpenDeleteConfirmationModal] =
     useRecoilState(productDeleteConfirmationModalState);
   const [currentProduct, setCurrentProduct] = useState(null);
-
-  useEffect(() => {
-    fetchGET("http://localhost:3000/api/db/products").then((data) =>
-      setProducts(data.products)
-    );
-  });
 
   const changeCurrentProduct = (_id) => {
     setCurrentProduct(() => {
@@ -62,8 +54,6 @@ const DashboardProductsTable = () => {
   };
 
   const handleDelete = async (_id) => {
-    // close the confirmation modal when clicked
-    setOpenDeleteConfirmationModal(false);
     const productDocId = _id;
     //start an toast when fetching start
     deleteProduct(productDocId);
@@ -74,11 +64,11 @@ const DashboardProductsTable = () => {
       <div className="product-table-wrapper">
         {/* header  */}
         <div className="product-table-header">
-          <h2 className="product-table-head px-4">id</h2>
-          <h2 className="product-table-head">name</h2>
-          <h2 className="product-table-head">price</h2>
-          <h2 className="product-table-head">brand</h2>
-          <h2 className="product-table-head hidden md:inline">category</h2>
+          <h2 className="product-table-head px-4 hidden md:inline">id</h2>
+          <h2 className="product-table-head col-span-3 sm:col-span-2">name</h2>
+          <h2 className="product-table-head hidden md:inline">price</h2>
+          <h2 className="product-table-head hidden sm:inline">brand</h2>
+          <h2 className="product-table-head">category</h2>
           <h2 className="product-table-head hidden md:inline">weight</h2>
           <h2 className="product-table-head hidden md:inline">date</h2>
           <h2 className="product-table-head">action</h2>
@@ -107,7 +97,6 @@ const DashboardProductsTable = () => {
       </div>
       {/* modals  */}
       <div>
-
         {/* update modal  */}
         <ReactModal
           isOpen={isOpenProductUpdateModal}
@@ -132,18 +121,18 @@ const DashboardProductsTable = () => {
         <ReactModal
           isOpen={isOpenDeleteConfirmationModal}
           onRequestClose={closeDeleteConfirmationModal}
-          className="h-auto w-auto relative"
+          className="h-auto w-auto"
         >
-          <XMarkIcon
-            onClick={closeDeleteConfirmationModal}
-            className="product-modal-close-icon"
-          />
-          <div className="product-modal-body">
+          <div>
             <Confirmation
               actionText={"delete"}
               message={"can't undo the deleted file!"}
               handleClose={closeDeleteConfirmationModal}
-              handleConfirm={()=>handleDelete(currentProduct._id)}
+              handleConfirm={() => {
+                // close the confirmation modal when clicked
+                setOpenDeleteConfirmationModal(false);
+                handleDelete(currentProduct._id);
+              }}
             />
           </div>
         </ReactModal>
