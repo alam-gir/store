@@ -126,14 +126,13 @@ const Form = ({ givenInitial, actionText, messageText, handleConfirm }) => {
   const disableSubmitBtn = () => {
     // errors.form || errors.image ? true : false || isValueSame
     if(givenInitial){
-      if(givenInitial.images.length !== selectedImages.length) return false
+      if(givenInitial.images !== selectedImages) return false
     }
     if (errors.form) return true;
     if (errors.image) return true;
     if (isValueSame) return true;
     return false;
   };
-  console.log("bugggggggggggg re rendaring");
   return (
     // all design will provided from /styles/dashboard.css
     <div className="formik-container">
@@ -356,7 +355,7 @@ const Form = ({ givenInitial, actionText, messageText, handleConfirm }) => {
               {selectedImages.length > 0
                 ? selectedImages.map((image) => (
                     <div className="image-container">
-                      <button className="remove-btn">
+                      <button type="button" className="remove-btn">
                         <TrashIcon
                           onClick={() => handleDeleteImage(image)}
                           className="icon"

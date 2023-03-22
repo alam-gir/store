@@ -25,10 +25,10 @@ const handler = async (req, res) => {
     }
   }
 
-  // add 
+  // add
   if (req.method === "POST") {
     //grab data from client side
-    const product = req.body
+    const product = req.body;
 
     const errorMessage = () => {
       return product.images.length <= 0
@@ -44,7 +44,7 @@ const handler = async (req, res) => {
         // then we will store client productInfo in mongodb
         const productDoc = await db.collection("products").insertOne({
           ...product,
-          images:[], //because images will push from fireStorage
+          images: [], //because images will push from fireStorage
           createdAt: new Date().toLocaleString(),
         });
 
@@ -86,13 +86,14 @@ const handler = async (req, res) => {
     }
   }
 
-    // update 
+  // update
   if (req.method === "PUT") {
     //grab data from client side
     // const { productDocId, newProductInfo, newProductImages } = req.body;
-    const product = req.body
-    const productDocId = product._id
-    const {_id, lastModified, ...updatedProduct} = product
+    const product = req.body;
+    console.log(product)
+    const productDocId = product._id;
+    const { _id, lastModified, ...updatedProduct } = product;
 
     const errorMessage = () => {
       return updatedProduct.images.length <= 0
@@ -149,8 +150,7 @@ const handler = async (req, res) => {
                   }
                 );
                 // delete from storage
-                deleteObject(imageRef)
-                  .catch((err) => console.log(err.message));
+                deleteObject(imageRef).catch((err) => console.log(err.message));
               }
             });
           });
@@ -192,7 +192,8 @@ const handler = async (req, res) => {
   }
 
   if (req.method === "DELETE") {
-    const productDocId = req.body._id;
+    const productDocId = req.body;
+    console.log(productDocId);
     try {
       //connect db
       const { db } = await connectMongoDB();
@@ -201,17 +202,13 @@ const handler = async (req, res) => {
         .collection("products")
         .deleteOne({ _id: new ObjectId(productDocId) });
       console.log("delete response", res);
-      return res
-        .status(200)
-        .json({
-          success: true,
-          message: `successfully deleted product _id: ${productDocId}`,
-        });
+      return res.status(200).json({
+        success: true,
+        message: `successfully deleted product _id: ${productDocId}`,
+      });
     } catch (error) {
       return res.send({ success: false, message: error.message });
     }
-    console.log(id);
-    return res.status(200).json({ success: true, id });
   }
   return res.status(500).json({ message: "internal server error" });
 };
