@@ -11,7 +11,7 @@ const View = ({ products }) => {
 export default View;
 
 export const getServerSideProps = async () => {
-  const res = await fetch("http://localhost:3000/api/db/products");
+  const res = await fetch("https://store-alam-gir.vercel.app/api/db/products");
   const data = await res.json();
   return {
     props: {
