@@ -1,5 +1,4 @@
 import { productAddModalState } from "@/lib/atom/modalOpenState";
-import { fetchGET } from "@/lib/fetch/fetch";
 import { addProduct } from "@/lib/product/productCRUD";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import React, { useEffect, useState } from "react";
@@ -9,6 +8,10 @@ import DashboardProductHeader from "./DashboardProductHeader";
 import DashboardProductsTable from "./DashboardProductsTable";
 import Form from "./Form";
 import { crudState } from "@/lib/atom/crudState";
+import useSWR, { useSWRConfig } from "swr";
+import { useRouter } from "next/router";
+
+const fetcher = (url) => fetch(url).then((res) => res.json());
 
 const DashboardProducts = () => {
   //* states
@@ -20,15 +23,20 @@ const DashboardProducts = () => {
   };
   const [products, setProducts] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState(null);
-  const [crudAction, setCrudAction]= useRecoilState(crudState)
+  const [crudAction, setCrudAction] = useRecoilState(crudState);
+  const { mutate } = useSWRConfig();
+  const { data, error, isLoading } = useSWR("/api/db/products", fetcher);
 
-  //* functions
   //fetch products
   useEffect(() => {
-    fetchGET("http://localhost:3000/api/db/products").then((data) =>
-      setProducts(data.products)
-    );
-  },[crudAction]);
+    if (data) {
+      setProducts(data.products);
+    }
+  }, [data]);
+  //revalidate swr fetch when crud action hitted
+  useEffect(() => {
+    mutate("/api/db/products");
+  }, [crudAction]);
 
   // search product
   useEffect(() => {
@@ -90,10 +98,11 @@ const DashboardProducts = () => {
         <div className="product-modal-body">
           <Form
             handleConfirm={
-              (data) => addProduct(data, ()=>{
-                handleCloseAddProductForm()
-                setCrudAction(prev => !prev)
-              }) // addProduct function from lib/product/productCRUD.js
+              (data) =>
+                addProduct(data, () => {
+                  handleCloseAddProductForm();
+                  setCrudAction((prev) => !prev);
+                }) // addProduct function from lib/product/productCRUD.js
             }
             actionText={"add product"}
             messageText="to add a product click 'Add Product'. for cancel procces click 'Cancel'"

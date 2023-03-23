@@ -13,8 +13,8 @@ const DashboardLanding = () => {
       <div className="landing-wrapper">
         {/* dashboard menu's  */}
         <div className="landing-menu-container">
-          <Link href="/dashboard/products">
-            <div className="landing-menu">
+          <div className="landing-menu">
+            <Link href="/dashboard/products">
               <DashboardMenu
                 Icon={BriefcaseIcon}
                 IconCustomStyle={""}
@@ -22,35 +22,42 @@ const DashboardLanding = () => {
                 tagline={"total products"}
                 status={25.42}
               />
-            </div>
-          </Link>
-          <div className="landing-menu">
-            <DashboardMenu
-              Icon={ShoppingCartIcon}
-              IconCustomStyle={""}
-              quantity={5040}
-              tagline={"total orders"}
-              status={40.25}
-            />
+            </Link>
           </div>
           <div className="landing-menu">
-            <DashboardMenu
-              Icon={CurrencyBangladeshiIcon}
-              IconCustomStyle={""}
-              isCurrency={true}
-              quantity={"40625"}
-              tagline={"total seles"}
-              status={69.12}
-            />
+            <Link href="/dashboard/orders">
+              <DashboardMenu
+                Icon={ShoppingCartIcon}
+                IconCustomStyle={""}
+                quantity={5040}
+                tagline={"total orders"}
+                status={40.25}
+              />
+            </Link>
+          </div>
+
+          <div className="landing-menu">
+            <Link href="/dashboard/sales">
+              <DashboardMenu
+                Icon={CurrencyBangladeshiIcon}
+                IconCustomStyle={""}
+                isCurrency={true}
+                quantity={"40625"}
+                tagline={"total seles"}
+                status={69.12}
+              />
+            </Link>
           </div>
           <div className="landing-menu">
-            <DashboardMenu
-              Icon={UsersIcon}
-              IconCustomStyle={""}
-              quantity={120}
-              tagline={"customers"}
-              status={17.47}
-            />
+            <Link href="/dashboard/customers">
+              <DashboardMenu
+                Icon={UsersIcon}
+                IconCustomStyle={""}
+                quantity={120}
+                tagline={"customers"}
+                status={17.47}
+              />
+            </Link>
           </div>
         </div>
       </div>

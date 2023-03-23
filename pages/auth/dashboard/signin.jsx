@@ -51,7 +51,7 @@ const signin = () => {
             // make response initialResponse
             setResponse(initialResponse);
             // redirect to the dashboard page
-            router.push("http://localhost:3000/dashboard");
+            router.push(`${window.origin}/dashboard`);
           } else {
             if (data.status === "notFound") {
               setResponse((prev) => ({
