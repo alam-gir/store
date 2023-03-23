@@ -1,5 +1,6 @@
 import Confirmation from "@/components/confirmation/Confirmation";
 import LoaderSVG from "@/components/LoaderSVG";
+import { crudState } from "@/lib/atom/crudState";
 import {
   productDeleteConfirmationModalState,
   productUpdatemodalState,
@@ -13,12 +14,16 @@ import DashboardProductList from "./DashboardProductList";
 import Form from "./Form";
 
 const DashboardProductsTable = ({ products }) => {
+  //* state -------------
   const [isOpenProductUpdateModal, setOpenProductUpdateModal] = useRecoilState(
     productUpdatemodalState
   );
   const [isOpenDeleteConfirmationModal, setOpenDeleteConfirmationModal] =
     useRecoilState(productDeleteConfirmationModalState);
   const [currentProduct, setCurrentProduct] = useState(null);
+  const [crudAction, setCrudAction] = useRecoilState(crudState);
+
+  //* function ------------
 
   const changeCurrentProduct = (_id) => {
     setCurrentProduct(() => {
@@ -51,14 +56,7 @@ const DashboardProductsTable = ({ products }) => {
     setOpenDeleteConfirmationModal(false);
     // start body scrolling
     document.body.style.overflow = "unset";
-  };
-
-  const handleDelete = async (_id) => {
-    const productDocId = _id;
-    //start an toast when fetching start
-    deleteProduct(productDocId);
-  };
-
+  }; 
   return (
     <div className="product-table-container">
       <div className="product-table-wrapper">
@@ -131,7 +129,10 @@ const DashboardProductsTable = ({ products }) => {
               handleConfirm={() => {
                 // close the confirmation modal when clicked
                 setOpenDeleteConfirmationModal(false);
-                handleDelete(currentProduct._id);
+                deleteProduct(currentProduct._id).then(() => {
+                  setCrudAction((prev) => !prev);
+                });
+                // handleDelete(currentProduct._id, setCrudAction);
               }}
             />
           </div>
