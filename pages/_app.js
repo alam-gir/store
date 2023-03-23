@@ -5,10 +5,8 @@ import CartBtn from "@/components/CartBtn";
 import { RecoilRoot } from "recoil";
 import CartModal from "@/components/CartModal";
 import { ToastContainer } from "react-toastify";
+
 export default function App({ Component, pageProps }) {
-  if (Component.getLayout) {
-    return Component.getLayout(<Component {...pageProps} />);
-  }
 
   return (
     <>

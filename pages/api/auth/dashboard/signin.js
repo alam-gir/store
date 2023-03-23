@@ -3,8 +3,7 @@ import { textEncode } from "@/lib/textEncoder/encodeText";
 import { serialize } from "cookie";
 import { SignJWT } from "jose";
 
-
-const secret = textEncode(process.env.SECRET_JWT)
+const secret = textEncode(process.env.SECRET_JWT);
 const signin = async (req, res) => {
   if (req.method === "POST") {
     const data = req.body;
@@ -17,37 +16,55 @@ const signin = async (req, res) => {
         .findOne({ email: data.email, password: data.password });
       if (user) {
         // create token,
-        const JWT = await new SignJWT({ email: user.email, name: user.name })
+        const JWT = await new SignJWT(user)
           .setProtectedHeader({ alg: "HS256" })
           .setExpirationTime("1d")
           .setJti()
-          .sign(secret)
+          .sign(secret);
 
-          //serialize for set cookie
-          const serialized = serialize('adminJWT',JWT, {
-            httpOnly: true,
-            sameSite: true,
-            secure: true,
-            maxAge: 60 * 60 * 24, // 1 day
-            path: '/'
-          })
+        //serialize for set cookie
+        const serialized = serialize("adminJWT", JWT, {
+          httpOnly: true,
+          sameSite: true,
+          secure: true,
+          maxAge: 60 * 60 * 24, // 1 day
+          path: "/",
+        });
 
-          res.setHeader('Set-Cookie', serialized)
+        res.setHeader("Set-Cookie", serialized);
         // set cookies
-        return res.status(200).json({ success: true, status:'success', message: "user logged in" });
+        return res
+          .status(200)
+          .json({
+            success: true,
+            status: "success",
+            message: "user logged in",
+          });
       } else {
         return res
           .status(404)
-          .json({ success: false, status:'notFound', message: "user not found." });
+          .json({
+            success: false,
+            status: "notFound",
+            message: "user not found.",
+          });
       }
     } catch (error) {
       console.log(error.message);
-      return res.send({success: false, status: 'error', error: error.message});
+      return res.send({
+        success: false,
+        status: "error",
+        error: error.message,
+      });
     }
   }
   return res
     .status(500)
-    .json({ success: false, status: 'error', message: "Internal server error!" });
+    .json({
+      success: false,
+      status: "error",
+      message: "Internal server error!",
+    });
 };
 
 export default signin;

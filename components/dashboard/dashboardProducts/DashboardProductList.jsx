@@ -1,5 +1,5 @@
 const DashboardProductList = ({
-  product: { _id, id, name, price, brand, category, stock, createdAt },
+  product: { id, name, price, brand, category, stock, createdAt },
   openProductUpdateModal,
   openDeleteConfirmationModal,
 }) => {
