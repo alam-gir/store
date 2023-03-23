@@ -7,6 +7,7 @@ import { FunnelIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import React, { useEffect, useState } from "react";
 import ReactModal from "react-modal";
 import { useRecoilState } from "recoil";
+import DashboardProductHeader from "./DashboardProductHeader";
 import DashboardProductsTable from "./DashboardProductsTable";
 import Form from "./Form";
 
@@ -65,47 +66,12 @@ const DashboardProducts = () => {
   return (
     <div>
       <div className="dashboard-product-wrapper">
-        <div className="dashboard-product-header">
-          <div className="left">
-            <div className="btn-container add-products">
-              {/* add products btn  */}
-              <Button
-                handleClick={handleOpenAddProductForm}
-                text={"add Products"}
-                Icon={PlusIcon}
-                customStyle="btn"
-                iconCustomStyle="icon"
-              />
-            </div>
-            <h1 className="text">
-              results:{" "}
-              <span>
-                {searchValue.trim() ? `${searchValue}` : "all products"}
-              </span>
-            </h1>
-          </div>
-          <div className="right">
-            {/* filter btn container  */}
-            <div className="searchbar-container search">
-              <Searchbar
-                handleChange={handleChangeSearch}
-                value={searchValue}
-                placeholder={"search products..."}
-              />
-            </div>
-            {/* search btn container  */}
-            <div className="btn-container filter">
-              {/* add products btn  */}
-              <Button
-                handleClick={handleOpenAddProductForm}
-                text={"filter"}
-                Icon={FunnelIcon}
-                customStyle="btn"
-                iconCustomStyle="icon"
-              />
-            </div>
-          </div>
-        </div>
+        <DashboardProductHeader
+          handleOpenAddProductForm={handleOpenAddProductForm}
+          handleChangeSearch={handleChangeSearch}
+          searchValue={searchValue}
+        />
+
         <div className="dashboard-product-body">
           <DashboardProductsTable
             products={searchValue.length > 0 ? filteredProducts : products}
