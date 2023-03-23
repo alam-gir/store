@@ -5,6 +5,7 @@ import {
   productDeleteConfirmationModalState,
   productUpdatemodalState,
 } from "@/lib/atom/modalOpenState";
+import { closeModal, openModal } from "@/lib/modal/openModal";
 import { updateProduct, deleteProduct } from "@/lib/product/productCRUD";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import React, { useState } from "react";
@@ -31,32 +32,17 @@ const DashboardProductsTable = ({ products }) => {
     });
   };
 
-  const openProductUpdateModal = (_id) => {
-    // stop body scrolling
-    document.body.style.overflow = "hidden";
-    changeCurrentProduct(_id);
-    //open modal
-    setOpenProductUpdateModal(true);
-  };
-
   const closeProductUpdateModal = () => {
     setOpenProductUpdateModal(false);
     // start body scrolling
     document.body.style.overflow = "unset";
-  };
-  const openDeleteConfirmationModal = (_id) => {
-    // stop body scrolling
-    document.body.style.overflow = "hidden";
-    changeCurrentProduct(_id);
-    //open modal
-    setOpenDeleteConfirmationModal(true);
   };
 
   const closeDeleteConfirmationModal = () => {
     setOpenDeleteConfirmationModal(false);
     // start body scrolling
     document.body.style.overflow = "unset";
-  }; 
+  };
   return (
     <div className="product-table-container">
       <div className="product-table-wrapper">
@@ -82,12 +68,14 @@ const DashboardProductsTable = ({ products }) => {
               <DashboardProductList
                 key={product?._id}
                 product={product}
-                openProductUpdateModal={() =>
-                  openProductUpdateModal(product?._id)
-                }
-                openDeleteConfirmationModal={() =>
-                  openDeleteConfirmationModal(product?._id)
-                }
+                openProductUpdateModal={() => {
+                  changeCurrentProduct(product?._id);
+                  openModal(setOpenProductUpdateModal);
+                }}
+                openDeleteConfirmationModal={() => {
+                  changeCurrentProduct(product?._id);
+                  openModal(setOpenDeleteConfirmationModal);
+                }}
               />
             ))
           )}
@@ -98,17 +86,19 @@ const DashboardProductsTable = ({ products }) => {
         {/* update modal  */}
         <ReactModal
           isOpen={isOpenProductUpdateModal}
-          onRequestClose={closeProductUpdateModal}
+          onRequestClose={() => closeModal(setOpenProductUpdateModal)}
           className="product-modal"
         >
           <XMarkIcon
-            onClick={closeProductUpdateModal}
+            onClick={() => closeModal(setOpenProductUpdateModal)}
             className="product-modal-close-icon"
           />
           <div className="product-modal-body">
             <Form
               givenInitial={currentProduct}
-              handleConfirm={(data) => updateProduct(data)}
+              handleConfirm={(data) =>
+                updateProduct(data).then(() => setCrudAction((prev) => !prev))
+              }
               actionText={"update product"}
               messageText="to update this product click 'update Product'. For cancel procces click 'Cancel'"
             />
@@ -118,21 +108,20 @@ const DashboardProductsTable = ({ products }) => {
         {/* delete confirmation modal  */}
         <ReactModal
           isOpen={isOpenDeleteConfirmationModal}
-          onRequestClose={closeDeleteConfirmationModal}
+          onRequestClose={() => closeModal(setOpenDeleteConfirmationModal)}
           className="h-auto w-auto"
         >
           <div>
             <Confirmation
               actionText={"delete"}
               message={"can't undo the deleted file!"}
-              handleClose={closeDeleteConfirmationModal}
+              handleClose={() => closeModal(setOpenDeleteConfirmationModal)}
               handleConfirm={() => {
                 // close the confirmation modal when clicked
-                setOpenDeleteConfirmationModal(false);
+                closeModal(setOpenDeleteConfirmationModal);
                 deleteProduct(currentProduct._id).then(() => {
                   setCrudAction((prev) => !prev);
                 });
-                // handleDelete(currentProduct._id, setCrudAction);
               }}
             />
           </div>

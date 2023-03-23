@@ -49,7 +49,6 @@ const DashboardProducts = () => {
       );
     }
   }, [searchValue]);
-  console.log('re')
 
   const handleOpenAddProductForm = () => {
     //disable body scrolling

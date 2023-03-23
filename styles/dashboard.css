@@ -130,7 +130,7 @@
     @apply flex justify-start md:justify-center md:mr-[20%];
   }
   .dashboard-product-header .right .btn-container.filter {
-    @apply md:mr-0 ;
+    @apply md:mr-0;
   }
   .dashboard-product-header .btn-container .btn {
     @apply w-fit whitespace-nowrap px-2 py-2 bg-[#e50914] gap-2 text-white hover:brightness-75;
@@ -326,15 +326,30 @@
   .formik .submit-btn {
     @apply col-span-2 md:col-span-3 bg-[#e50914] text-white p-2 capitalize font-medium tracking-wider disabled:brightness-75 disabled:cursor-not-allowed;
   }
-}
 
-/* ! product modal =================== */
-.product-modal {
-  @apply relative h-screen w-screen md:max-h-[80%] md:max-w-[80%] rounded-lg top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-red-50  overflow-y-scroll overflow-x-hidden;
-}
-.product-modal-close-icon {
-  @apply h-6 w-6 fixed top-2 right-1 z-10 text-gray-600 hover:text-gray-800 hover:h-7 hover:w-7 transition-all duration-200;
-}
-.product-modal-body {
-  @apply p-4;
+  /* ! product modal =================== */
+  .product-modal {
+    @apply relative h-screen w-screen md:max-h-[80%] md:max-w-[80%] rounded-lg top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-red-50  overflow-y-scroll overflow-x-hidden;
+  }
+  .product-modal-close-icon {
+    @apply h-6 w-6 fixed top-2 right-1 z-10 text-gray-600 hover:text-gray-800 hover:h-7 hover:w-7 transition-all duration-200;
+  }
+  .product-modal-body {
+    @apply p-4;
+  }
+
+  /* ! profile modal =================== */
+  .profile-modal-container{
+    @apply h-auto w-auto border-0 outline-none absolute top-14 left-4
+  }
+  .profile-modal-wrapper{
+    @apply h-auto w-auto bg-white shadow-[0px_0px_48px_-6px_rgba(0,0,0,0.5)] rounded-md p-4
+  }
+  .profile-modal-nav{
+    @apply flex flex-col gap-1
+  }
+  .profile-modal-nav h3{
+    @apply text-sm sm:text-base capitalize text-gray-500 font-semibold tracking-wide  hover:text-gray-800 transition-all duration-200 cursor-pointer active:text-[#e50914]
+  }
+  
 }
