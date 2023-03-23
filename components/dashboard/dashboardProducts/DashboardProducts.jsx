@@ -1,15 +1,14 @@
-import Button from "@/components/Button";
-import Searchbar from "@/components/searchbar/Searchbar";
 import { productAddModalState } from "@/lib/atom/modalOpenState";
 import { fetchGET } from "@/lib/fetch/fetch";
 import { addProduct } from "@/lib/product/productCRUD";
-import { FunnelIcon, PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import React, { useEffect, useState } from "react";
 import ReactModal from "react-modal";
 import { useRecoilState } from "recoil";
 import DashboardProductHeader from "./DashboardProductHeader";
 import DashboardProductsTable from "./DashboardProductsTable";
 import Form from "./Form";
+import { crudState } from "@/lib/atom/crudState";
 
 const DashboardProducts = () => {
   //* states
@@ -21,6 +20,7 @@ const DashboardProducts = () => {
   };
   const [products, setProducts] = useState(null);
   const [filteredProducts, setFilteredProducts] = useState(null);
+  const [crudAction, setCrudAction]= useRecoilState(crudState)
 
   //* functions
   //fetch products
@@ -28,7 +28,7 @@ const DashboardProducts = () => {
     fetchGET("http://localhost:3000/api/db/products").then((data) =>
       setProducts(data.products)
     );
-  });
+  },[crudAction]);
 
   // search product
   useEffect(() => {
@@ -49,7 +49,8 @@ const DashboardProducts = () => {
       );
     }
   }, [searchValue]);
-  console.log({ filteredProducts });
+  console.log('re')
+
   const handleOpenAddProductForm = () => {
     //disable body scrolling
     document.body.style.overflow = "hidden";
@@ -90,7 +91,10 @@ const DashboardProducts = () => {
         <div className="product-modal-body">
           <Form
             handleConfirm={
-              (data) => addProduct(data, handleCloseAddProductForm) // addProduct function from lib/product/productCRUD.js
+              (data) => addProduct(data, ()=>{
+                handleCloseAddProductForm()
+                setCrudAction(prev => !prev)
+              }) // addProduct function from lib/product/productCRUD.js
             }
             actionText={"add product"}
             messageText="to add a product click 'Add Product'. for cancel procces click 'Cancel'"
