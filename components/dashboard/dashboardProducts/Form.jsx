@@ -389,6 +389,7 @@ const Form = ({ givenInitial, actionText, messageText, handleConfirm }) => {
           </button>
         </form>
       </div>
+      {/* confirmation modal  */}
       <ReactModal
         isOpen={isOpenConfirmation}
         onRequestClose={closeConfirmation}

@@ -1,4 +1,5 @@
 import React from "react";
+import LoaderSVG from "./LoaderSVG";
 
 const Button = ({
   textColor,
@@ -11,6 +12,7 @@ const Button = ({
   handleClick,
   type,
   disable,
+  isLoading,
 }) => {
   const btnTextClr = textColor ? textColor : "text-zinc-900";
   const btnBgClr = bgColor ? bgColor : "bg-zinc-300";
@@ -24,8 +26,9 @@ const Button = ({
       disabled={disable}
       type={type}
     >
-      {text}
-      {Icon ? <Icon className={iconCustomStyle} /> : null }
+      {isLoading ? <LoaderSVG color={"fill-gray-400"} /> : null}
+      {!isLoading && text}
+      {!isLoading && Icon ? <Icon className={iconCustomStyle} /> : null}
     </button>
   );
 };

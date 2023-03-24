@@ -1,5 +1,6 @@
 import "@/styles/globals.css";
 import "@/styles/dashboard.css";
+import "@/styles/orderplacedAlert.css"
 import "react-toastify/dist/ReactToastify.css";
 import { RecoilRoot } from "recoil";
 import CartModal from "@/components/CartModal";

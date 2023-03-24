@@ -1,5 +1,5 @@
-import React from "react";
-import {useFormik} from "formik";
+import React, { useState } from "react";
+import { useFormik } from "formik";
 import * as Yup from "yup";
 import Button from "./Button";
 import CartItem from "./CartItem";
@@ -8,10 +8,13 @@ import {
   handleDelete,
   handleIncrease,
 } from "@/lib/cart/cartFunctions";
-import {useRecoilState, useRecoilValue} from "recoil";
-import {cartState} from "@/lib/atom/cartState";
-import {cartProductsIdState} from "@/lib/atom/cartProductsIdState";
+import { useRecoilState } from "recoil";
+import { cartState } from "@/lib/atom/cartState";
+import { cartProductsIdState } from "@/lib/atom/cartProductsIdState";
 import CartPricing from "./CartPricing";
+import ReactModal from "react-modal";
+import { fetchPOST } from "@/lib/fetch/fetch";
+import OrderPlacedAlert from "./confirmation/OrderPlacedAlert";
 
 const userInputValidation = Yup.object({
   fullName: Yup.string()
@@ -24,12 +27,19 @@ const userInputValidation = Yup.object({
     .required("Required"),
   email: Yup.string().email("Enter a valid E-mail").required("Required"),
   cityName: Yup.string().required("Required"),
+  userAddress: Yup.string().required("Required"),
+  userDistrict: Yup.string().required("Required"),
 });
-
+const initialOrderReq = {
+  isLoading: false,
+  success: false,
+  orderId: "",
+};
 export default function CheckoutPage() {
   const [cartProductsId, setCartProductsId] =
     useRecoilState(cartProductsIdState);
   const [cart, setCart] = useRecoilState(cartState);
+  const [orderReq, setOrderReq] = useState(initialOrderReq);
 
   const formik = useFormik({
     initialValues: {
@@ -37,27 +47,30 @@ export default function CheckoutPage() {
       mobileNum: "",
       email: "",
       cityName: "",
+      userAddress: "",
+      userDistrict: "",
     },
     validationSchema: userInputValidation,
-    onSubmit: async (values, {resetForm}) => {
+    onSubmit: async (values, { resetForm }) => {
+      //start loading
+      setOrderReq({ ...initialOrderReq, isLoading: true });
       // send data to sever for place order
-      const res = await fetch("/api/db/orders/placeorder", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({customer: values, cartProductsId}),
+      const data = await fetchPOST("/api/db/orders/placeorder", {
+        customer: values,
+        cartProductsId,
       });
-      const data = await res.json();
       if (data.success) {
-        console.log(data.orderId);
-        resetForm({values: ""});
-      }
+        setOrderReq((prev) => ({
+          ...prev,
+          isLoading: false,
+          success: true,
+          orderId: data.orderId,
+        }));
+        resetForm({ values: "" });
+      } else setOrderReq(initialOrderReq);
     },
   });
 
-  console.log('formik checkout')
   return (
     <>
       <div className="wrapper">
@@ -163,11 +176,23 @@ export default function CheckoutPage() {
                   <label htmlFor="userDistrict">
                     District <span title="Information must be provided">*</span>
                   </label>
-                  <select className="select" id="userDistrict">
-                    <option>Select One</option>
+                  <select
+                    className="select"
+                    id="userDistrict"
+                    name="userDistrict"
+                    onChange={formik.handleChange}
+                    value={formik.values.userDistrict}
+                  >
+                    <option value="">Select One</option>
                     <option value="Chattogram">Chattogram</option>
                     <option value="Dhaka">Dhaka</option>
                   </select>
+                  {formik.touched.userDistrict &&
+                    formik.touched.userDistrict && (
+                      <span className="text-red-600 text-sm">
+                        {formik.errors.userDistrict}
+                      </span>
+                    )}
                 </div>
                 {/* City name input Box */}
                 <div className="inputForm">
@@ -198,13 +223,41 @@ export default function CheckoutPage() {
                 <textarea
                   className="textarea"
                   id="userAddress"
-                  placeholder="Type here..."></textarea>
+                  name="userAddress"
+                  placeholder="Type here..."
+                  onChange={formik.handleChange}
+                  value={formik.values.userAddress}
+                />
+                {formik.touched.userAddress && formik.touched.userAddress && (
+                  <span className="text-red-600 text-sm">
+                    {formik.errors.userAddress}
+                  </span>
+                )}
               </div>
-              <Button type="submit" text="Confirm Order" />
+              <Button
+                isLoading={orderReq.isLoading}
+                disable={orderReq.isLoading}
+                type={"submit"}
+                text="Confirm Order"
+              />
             </form>
           </section>
         </section>
       </div>
+        <ReactModal
+          isOpen={orderReq.success}
+          onRequestClose={() =>
+            setOrderReq((prev) => ({ ...prev, success: false, orderId: "" }))
+          }
+          className="h-auto w-auto"
+        >
+          <OrderPlacedAlert
+            handleClose={() =>
+              setOrderReq((prev) => ({ ...prev, success: false, orderId: "" }))
+            }
+            orderId={orderReq.orderId}
+          />
+        </ReactModal>
     </>
   );
 }
