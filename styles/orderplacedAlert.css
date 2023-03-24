@@ -1,0 +1,45 @@
+@tailwind components;
+
+.ReactModal__Content{
+    @apply bg-[rgba(216,243,220,0.90)]
+}
+
+@layer components {
+  .orderPlaceAlert-container {
+    @apply h-screen w-screen ;
+  }
+  .orderPlaceAlert-wrapper {
+    @apply h-[250px] w-[350px] bg-white shadow-md rounded-md fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center gap-2;
+  }
+  .close-icon{
+    @apply h-5 w-5 absolute top-2 right-2 text-gray-400 hover:text-gray-700 transition-all duration-200 cursor-pointer
+  }
+  .orderPlaceAlert-header{
+    @apply flex flex-col justify-center items-center bg-transparent p-0
+  }
+
+  .orderPlaceAlert-header .icon {
+    @apply h-20 w-20 text-green-400
+  }
+  .orderPlaceAlert-header .greetings {
+    @apply capitalize text-2xl text-gray-700 font-semibold 
+  }
+  .orderPlaceAlert-body{
+    @apply flex flex-col items-center
+  }
+  .orderPlaceAlert-body .message{
+    @apply text-green-500 capitalize text-lg 
+  }
+  .orderPlaceAlert-body .order-id{
+    @apply text-gray-500 capitalize text-base  cursor-pointer hover:underline
+  }
+  .orderPlaceAlert-body .order-id span{
+    @apply text-red-500 capitalize text-base
+  }
+  .orderPlaceAlert-footer{
+    @apply flex justify-center
+  }
+  .orderPlaceAlert-footer .message{
+    @apply text-base text-gray-500
+  }
+}

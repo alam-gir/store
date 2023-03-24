@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import CartItem from "./CartItem";
-import CartPricing from "./CartPricing";
 import { cartProductsIdState } from "@/lib/atom/cartProductsIdState";
 import { cartState } from "@/lib/atom/cartState";
 import {
@@ -12,7 +11,6 @@ import {
   handleIncrease,
 } from "@/lib/cart/cartFunctions";
 import Link from "next/link";
-import { Button } from "@/components/Button";
 
 export default function CartModal() {
   const [isOpenCart, setOpenCart] = useRecoilState(toggleCartState);
@@ -48,6 +46,7 @@ export default function CartModal() {
     setOpenCart(!isOpenCart);
   };
 
+  const closeCart = () => setOpenCart(false)
   return (
     <>
       {isOpenCart && (
@@ -79,6 +78,7 @@ export default function CartModal() {
                         handleDelete={() =>
                           handleDelete(product, setCartProductsId)
                         }
+                        handleCloseCart = {closeCart}
                       />
                     </div>
                   ))}
@@ -103,7 +103,7 @@ export default function CartModal() {
                         </li>
                       </ul>
                       <Link href="/placeorder" className="w-2/5">
-                        <button className="checkOutBtn">Check Out</button>
+                        <button onClick={closeCart} className="checkOutBtn">Check Out</button>
                         {/* <Button
                           text={"Check Out"}
                           bgColor={"bg-red-600"}
