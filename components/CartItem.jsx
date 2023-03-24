@@ -10,6 +10,7 @@ const CartItem = ({
   handleIncrease,
   handleDecrease,
   handleDelete,
+  handleCloseCart,
   product: { _id, name, images, price, discountPercentage, weight, quantity },
 }) => {
   const cartProductsId = useRecoilValue(cartProductsIdState);
@@ -33,7 +34,7 @@ const CartItem = ({
         <div className="flex flex-col gap-2 justify-center">
           <div className="cartItemNamePrice">
             <Link href={`/products/${_id}`}>
-              <h2 className="cartItemName">
+              <h2 onClick={handleCloseCart} className="cartItemName">
                 {name.length > 18 ? name.slice(0, 18) + "..." : name}
                 <span>{weight && ` (${weight})`}</span>
               </h2>

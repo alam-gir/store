@@ -8,7 +8,7 @@ import {cartProductsIdState} from "@/lib/atom/cartProductsIdState";
 const CartBtn = () => {
   const [isOpenCart, setOpenCart] = useRecoilState(toggleCartState);
   const [cart, setCart] = useRecoilState(cartState);
-  const handleClick = () => setOpenCart(!isOpenCart);
+  const openCart = () => setOpenCart(!isOpenCart);
   const [cartProductsId, setCartProductsId] =
     useRecoilState(cartProductsIdState);
 
@@ -24,7 +24,7 @@ const CartBtn = () => {
   return (
     <>
       <div className="relative">
-        <button onClick={handleClick}>
+        <button onClick={openCart}>
           <ShoppingBagIcon className="h-8 w-8 bg-[#227C70] rounded-md p-1 text-white hover:brightness-75" />
         </button>
         {cart?.products?.length > 0 && (

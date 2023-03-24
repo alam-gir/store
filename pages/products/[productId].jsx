@@ -1,8 +1,12 @@
+import CartBtn from "@/components/CartBtn";
 import ProductView from "@/components/ProductView";
 import { handleAddToCart } from "@/lib/cart/cartFunctions";
 const View = ({ products }) => {
   return (
     <div>
+      <div className="cart-btn">
+        <CartBtn />
+      </div>
       <ProductView products={products} handleAddToCart={handleAddToCart} />
     </div>
   );
