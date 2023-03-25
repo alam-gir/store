@@ -2,11 +2,10 @@ import { useRouter } from "next/router";
 import Button from "./Button";
 import { useState, useEffect } from "react";
 import MoreRelatedProduct from "./MoreRelatedProduct";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { cartState } from "@/lib/atom/cartState";
-import { cartProductsIdState } from "@/lib/atom/cartProductsIdState";
+import { useRecoilState } from "recoil";
+import { cartChangesState } from "@/lib/atom/cartState";
 import { handleAddToCart } from "@/lib/cart/cartFunctions";
-import { isCarted } from "@/lib/cart/checkStatus";
+import { isCartedStatus } from "@/lib/cart/checkStatus";
 import { calculateOfferPrice } from "@/lib/product/calculateOfferPrice";
 
 // Carousel
@@ -14,8 +13,8 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 
 const ProductView = ({ products }) => {
-  const [cartProductsId, setCartProductsId] =
-    useRecoilState(cartProductsIdState);
+  const [isCarted, setCartedStatus] = useState(false);
+  const [cartChanges, setCartChanges] = useRecoilState(cartChangesState);
 
   const [currentProduct, setCurrentProduct] = useState(null);
 
@@ -38,6 +37,11 @@ const ProductView = ({ products }) => {
     });
   }, [productId]);
 
+  useEffect(() => {
+    setCartedStatus(isCartedStatus(currentProduct?.product?._id));
+  }, [currentProduct, cartChanges]);
+  console.log({ isCarted });
+
   const productDefaultImg =
     "https://i.ibb.co/P9fVhj6/pngfind-com-lemon-tea-png-6661129.png";
 
@@ -56,7 +60,8 @@ const ProductView = ({ products }) => {
               swipeable={true}
               emulateTouch={true}
               showIndicators={false}
-              thumbWidth={60}>
+              thumbWidth={60}
+            >
               {currentProduct?.product?.images?.map((image, index) => {
                 return (
                   <div key={index} className="carouselImgWrapper">
@@ -71,14 +76,6 @@ const ProductView = ({ products }) => {
                   </div>
                 );
               })}
-
-              {/* This is for testing purpose --static design */}
-              {/* <div className="carouselImgWrapper">
-                <img
-                  src={productDefaultImg}
-                  className="h-full w-full object-contain"
-                />
-              </div> */}
             </Carousel>
           </div>
         </div>
@@ -112,19 +109,13 @@ const ProductView = ({ products }) => {
             <div className="orderBtns">
               <Button text="Buy Now" />
               <Button
-                text={
-                  isCarted(currentProduct?.product?._id, cartProductsId)
-                    ? "in cart"
-                    : "add to cart"
-                }
+                text={isCarted ? "+1 in cart" : "add to cart"}
                 bgColor={"bg-red-600"}
                 textColor={"text-white"}
-                handleClick={() =>
-                  handleAddToCart(
-                    currentProduct?.product?._id,
-                    setCartProductsId
-                  )
-                }
+                handleClick={() => {
+                  handleAddToCart(currentProduct?.product?._id);
+                  setCartChanges((prev) => !prev);
+                }}
               />
             </div>
             <div className="moreRelatedProducts">

@@ -1,20 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Button from "./Button";
 import CartItem from "./CartItem";
-import {
-  handleDecrease,
-  handleDelete,
-  handleIncrease,
-} from "@/lib/cart/cartFunctions";
-import { useRecoilState } from "recoil";
-import { cartState } from "@/lib/atom/cartState";
-import { cartProductsIdState } from "@/lib/atom/cartProductsIdState";
+import { fetchCartProducts } from "@/lib/cart/cartFunctions";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { cartChangesState, cartState } from "@/lib/atom/cartState";
 import CartPricing from "./CartPricing";
 import ReactModal from "react-modal";
 import { fetchPOST } from "@/lib/fetch/fetch";
 import OrderPlacedAlert from "./confirmation/OrderPlacedAlert";
+import LoaderSVG from "./LoaderSVG";
+import { addToLocalstorage } from "@/lib/localStorage/addToLocalstorage";
+import { useRouter } from "next/router";
 
 const userInputValidation = Yup.object({
   fullName: Yup.string()
@@ -36,11 +34,14 @@ const initialOrderReq = {
   orderId: "",
 };
 export default function CheckoutPage() {
-  const [cartProductsId, setCartProductsId] =
-    useRecoilState(cartProductsIdState);
+  const cartChanges = useRecoilValue(cartChangesState);
   const [cart, setCart] = useRecoilState(cartState);
+  const [localCart, setLocalCart] = useState(null);
+  const [isLoading, setLoading] = useState(false);
   const [orderReq, setOrderReq] = useState(initialOrderReq);
+  const router = useRouter();
 
+  //* formik---------
   const formik = useFormik({
     initialValues: {
       fullName: "",
@@ -57,19 +58,32 @@ export default function CheckoutPage() {
       // send data to sever for place order
       const data = await fetchPOST("/api/db/orders/placeorder", {
         customer: values,
-        cartProductsId,
+        localCart,
       });
+
+      //if order placed
       if (data.success) {
+        // set order reqst
         setOrderReq((prev) => ({
           ...prev,
           isLoading: false,
           success: true,
           orderId: data.orderId,
         }));
+
+        //reset order forms
         resetForm({ values: "" });
+
+        // cart empty
+        addToLocalstorage("ramzansStoreCartProductsId", []);
       } else setOrderReq(initialOrderReq);
     },
   });
+
+  // fetch cart products
+  useEffect(() => {
+    fetchCartProducts(setCart, setLoading, setLocalCart);
+  }, [cartChanges]);
 
   return (
     <>
@@ -81,32 +95,27 @@ export default function CheckoutPage() {
             <section className="cartItemContainer">
               {cart?.products?.map((product) => (
                 <div className="" key={product._id}>
-                  <CartItem
-                    product={product}
-                    handleIncrease={() =>
-                      handleIncrease(product, setCartProductsId)
-                    }
-                    handleDecrease={() =>
-                      handleDecrease(product, setCartProductsId)
-                    }
-                    handleDelete={() =>
-                      handleDelete(product, setCartProductsId)
-                    }
-                  />
+                  <CartItem product={product} />
                 </div>
               ))}
             </section>
 
             {/* Pricing Details Section */}
-            <CartPricing
-              cart={cart}
-              isHeader
-              isTotalAmount
-              isDeliveryCharge
-              isBagDiscount
-              isEstimatedTax
-              isSubTotalAmount
-            />
+            {cart?.products?.length > 0 ? (
+              <CartPricing
+                cart={cart}
+                isHeader
+                isTotalAmount
+                isDeliveryCharge
+                isBagDiscount
+                isEstimatedTax
+                isSubTotalAmount
+              />
+            ) : (
+              <div className="flex justify-center items-center">
+                <LoaderSVG color={"fill-gray-400"} />
+              </div>
+            )}
           </section>
 
           {/* Checkout Form Section */}
@@ -244,20 +253,21 @@ export default function CheckoutPage() {
           </section>
         </section>
       </div>
-        <ReactModal
-          isOpen={orderReq.success}
-          onRequestClose={() =>
+      <ReactModal
+        isOpen={orderReq.success}
+        onRequestClose={() =>
+          setOrderReq((prev) => ({ ...prev, success: false, orderId: "" }))
+        }
+        onAfterClose={() => router.push(`${window.origin}/myorders`)}
+        className="h-auto w-auto"
+      >
+        <OrderPlacedAlert
+          handleClose={() =>
             setOrderReq((prev) => ({ ...prev, success: false, orderId: "" }))
           }
-          className="h-auto w-auto"
-        >
-          <OrderPlacedAlert
-            handleClose={() =>
-              setOrderReq((prev) => ({ ...prev, success: false, orderId: "" }))
-            }
-            orderId={orderReq.orderId}
-          />
-        </ReactModal>
+          orderId={orderReq.orderId}
+        />
+      </ReactModal>
     </>
   );
 }

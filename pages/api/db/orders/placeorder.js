@@ -5,12 +5,12 @@ import { ObjectId } from "mongodb";
 
 const placeorder = async (req, res) => {
   if (req.method === "POST") {
-    const { customer, cartProductsId } = req.body;
-    if (customer && cartProductsId) {
+    const { customer, localCart } = req.body;
+    if (customer && localCart) {
       //execute if customer and porducts id available.......
       try {
         // convert ids to ObjectIds
-        const cartProductObjectdIds = cartProductsId.map(
+        const localCartObjectIds = localCart.map(
           (product) => new ObjectId(product.id)
         );
 
@@ -21,13 +21,13 @@ const placeorder = async (req, res) => {
         const products = await findDocumentsWithObjectIds(
           db,
           "products",
-          cartProductObjectdIds
+          localCartObjectIds
         );
 
         // modify products with quantity
         const modifiedProducts = products.map((product) => {
           let temp;
-          for (let item of cartProductsId) {
+          for (let item of localCart) {
             if (item.id === product._id.toString()) {
               temp = {
                 ...product,

@@ -1,27 +1,23 @@
-import { cartProductsIdState } from "@/lib/atom/cartProductsIdState";
 import { TrashIcon, PlusIcon, MinusIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { useEffect, useState } from "react";
-import { addToLocalstorage } from "@/lib/localStorage/addToLocalstorage";
 import { calculateOfferPrice } from "@/lib/product/calculateOfferPrice";
+import { handleAddToCart, removeFromCart } from "@/lib/cart/cartFunctions";
+import { cartChangesState } from "@/lib/atom/cartState";
 
 const CartItem = ({
-  handleIncrease,
-  handleDecrease,
-  handleDelete,
   handleCloseCart,
   product: { _id, name, images, price, discountPercentage, weight, quantity },
 }) => {
-  const cartProductsId = useRecoilValue(cartProductsIdState);
-  const [productPrice, setProductPrice] = useState(null)
+  const [cartChanges, setCartChanges] = useRecoilState(cartChangesState);
+  const [productPrice, setProductPrice] = useState(null);
 
   // set cart to local storage whenver changes cartProductsId
   useEffect(() => {
-    setProductPrice(calculateOfferPrice(price,discountPercentage))
-    addToLocalstorage("ramzansStoreCartProductsId", cartProductsId);
-  }, [cartProductsId]);
-  
+    setProductPrice(calculateOfferPrice(price, discountPercentage));
+  }, [cartChanges]);
+
   return (
     <div className="cartItem">
       {/* Product Image */}
@@ -50,11 +46,23 @@ const CartItem = ({
           <div className="cartItemQuantity">
             <span>Quantity</span>
             <div className="quantityController">
-              <button onClick={handleDecrease} className="minusIconBtn">
+              <button
+                onClick={() => {
+                  handleAddToCart(_id, true);
+                  setCartChanges((prev) => !prev);
+                }}
+                className="minusIconBtn"
+              >
                 <MinusIcon className="minusIcon" />
               </button>
               <span>{quantity}</span>
-              <button onClick={handleIncrease} className="plusIconBtn">
+              <button
+                onClick={() => {
+                  handleAddToCart(_id);
+                  setCartChanges((prev) => !prev);
+                }}
+                className="plusIconBtn"
+              >
                 <PlusIcon className="plusIcon" />
               </button>
             </div>
@@ -62,7 +70,13 @@ const CartItem = ({
         </div>
 
         {/* delete btn */}
-        <div className="cartItemRemoveBtn" onClick={handleDelete}>
+        <div
+          className="cartItemRemoveBtn"
+          onClick={() => {
+            removeFromCart(_id);
+            setCartChanges(prev => !prev)
+          }}
+        >
           <TrashIcon className="trashIcon" />
         </div>
       </div>
