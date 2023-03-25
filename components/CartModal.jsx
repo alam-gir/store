@@ -1,52 +1,32 @@
 import { toggleCartState } from "@/lib/atom/cartRecoil";
-import { useEffect } from "react";
-import { useRecoilState } from "recoil";
+import { useEffect, useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import CartItem from "./CartItem";
-import { cartProductsIdState } from "@/lib/atom/cartProductsIdState";
-import { cartState } from "@/lib/atom/cartState";
+import { cartChangesState, cartState } from "@/lib/atom/cartState";
 import {
-  handleDecrease,
-  handleDelete,
-  handleIncrease,
+  fetchCartProducts,
 } from "@/lib/cart/cartFunctions";
 import Link from "next/link";
+import LoaderSVG from "./LoaderSVG";
 
 export default function CartModal() {
   const [isOpenCart, setOpenCart] = useRecoilState(toggleCartState);
-  const [cartProductsId, setCartProductsId] =
-    useRecoilState(cartProductsIdState);
+  const cartChanges = useRecoilValue(cartChangesState);
 
   const [cart, setCart] = useRecoilState(cartState);
-
-  //fetch documents by id
-  const fetchProducts = async (cartProductsDetails) => {
-    const res = await fetch("/api/db/products/cart", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify(cartProductsDetails),
-    });
-    const data = await res.json();
-    if (data.success) {
-      setCart(data.cart);
-    }
-    if (!data.success) {
-      setCart([]);
-    }
-  };
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetchProducts(cartProductsId);
-  }, [cartProductsId]);
+    fetchCartProducts(setCart, setLoading);
+  }, [cartChanges]);
 
   const handleClose = () => {
     setOpenCart(!isOpenCart);
   };
 
-  const closeCart = () => setOpenCart(false)
+  const closeCart = () => setOpenCart(false);
+
   return (
     <>
       {isOpenCart && (
@@ -61,7 +41,12 @@ export default function CartModal() {
               </div>
             </header>
             {/* body  */}
-            {cart?.products?.length > 0 ? (
+            {/* isLoading ? "loading" : isCartItems ? cartitems : 'noitems' */}
+            {isLoading ? (
+              <div className="h-full w-full flex justify-center items-center">
+                <LoaderSVG color={"fill-gray-400"} />
+              </div>
+            ) : cart?.products?.length > 0 ? (
               <>
                 {/* Product Items  */}
                 <div className="cartItemContainer customScrollbar px-4 my-4">
@@ -69,16 +54,7 @@ export default function CartModal() {
                     <div key={product._id}>
                       <CartItem
                         product={product}
-                        handleIncrease={() =>
-                          handleIncrease(product, setCartProductsId)
-                        }
-                        handleDecrease={() =>
-                          handleDecrease(product, setCartProductsId)
-                        }
-                        handleDelete={() =>
-                          handleDelete(product, setCartProductsId)
-                        }
-                        handleCloseCart = {closeCart}
+                        handleCloseCart={closeCart}
                       />
                     </div>
                   ))}
@@ -103,12 +79,9 @@ export default function CartModal() {
                         </li>
                       </ul>
                       <Link href="/placeorder" className="w-2/5">
-                        <button onClick={closeCart} className="checkOutBtn">Check Out</button>
-                        {/* <Button
-                          text={"Check Out"}
-                          bgColor={"bg-red-600"}
-                          textColor={"text-white"}
-                        /> */}
+                        <button onClick={closeCart} className="checkOutBtn">
+                          Check Out
+                        </button>
                       </Link>
                     </div>
                   </div>

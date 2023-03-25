@@ -272,7 +272,6 @@ const handler = async (req, res) => {
       const res = await db
         .collection("products")
         .deleteOne({ _id: new ObjectId(productDocId) });
-      console.log("delete response", res);
       return res.status(200).json({
         success: true,
         message: `successfully deleted product _id: ${productDocId}`,
