@@ -42,15 +42,16 @@ export default function CheckoutPage() {
   const router = useRouter();
 
   //* formik---------
+  const initialValues = {
+    fullName: "",
+    mobileNum: "",
+    email: "",
+    cityName: "",
+    userAddress: "",
+    userDistrict: "",
+  };
   const formik = useFormik({
-    initialValues: {
-      fullName: "",
-      mobileNum: "",
-      email: "",
-      cityName: "",
-      userAddress: "",
-      userDistrict: "",
-    },
+    initialValues,
     validationSchema: userInputValidation,
     onSubmit: async (values, { resetForm }) => {
       //start loading
@@ -72,10 +73,13 @@ export default function CheckoutPage() {
         }));
 
         //reset order forms
-        resetForm({ values: "" });
+        resetForm(initialValues);
 
         // cart empty
         addToLocalstorage("ramzansStoreCartProductsId", []);
+        // make empty cart 
+        fetchCartProducts(setCart, setLoading, setLocalCart);
+        
       } else setOrderReq(initialOrderReq);
     },
   });
@@ -206,7 +210,7 @@ export default function CheckoutPage() {
                 {/* City name input Box */}
                 <div className="inputForm">
                   <label htmlFor="userCity">
-                    City name{" "}
+                    City name
                     <span title="Information must be provided">*</span>
                   </label>
                   <input
@@ -258,7 +262,7 @@ export default function CheckoutPage() {
         onRequestClose={() =>
           setOrderReq((prev) => ({ ...prev, success: false, orderId: "" }))
         }
-        onAfterClose={() => router.push(`${window.origin}/myorders`)}
+        onAfterClose={() => router.replace(`${window.origin}`)}
         className="h-auto w-auto"
       >
         <OrderPlacedAlert

@@ -51,10 +51,24 @@ const placeorder = async (req, res) => {
           .collection("neworders")
           .insertOne(newOrderObj);
 
-        if(newOrder.acknowledged){
-          return res.status(201).json({success:true, message: 'order placed',orderId: newOrder.insertedId})
-        }else{
-          return res.send({success:false, message: 'order dosent placed.'})
+        // update order with orderId
+        await db
+          .collection("neworders")
+          .updateOne(
+            { _id: newOrder.insertedId },
+            { $set: { orderId: newOrder.insertedId } }
+          );
+
+        if (newOrder.acknowledged) {
+          return res
+            .status(201)
+            .json({
+              success: true,
+              message: "order placed",
+              orderId: newOrder.insertedId,
+            });
+        } else {
+          return res.send({ success: false, message: "order dosent placed." });
         }
       } catch (error) {
         console.log(error.message);
