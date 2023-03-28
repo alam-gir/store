@@ -1,5 +1,6 @@
 import CartBtn from "@/components/CartBtn";
 import HomePage from "@/components/HomePage";
+import customerTemplate from "@/lib/mail/sellerTemplate";
 
 export default function Home({ products }) {
   return (

@@ -1,3 +1,5 @@
+import { customerTemplate, sellerTemplate } from "@/lib/mail/sellerTemplate";
+import { sendMailThroughNodemailer } from "@/lib/mail/sendMail";
 import { getPriceDetails } from "@/lib/mongodb/calculatePoductsPrice";
 import { connectMongoDB } from "@/lib/mongodb/connectDB";
 import { findDocumentsWithObjectIds } from "@/lib/mongodb/queryFunctions";
@@ -28,11 +30,10 @@ const placeorder = async (req, res) => {
         const modifiedProducts = products.map((product) => {
           let temp;
           for (let item of localCart) {
-            if (item.id === product._id.toString()) {
+            if (item.id === product._id.toLocaleString()) {
               temp = {
                 ...product,
                 quantity: item.quantity,
-                orderedAt: new Date().toLocaleString(),
               };
             }
           }
@@ -52,21 +53,55 @@ const placeorder = async (req, res) => {
           .insertOne(newOrderObj);
 
         // update order with orderId
-        await db
-          .collection("neworders")
-          .updateOne(
-            { _id: newOrder.insertedId },
-            { $set: { orderId: newOrder.insertedId } }
-          );
+        await db.collection("neworders").updateOne(
+          { _id: newOrder.insertedId },
+          {
+            $set: {
+              orderId: newOrder.insertedId.toLocaleString(),
+              orderedAt: new Date().toLocaleString(),
+            },
+          }
+        );
 
         if (newOrder.acknowledged) {
-          return res
-            .status(201)
-            .json({
-              success: true,
-              message: "order placed",
-              orderId: newOrder.insertedId,
-            });
+          // find product for getting new order data for email design
+          const finalOrder = await db
+            .collection("neworders")
+            .findOne({ _id: newOrder.insertedId });
+
+          // send email
+          const sellerMail = `"RamzanStore" <${process.env.GMAIL}>`;
+          const subjectForSeller = "alhamdulillah. a new order request";
+          const htmlForSeller = sellerTemplate(finalOrder); // "<b>alhamdulillah. a new order request. from html.</b>"
+          const customerMail = `"${customer.fullName}" <${customer.email}>`;
+          const subjectForCustomer =
+            "jazakumullah for your order! Stay with us..";
+          const htmlForCustomer =
+            "<b>jazakumullah for your order! Stay with us. from html.</b>";
+
+          // to customer
+          await sendMailThroughNodemailer(
+            sellerMail,
+            customerMail,
+            subjectForCustomer,
+            "",
+            htmlForCustomer
+          );
+          // to seller
+          await sendMailThroughNodemailer(
+            customerMail,
+            sellerMail,
+            subjectForSeller,
+            "",
+            htmlForSeller
+          );
+
+          //return response
+          return res.status(201).json({
+            success: true,
+            message: "order placed",
+            orderId: newOrder.insertedId,
+          });
         } else {
           return res.send({ success: false, message: "order dosent placed." });
         }
