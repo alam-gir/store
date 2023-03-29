@@ -1,3 +1,4 @@
+import { customerPlaceorderTemplate } from "@/lib/mail/customerPlaceorderTemplate";
 import { customerTemplate, sellerTemplate } from "@/lib/mail/sellerTemplate";
 import { sendMailThroughNodemailer } from "@/lib/mail/sendMail";
 import { getPriceDetails } from "@/lib/mongodb/calculatePoductsPrice";
@@ -74,10 +75,8 @@ const placeorder = async (req, res) => {
           const subjectForSeller = "alhamdulillah. a new order request";
           const htmlForSeller = sellerTemplate(finalOrder); // "<b>alhamdulillah. a new order request. from html.</b>"
           const customerMail = `"${customer.fullName}" <${customer.email}>`;
-          const subjectForCustomer =
-            "jazakumullah for your order! Stay with us..";
-          const htmlForCustomer =
-            "<b>jazakumullah for your order! Stay with us. from html.</b>";
+          const subjectForCustomer = "Place Order at RamzanStore..";
+          const htmlForCustomer = customerPlaceorderTemplate(finalOrder); //"<b>jazakumullah for your order! Stay with us. from html.</b>";
 
           // to customer
           await sendMailThroughNodemailer(
