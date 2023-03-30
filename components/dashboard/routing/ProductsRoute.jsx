@@ -2,7 +2,7 @@ import { ArrowRightIcon, HomeIcon, BriefcaseIcon } from "@heroicons/react/24/out
 import Link from "next/link";
 import React from "react";
 
-const DashboardProductsRoute = () => {
+const ProductsRoute = () => {
   return (
     <div className="routing-wrapper">
       <Link href={"/dashboard"} className="group routing-link">
@@ -12,7 +12,7 @@ const DashboardProductsRoute = () => {
       <span>
         <ArrowRightIcon className="h-3" />
       </span>
-      <Link href={"/dashboard/products"} className="group routing-link">
+      <Link href={""} className="group routing-link">
         <span className="routing-label">products</span>
         <BriefcaseIcon className="routing-icon" />
       </Link>
@@ -20,4 +20,4 @@ const DashboardProductsRoute = () => {
   );
 };
 
-export default DashboardProductsRoute;
+export default ProductsRoute;

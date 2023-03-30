@@ -1,7 +1,7 @@
 import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import DashboardProducts from "@/components/dashboard/dashboardProducts/DashboardProducts";
-import DashboardProductsRoute from "@/components/dashboard/routing/DashboardProductsRoute";
+import ProductsRoute from "@/components/dashboard/routing/ProductsRoute";
 
 const index = () => {
   return (
@@ -11,7 +11,7 @@ const index = () => {
       </div>
       {/* //dashboard routing... */}
       <div className="routing-container">
-        <DashboardProductsRoute />
+        <ProductsRoute />
       </div>
       <div>
         <DashboardProducts/>
