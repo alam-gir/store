@@ -1,12 +1,14 @@
 import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
-import DashboardLanding from "@/components/dashboard/DashboardLanding";
 import Routes from "@/components/dashboard/routing/Routes";
-import { HomeIcon } from "@heroicons/react/24/outline";
-const Dashboard = () => {
+import { HomeIcon, PlusIcon, ShoppingBagIcon } from "@heroicons/react/24/outline";
+
+const New = () => {
 
   const routes = [
-    { name: "dashboard", link: "", Icon: HomeIcon },
+    { name: "dashboard", link: "/dashboard", Icon: HomeIcon },
+    { name: "orders", link: "/dashboard/orders", Icon: ShoppingBagIcon },
+    { name: "new", link: "", Icon: PlusIcon },
   ];
   return (
     <div>
@@ -18,13 +20,10 @@ const Dashboard = () => {
         <Routes details={routes} />
       </div>
       <div>
-        <DashboardLanding />
-      </div>
-      <div>
         <DashboardFooter />
       </div>
     </div>
   );
-};
+}
 
-export default Dashboard;
+export default New
