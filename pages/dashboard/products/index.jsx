@@ -1,9 +1,15 @@
 import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import DashboardProducts from "@/components/dashboard/dashboardProducts/DashboardProducts";
-import ProductsRoute from "@/components/dashboard/routing/ProductsRoute";
+import Routes from "@/components/dashboard/routing/Routes";
+import { BriefcaseIcon, HomeIcon } from "@heroicons/react/24/outline";
 
 const index = () => {
+
+  const routes = [
+    { name: "dashboard", link: "/dashboard", Icon: HomeIcon },
+    { name: "products", link: "", Icon: BriefcaseIcon },
+  ];
   return (
     <div>
       <div>
@@ -11,7 +17,7 @@ const index = () => {
       </div>
       {/* //dashboard routing... */}
       <div className="routing-container">
-        <ProductsRoute />
+        <Routes details={routes}/>
       </div>
       <div>
         <DashboardProducts/>

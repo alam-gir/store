@@ -1,22 +1,25 @@
+import DashboardFooter from "@/components/dashboard/DashboardFooter";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import DashboardMenu from "@/components/dashboard/DashboardMenu";
-import OrdersRoute from "@/components/dashboard/routing/OrdersRoute";
+import Routes from "@/components/dashboard/routing/Routes";
 import {
-    ArrowUturnRightIcon,
-  BriefcaseIcon,
+  ArrowUturnRightIcon,
   CheckIcon,
-  CurrencyBangladeshiIcon,
   DocumentCheckIcon,
+  HomeIcon,
   PlusIcon,
-  ShoppingCartIcon,
+  ShoppingBagIcon,
   TruckIcon,
-  UsersIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import React from "react";
 
 const Orders = () => {
+  const routes = [
+    { name: "dashboard", link: "/dashboard", Icon: HomeIcon },
+    { name: "orders", link: "", Icon: ShoppingBagIcon },
+  ];
   return (
     <div>
       <div>
@@ -24,7 +27,7 @@ const Orders = () => {
       </div>
       {/* //dashboard routing... */}
       <div className="routing-container">
-        <OrdersRoute />
+        <Routes details={routes} />
       </div>
       <div className="landing">
         <div className="landing-wrapper">
@@ -99,6 +102,9 @@ const Orders = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div>
+        <DashboardFooter />
       </div>
     </div>
   );
