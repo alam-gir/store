@@ -9,8 +9,7 @@ import DashboardProductsTable from "./DashboardProductsTable";
 import Form from "./Form";
 import { crudState } from "@/lib/atom/crudState";
 import useSWR, { useSWRConfig } from "swr";
-
-const fetcher = (url) => fetch(url).then((res) => res.json());
+import { fetcher } from "@/lib/fetcher/fetcher";
 
 const DashboardProducts = () => {
   //* states

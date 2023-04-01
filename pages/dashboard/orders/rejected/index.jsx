@@ -15,7 +15,7 @@ const Rejected = () => {
           <div>
             <DashboardHeader />
           </div>
-          {/* //dashboard routing... */}
+          {/* dashboard routing... */}
           <div className="routing-container">
             <Routes details={routes} />
           </div>

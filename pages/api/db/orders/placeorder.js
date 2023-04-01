@@ -1,5 +1,5 @@
 import { customerPlaceorderTemplate } from "@/lib/mail/customerPlaceorderTemplate";
-import { customerTemplate, sellerTemplate } from "@/lib/mail/sellerTemplate";
+import { sellerTemplate } from "@/lib/mail/sellerTemplate";
 import { sendMailThroughNodemailer } from "@/lib/mail/sendMail";
 import { getPriceDetails } from "@/lib/mongodb/calculatePoductsPrice";
 import { connectMongoDB } from "@/lib/mongodb/connectDB";
@@ -7,6 +7,19 @@ import { findDocumentsWithObjectIds } from "@/lib/mongodb/queryFunctions";
 import { ObjectId } from "mongodb";
 
 const placeorder = async (req, res) => {
+  if (req.method === "GET") {
+    try {
+      //connect db
+      const { db } = await connectMongoDB();
+      //get new orders
+      const newOrders = await db.collection("neworders").find().toArray();
+
+      return res.status(200).json({ success: true, newOrders });
+    } catch (error) {
+      return res.status(404).json({ success: false, message: error.message });
+    }
+  }
+
   if (req.method === "POST") {
     const { customer, localCart } = req.body;
     if (customer && localCart) {

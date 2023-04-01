@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+}
+@layer components {
+  /* ========== order card  ========== */
+  .order-card-wrapper {
+    @apply relative h-auto w-full max-w-[25rem] p-4 bg-white rounded-lg drop-shadow-sm; 
+  }
+  .order-card-wrapper .action-btn-container {
+    @apply absolute top-0 right-0 p-1 items-center justify-center;
+  }
+  .order-card-wrapper .action-btn-container button{
+    @apply h-7 w-7 p-1 flex items-center justify-center bg-red-50 hover:bg-gray-200
+  }
+  .order-card-wrapper .action-btn-container .btn .icon {
+    @apply h-5 w-5;
+  }
+  .order-card-wrapper .action-btn-container .btn.call .icon {
+    @apply h-4 w-4;
+  }
+
+  .order-card-wrapper .order-details-container {
+    @apply grid grid-cols-1 gap-2 mt-4;
+  }
+
+  .order-card-wrapper .order-details-container .details {
+    @apply grid grid-cols-7;
+  }
+  .order-card-wrapper .order-details-container .details label {
+    @apply col-span-2 capitalize text-gray-600 font-medium;
+  }
+  .order-card-wrapper .order-details-container .details .value {
+    @apply col-span-5 text-gray-600 tracking-wide;
+  }
+}
