@@ -30,9 +30,12 @@
     @apply grid grid-cols-7;
   }
   .order-card-wrapper .order-details-container .details label {
-    @apply col-span-2 capitalize text-gray-600 font-medium;
+    @apply col-span-2 text-sm md:text-base capitalize text-gray-600 font-medium;
+  }
+  .order-card-wrapper .order-details-container .details.date .value {
+    @apply border-b border-red-100;
   }
   .order-card-wrapper .order-details-container .details .value {
-    @apply col-span-5 text-gray-600 tracking-wide;
+    @apply col-span-5 text-sm text-gray-600 tracking-wide;
   }
 }
