@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .view-order-modal {
+    @apply h-screen w-screen md:h-[80%] md:w-[80%] md:max-w-[60rem] md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:rounded-md !bg-white border-none outline-none;
+  }
+
+  .loader-container {
+    @apply h-full w-full flex justify-center items-center;
+  }
+
+  .section {
+    @apply h-auto w-full p-2;
+  }
+  .date-container {
+    @apply grid col-span-1 sm:grid-cols-2 gap-y-2;
+  }
+  .date-container .date {
+    @apply capitalize text-sm md:text-base grid grid-cols-7;
+  }
+  .date-container .date label {
+    @apply col-span-2 text-gray-600 font-medium;
+  }
+  .date-container .date .value {
+    @apply col-span-5 text-gray-600 tracking-wide;
+  }
+  .field-container {
+    @apply grid gap-1 sm:grid-cols-2;
+  }
+}

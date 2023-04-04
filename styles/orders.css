@@ -10,7 +10,7 @@
     @apply relative h-auto w-full max-w-[25rem] p-4 bg-white rounded-lg drop-shadow-sm; 
   }
   .order-card-wrapper .action-btn-container {
-    @apply absolute top-0 right-0 p-1 items-center justify-center;
+    @apply absolute top-0 right-0 lg:hidden p-1 items-center justify-center;
   }
   .order-card-wrapper .action-btn-container button{
     @apply h-7 w-7 p-1 flex items-center justify-center bg-red-50 hover:bg-gray-200

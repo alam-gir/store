@@ -13,14 +13,16 @@ const OrderCard = ({
 }) => {
   return (
     <div onClick={clickHandler} className="order-card-wrapper group">
-      <div className="action-btn-container hidden group-hover:inline">
-        <button className="group call btn " title="call to custoemer">
-          <PhoneIcon
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-            className="text-green-400 group-hover:text-green-600 icon"
-          />
+      <div className="action-btn-container group-hover:inline">
+        <button className="group call btn rounded-tr-md " title="call to custoemer">
+          <a href={`tel:+880${phone}`}>
+            <PhoneIcon
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              className="text-green-400 group-hover:text-green-600 icon"
+            />
+          </a>
         </button>
         <button className="group accept btn" title="accept order">
           <CheckIcon
@@ -62,7 +64,7 @@ const OrderCard = ({
         ) : null}
         {phone ? (
           <div className="details phone">
-            <label>phone</label> <h3 className="value">{phone}</h3>
+            <label>phone</label> <h3 className="value">{"0" + phone}</h3>
           </div>
         ) : null}
         {city ? (

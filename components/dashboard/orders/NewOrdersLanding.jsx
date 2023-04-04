@@ -7,13 +7,14 @@ import { useEffect, useState } from "react";
 import LoaderSVG from "@/components/LoaderSVG";
 import { useRouter } from "next/router";
 import ReactModal from "react-modal";
-import ViewOrders from "./ViewOrders";
+import ViewOrder from "./ViewOrder";
 
 const NewOrdersLanding = () => {
   // * states
   const [crudOrderAction, setCrudOrderAction] = useRecoilState(crudOrderState);
   const [queryOrderId, setOrderId] = useState(null);
   const router = useRouter();
+  const orderId = router.query.orderId;
 
   const { data, error, isLoading } = useSWR(
     "/api/db/orders/placeorder",
@@ -24,31 +25,23 @@ const NewOrdersLanding = () => {
 
   // * arrow functions
   const openOrderModal = (id) => {
-    //stop body scroll 
-    document.body.style.overflow = 'hidden'
+    //stop body scroll
+    document.body.style.overflow = "hidden";
     //set new order id
-    router.push(
-        `/dashboard/orders/new?orderId=${id}`,
-        undefined,
-        {
-          scroll: false,
-        }
-    )
-  }
+    router.push(`/dashboard/orders/new?orderId=${id}`, undefined, {
+      scroll: false,
+    });
+  };
   const closeOrderModal = () => {
-    //start body scroll 
-    document.body.style.overflow = 'unset'
+    //start body scroll
+    document.body.style.overflow = "unset";
     //set Order id to null
-    setOrderId(null)
+    setOrderId(null);
     // back to previous page on router for close modal
-    router.push(
-        `/dashboard/orders/new`,
-        undefined,
-        {
-          scroll: false,
-        }
-    )
-  }
+    router.push(`/dashboard/orders/new`, undefined, {
+      scroll: false,
+    });
+  };
 
   // * effects
   useEffect(() => {
@@ -56,12 +49,12 @@ const NewOrdersLanding = () => {
   }, [crudOrderAction]);
 
   useEffect(() => {
-    setOrderId(router.query.orderId);
-  }, [router.query.orderId]);
+    setOrderId(orderId);
+  }, [orderId]);
 
   // * functions
 
-  const orderCards = data?.newOrders?.map((order, index) => {
+  const OrderCards = data?.newOrders?.map((order, index) => {
     return (
       <OrderCard
         key={index}
@@ -77,16 +70,19 @@ const NewOrdersLanding = () => {
       />
     );
   });
+
+  ReactModal.defaultStyles.overlay.backgroundColor = "rgba(0,50,35,0.2)";
   return (
     <>
       <div className="flex flex-col items-center justify-center gap-2 p-2 md:flex-row md:flex-wrap md:p-4">
-        {isLoading ? <LoaderSVG color={"fill-gray-400"} /> : orderCards}
+        {isLoading ? <LoaderSVG color={"fill-gray-400"} /> : OrderCards}
       </div>
       <ReactModal
         isOpen={!!queryOrderId}
         onRequestClose={() => closeOrderModal()}
+        className={"view-order-modal"}
       >
-        <ViewOrders order={queryOrderId} />
+        <ViewOrder orderId={queryOrderId} />
       </ReactModal>
     </>
   );

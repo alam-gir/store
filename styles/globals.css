@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-  /* react modals overlay  */
-  .ReactModal__Overlay.ReactModal__Overlay--after-open {
-    @apply !bg-transparent !transition-all !duration-200;
-  }
-
 
 @layer base {
   html {
@@ -29,7 +24,25 @@
 }
 
 @layer components {
-  /* custom scrollbar  */
+  /* input field  */
+  .InputField{
+    @apply h-auto w-full grid grid-cols-9
+  }
+  .InputField label{
+    @apply col-span-2 text-gray-600 capitalize font-medium text-sm
+  }
+  .InputField input{
+    @apply col-span-6 text-gray-600 tracking-wide
+  }
+  .InputField .edit{
+    @apply col-span-1 text-gray-600
+  }
+  .InputField .edit button{
+    @apply h-full p-1 bg-green-400 flex items-center justify-center hover:bg-green-200 active:bg-red-400 rounded-sm
+  }
+  .InputField .edit .icon{
+    @apply h-4 w-4 text-white
+  }
 
   /* cart btns  */
   .cart-btn {
