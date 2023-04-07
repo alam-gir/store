@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .wrapper {
+    @apply flex;
+  }
+  .image-container {
+    @apply h-[3rem] sm:h-[5rem] aspect-video;
+  }
+  .image-container img {
+    @apply h-full w-full object-contain;
+  }
+  .details-container {
+    @apply w-full flex flex-col px-2;
+  }
+  .details-container .top .name {
+    @apply capitalize text-gray-600 text-sm sm:text-base hover:underline;
+  }
+  .details-container .bottom {
+    @apply w-full flex justify-between;
+  }
+  .details-container .bottom .left {
+    @apply flex gap-1 items-center;
+  }
+  .details-container .bottom .left .quantity-btn-container {
+    @apply flex flex-col gap-1 items-center mr-1;
+  }
+  .details-container .bottom .left .details {
+    @apply flex gap-8 items-center;
+  }
+  .details-container .bottom .left .details .quantity-text {
+    @apply capitalize text-base text-gray-800 font-medium tracking-wide;
+  }
+  .details-container .bottom .left .details .price-text {
+    @apply capitalize text-base text-gray-800 font-medium tracking-wide;
+  }
+  .details-container .bottom .action-btn-container {
+    @apply flex flex-col;
+  }
+  .details-container .bottom .action-btn-container button {
+    @apply flex items-center justify-end text-green-400 capitalize;
+  }
+  .details-container .bottom .action-btn-container button span{
+    @apply text-red-400;
+  }
+}

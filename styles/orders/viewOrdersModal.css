@@ -4,7 +4,7 @@
 
 @layer components {
   .view-order-modal {
-    @apply h-screen w-screen md:h-[80%] md:w-[80%] md:max-w-[60rem] md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:rounded-md !bg-white border-none outline-none;
+    @apply h-screen w-screen md:h-[90%] md:w-[90%] md:max-w-[60rem] md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:rounded-md !bg-white border-none outline-none overflow-y-scroll overflow-x-hidden;
   }
 
   .loader-container {
@@ -12,7 +12,10 @@
   }
 
   .section {
-    @apply h-auto w-full p-2;
+    @apply h-auto w-full p-4;
+  }
+  .section .heading{
+    @apply capitalize text-base font-medium tracking-wider text-white inline-block bg-[#e50914] p-1 px-3 pr-28 rounded-r-full -ml-4
   }
   .date-container {
     @apply grid col-span-1 sm:grid-cols-2 gap-y-2;
@@ -26,7 +29,13 @@
   .date-container .date .value {
     @apply col-span-5 text-gray-600 tracking-wide;
   }
-  .field-container {
-    @apply grid gap-1 sm:grid-cols-2;
+  .data-container {
+    @apply  pt-4;
+  }
+  .section.delivery .data-container{
+    @apply grid gap-1 lg:grid-cols-2
+  }
+  .section.product .data-container{
+    @apply flex flex-col gap-2
   }
 }

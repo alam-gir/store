@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import useSWR, { useSWRConfig } from "swr";
 import InputField from "./InputField";
+import ProductCard from "./ProductCard";
 
 const ViewOrder = () => {
   const [crudOrderAction, setCrudOrderAction] = useRecoilState(crudOrderState);
@@ -42,7 +43,9 @@ const ViewOrder = () => {
       );
     });
   }
-
+  const Products = data?.order?.order?.products?.map((product, index) => (
+    <ProductCard key={index} product={product} />
+  ));
   // if error to fetch order redirect to 404 not found
   if (error) return router.push("/404");
   if (isLoading)
@@ -75,18 +78,14 @@ const ViewOrder = () => {
           </div>
         </section>
         {/* delivery details section  */}
-        <section className="section delivery-details">
-          <div className="field-container">
-            {/* <div className="name">
-              <InputField
-                type={"text"}
-                name={"name"}
-                placeholder={"your name"}
-                value={"name of customer"}
-              />
-            </div> */}
-            {CustomerDetails}
-          </div>
+        <section className="section delivery">
+          <h1 className="heading">delivery details</h1>
+          <div className="data-container">{CustomerDetails}</div>
+        </section>
+        {/* prorduct section  */}
+        <section className="section product">
+          <h1 className="heading">products details</h1>
+          <div className="data-container">{Products}</div>
         </section>
         {/* price section  */}
         <section className="section">price section </section>

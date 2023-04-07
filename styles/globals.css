@@ -26,16 +26,16 @@
 @layer components {
   /* input field  */
   .InputField{
-    @apply h-auto w-full grid grid-cols-9
+    @apply h-auto w-full grid grid-cols-9 gap-1
   }
   .InputField label{
-    @apply col-span-2 text-gray-600 capitalize font-medium text-sm
+    @apply col-span-2 text-gray-600 capitalize font-medium text-sm md:text-base
   }
   .InputField input{
-    @apply col-span-6 text-gray-600 tracking-wide
+    @apply col-span-6 text-gray-600 tracking-wide text-sm md:text-base
   }
   .InputField .edit{
-    @apply col-span-1 text-gray-600
+    @apply col-span-1 text-gray-600 flex gap-1
   }
   .InputField .edit button{
     @apply h-full p-1 bg-green-400 flex items-center justify-center hover:bg-green-200 active:bg-red-400 rounded-sm
